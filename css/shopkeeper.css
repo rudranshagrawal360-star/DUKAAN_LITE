@@ -1,131 +1,289 @@
 /* ==========================================================================
-   DukaanLite - Shopkeeper Vertical Styles (Calmer, Denser & Operational)
+   DukaanLite - Shopkeeper Vertical Styles (Calm, Dense, Operational)
    ========================================================================== */
 
-/* 1. Admin Header & Navigation Accent */
-.shopkeeper-navbar {
-  border-bottom: 2px solid var(--color-primary);
-  background-color: #FFFFFF;
-  padding: 0.65rem 0;
-}
-
-.shopkeeper-badge {
-  background-color: #FEF3C7;
-  color: #92400E;
-  font-size: 0.72rem;
-  font-weight: 700;
-  padding: 0.15rem 0.55rem;
-  border-radius: var(--radius-pill);
-  border: 1px solid #FDE68A;
-}
-
-/* 2. Admin Workspace Layout */
-.admin-header {
-  background: #FFFFFF;
-  border-bottom: 1px solid var(--border-color);
-  padding: 1.25rem 0;
-  margin-bottom: 1.5rem;
-}
-
-.admin-header-title {
-  font-family: var(--font-heading);
-  font-size: clamp(1.35rem, 3.5vw, 1.6rem);
-  font-weight: 800;
-  color: var(--text-main);
-  margin-bottom: 0.25rem;
-}
-
-/* 3. Placeholder / Coming Soon Card */
-.placeholder-card {
-  background: #FFFFFF;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 2rem 1.25rem;
-  text-align: center;
-  box-shadow: var(--shadow-sm);
-  max-width: 650px;
-  margin: 1.5rem auto;
-}
-
-.placeholder-icon {
-  font-size: 2.75rem;
-  margin-bottom: 0.75rem;
-  display: inline-block;
-}
-
-.placeholder-phase-chip {
-  background-color: var(--color-mint);
-  color: var(--color-primary-dark);
-  font-weight: 700;
-  font-size: 0.78rem;
-  padding: 0.2rem 0.65rem;
-  border-radius: var(--radius-pill);
-  display: inline-block;
-  margin-bottom: 0.85rem;
-}
-
-/* 4. Login Card Styling */
-.auth-container {
-  max-width: 480px;
-  margin: 1.5rem auto;
-  width: 100%;
-}
-
-.auth-card {
-  background: #FFFFFF;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  padding: 1.25rem 1rem;
-}
-
-@media (min-width: 576px) {
-  .auth-card {
-    padding: 2rem;
-  }
-}
-
-.role-tabs {
+/* 1. Layout Container: Desktop Sidebar + Content Area */
+.dl-admin-layout {
   display: flex;
-  background-color: var(--bg-subtle);
-  padding: 0.3rem;
-  border-radius: var(--radius-md);
-  gap: 0.3rem;
-  margin-bottom: 1.25rem;
+  min-height: 100vh;
+  background-color: var(--dl-bg);
 }
 
-@media (max-width: 420px) {
-  .role-tabs {
-    flex-direction: column;
+/* Left Sidebar on Desktop */
+.dl-admin-sidebar {
+  width: 250px;
+  background-color: var(--dl-forest);
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 1030;
+  padding: 1.5rem 1rem 1rem 1rem;
+}
+
+.dl-sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #FFFFFF;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  padding: 0 0.5rem;
+}
+
+.dl-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+
+.dl-sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.78);
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--dl-radius-btn);
+  font-size: 0.92rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all var(--dl-transition-fast);
+}
+
+.dl-sidebar-link:hover {
+  color: #FFFFFF;
+  background: rgba(233, 246, 237, 0.12);
+}
+
+.dl-sidebar-link.active {
+  color: #FFFFFF;
+  background: rgba(233, 246, 237, 0.22);
+  font-weight: 600;
+}
+
+.dl-sidebar-link svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.dl-sidebar-footer {
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Main Content Area */
+.dl-admin-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 1.5rem 1.5rem 5rem 1.5rem;
+}
+
+@media (min-width: 992px) {
+  .dl-admin-main {
+    padding: 2rem 2.5rem 3rem 2.5rem;
   }
 }
 
-.role-tab-btn {
+/* 2. Mobile Bottom Tab Bar (Dashboard, Products, Orders, Settings) */
+.dl-mobile-bottom-tabs {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--dl-surface);
+  border-top: 1px solid var(--dl-border);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  z-index: 1040;
+  padding: 0.35rem 0;
+}
+
+@media (max-width: 991px) {
+  .dl-admin-sidebar {
+    display: none; /* Collapses sidebar on mobile/tablet */
+  }
+  .dl-mobile-bottom-tabs {
+    display: flex;
+    justify-content: space-around;
+  }
+}
+
+.dl-tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  padding: 0.35rem 0.5rem;
+  color: var(--dl-muted);
+  text-decoration: none;
+  font-size: 0.72rem;
+  font-weight: 500;
   flex: 1;
-  border: none;
-  background: transparent;
-  padding: 0.55rem 0.45rem;
-  border-radius: var(--radius-sm);
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  text-align: center;
+  transition: color var(--dl-transition-fast);
 }
 
-.role-tab-btn.active {
-  background: #FFFFFF;
-  color: var(--color-primary);
-  box-shadow: var(--shadow-sm);
+.dl-tab-item.active {
+  color: var(--dl-primary);
+  font-weight: 700;
 }
 
-.demo-credentials-box {
-  background-color: var(--color-mint-light);
-  border: 1px dashed var(--color-mint-border);
-  border-radius: var(--radius-md);
-  padding: 0.65rem 0.85rem;
+.dl-tab-item svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* 3. Demo Area Banner */
+.dl-admin-demo-banner {
+  background: var(--dl-mint);
+  border: 1px solid rgba(10, 125, 62, 0.15);
+  border-radius: var(--dl-radius-btn);
+  padding: 0.65rem 1rem;
+  font-size: 0.85rem;
+  color: var(--dl-forest);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* 4. Stat Cards (Metrics with small icon in mint circle) */
+.dl-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.dl-stat-card {
+  background: var(--dl-surface);
+  border: 1px solid var(--dl-border);
+  border-radius: var(--dl-radius-card);
+  padding: 1.25rem;
+  box-shadow: var(--dl-shadow-card);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dl-stat-icon-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--dl-mint);
+  color: var(--dl-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.25rem;
+}
+
+.dl-stat-label {
   font-size: 0.82rem;
-  margin-bottom: 1.15rem;
+  color: var(--dl-muted);
+  font-weight: 500;
+  margin-bottom: 0.15rem;
+}
+
+.dl-stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--dl-ink);
+  line-height: 1.2;
+}
+
+/* 5. Responsive Data Tables (Laptop Table, Mobile Stacked Cards) */
+.dl-table-container {
+  background: var(--dl-surface);
+  border: 1px solid var(--dl-border);
+  border-radius: var(--dl-radius-card);
+  box-shadow: var(--dl-shadow-card);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.dl-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.dl-table th {
+  background: #F8F9F8;
+  color: var(--dl-muted);
+  font-weight: 600;
+  padding: 0.85rem 1.15rem;
+  border-bottom: 1px solid var(--dl-border);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.dl-table td {
+  padding: 0.9rem 1.15rem;
+  border-bottom: 1px solid var(--dl-border);
+  color: var(--dl-text);
+  vertical-align: middle;
+}
+
+.dl-table tr:last-child td {
+  border-bottom: none;
+}
+
+.dl-table tr:hover td {
+  background-color: #FAFBF9;
+}
+
+/* Stacked Mobile Cards for Order / Product lists */
+.dl-mobile-card-list {
+  display: none;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (max-width: 767px) {
+  .dl-table-container {
+    display: none; /* Hide table on phone */
+  }
+  .dl-mobile-card-list {
+    display: flex; /* Show stacked cards on phone */
+  }
+}
+
+.dl-admin-item-card {
+  background: var(--dl-surface);
+  border: 1px solid var(--dl-border);
+  border-radius: var(--dl-radius-card);
+  padding: 1rem;
+  box-shadow: var(--dl-shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dl-admin-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.dl-admin-item-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--dl-text);
 }

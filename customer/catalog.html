@@ -5,131 +5,191 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Customer Catalog – DukaanLite</title>
   
-  <!-- Google Fonts: Baloo 2 (Headings) & DM Sans (Body) -->
+  <!-- Inter Font from Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Bootstrap 5.3 CSS via CDN -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  
-  <!-- DukaanLite Styles (using relative ../ paths) -->
+  <!-- DukaanLite Shared & Customer Styles -->
   <link rel="stylesheet" href="../css/shared.css">
   <link rel="stylesheet" href="../css/customer.css">
 </head>
 <body>
   <!-- Accessibility Skip Link -->
-  <a href="#main-content" class="skip-link">Skip to catalog products</a>
+  <a href="#main-content" class="skip-link">Skip to product catalog</a>
 
-  <!-- Demo Disclaimer Banner -->
-  <div class="demo-banner">
-    <span>💡 <strong>Demo Mode:</strong> Browser-local data only &bull; Orders will hand off to WhatsApp in Phase 2</span>
-  </div>
-
-  <!-- Main Navigation Bar -->
-  <nav class="navbar navbar-expand-lg dukaan-navbar" aria-label="Main Navigation">
+  <!-- Standardised Top App Header -->
+  <header class="dl-app-header" style="background: var(--dl-surface); border-bottom: 1px solid var(--dl-border);">
     <div class="container">
-      <!-- Brand Logo & Home Link -->
-      <a class="navbar-brand" href="../index.html">
-        <span>🥬 DukaanLite</span>
-        <span class="brand-badge">Kirana</span>
-      </a>
-
-      <!-- Mobile Hamburger Toggle -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#catalogNavCollapse" aria-controls="catalogNavCollapse" aria-expanded="false" aria-label="Toggle navigation" style="border: 1px solid var(--border-color); padding: 0.35rem 0.65rem;">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <!-- Collapsible Navigation Items -->
-      <div class="collapse navbar-collapse" id="catalogNavCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="catalog.html">Catalog</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-muted" href="../shopkeeper/login.html" title="Access shopkeeper administration area">
-              🏪 Shopkeeper Demo Area
-            </a>
-          </li>
-        </ul>
-
-        <!-- Right Side: Cart Icon Placeholder & User Pill -->
-        <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0">
-          <span id="customer-greeting-pill" class="text-muted small d-none d-md-inline"></span>
-          
-          <!-- Cart Icon with Count Badge (Phase 1: Displays 0, no cart logic yet) -->
-          <div class="cart-icon-btn" title="Shopping cart (Available in Phase 2)" aria-label="Shopping Cart, 0 items" tabindex="0">
-            <span aria-hidden="true" style="font-size: 1.15rem;">🛒</span>
-            <span class="d-none d-sm-inline" style="font-size: 0.85rem;">Cart</span>
-            <span class="cart-badge" id="cart-count-badge">0</span>
+      <div class="dl-app-header-inner">
+        <!-- Brand: Leaf icon + DukaanLite -->
+        <a class="dl-brand" href="../index.html" aria-label="DukaanLite Home">
+          <div class="dl-brand-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
+              <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/>
+            </svg>
           </div>
-        </div>
-      </div>
-    </div>
-  </nav>
+          <span class="dl-brand-text">DukaanLite</span>
+        </a>
 
-  <!-- Shop Header Banner (Dynamic shop name, status chip, tagline) -->
-  <header class="customer-shop-header">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-12 col-md-8">
-          <div class="d-flex align-items-center flex-wrap gap-2 mb-1">
-            <h1 class="shop-header-title mb-0" id="shop-name-display">Sharma General Store</h1>
-            <span class="shop-status-chip">
-              <span class="shop-status-dot" aria-hidden="true"></span>
-              <span id="shop-hours-display">Open 8 am to 9 pm</span>
-            </span>
+        <!-- Right Header Items: Store Status Pill + Cart Button -->
+        <div class="d-flex align-items-center gap-3">
+          <!-- Status Pill -->
+          <div class="dl-header-pill" aria-label="Store status: Sharma General Store is currently open">
+            <span id="header-shop-name">Sharma General Store</span>
+            <span style="color: var(--dl-border);">&bull;</span>
+            <span class="dl-status-dot" aria-hidden="true"></span>
+            <span class="dl-status-open">Open</span>
           </div>
-          <p class="shop-tagline" id="shop-tagline-display">
-            Fresh groceries &amp; daily essentials at fair neighborhood prices
-          </p>
-        </div>
-        <div class="col-12 col-md-4 text-md-end mt-2 mt-md-0">
-          <span class="badge bg-white text-muted border py-2 px-3 fw-normal" style="font-size: 0.75rem; border-radius: var(--radius-pill);">
-            📍 Local Neighborhood Delivery
-          </span>
+
+          <!-- Slide-in Cart Drawer Trigger -->
+          <button type="button" class="dl-header-cart-btn" id="btn-open-cart-drawer" aria-label="Open shopping cart drawer" aria-expanded="false" aria-controls="cart-drawer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span class="d-none d-sm-inline">Cart</span>
+            <span class="dl-cart-badge" id="header-cart-count">0</span>
+          </button>
         </div>
       </div>
     </div>
   </header>
 
+  <!-- Mint Hero Strip -->
+  <section class="dl-customer-hero" aria-label="Store details">
+    <div class="container">
+      <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+          <h1 class="dl-shop-title" id="hero-shop-title">Sharma General Store</h1>
+          <span class="dl-open-chip">
+            <span class="dl-status-dot" aria-hidden="true"></span>
+            <span id="hero-shop-hours">Open 8 am to 9 pm</span>
+          </span>
+        </div>
+        <p class="dl-shop-tagline" id="hero-shop-tagline">
+          Fresh groceries &amp; daily essentials at fair neighborhood prices
+        </p>
+        <div class="dl-demo-note">
+          <span>💡 <strong>Demo Mode:</strong> Products and orders are saved in this browser's local storage and are not shared across devices.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Main Catalog Content -->
-  <main id="main-content" class="container">
-    <!-- Screen Header & Live Announcement Area -->
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <div>
-        <h2 class="font-heading mb-0" style="font-size: 1.4rem;">Browse Products</h2>
-        <span class="text-muted small" id="product-count-summary">Loading available products...</span>
+  <main id="main-content" class="container" style="padding-bottom: 3rem;">
+    
+    <!-- Controls: Search & Category Pills -->
+    <div class="dl-catalog-controls">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;">
+        <!-- Search Field -->
+        <div style="flex: 1 1 240px; max-width: 380px;">
+          <div class="dl-search-wrap">
+            <span class="dl-search-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </span>
+            <input type="search" id="catalog-search-input" class="dl-input dl-search-input" placeholder="Search milk, atta, biscuits..." aria-label="Search catalog products">
+          </div>
+        </div>
+
+        <!-- Role Indicator / Switch Link -->
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span id="customer-welcome-text" class="text-dl-muted small"></span>
+          <a href="../index.html?role=shopkeeper" class="btn-dl-secondary" style="min-height: 38px; padding: 0.35rem 0.85rem; font-size: 0.85rem;">
+            <span>🏪 Shopkeeper Demo</span>
+          </a>
+        </div>
       </div>
 
-      <div id="catalog-status-announcer" class="visually-hidden" aria-live="polite"></div>
+      <!-- Category Filter Pills -->
+      <nav class="dl-categories-scroll" id="category-pills-nav" aria-label="Filter by grocery category">
+        <button type="button" class="dl-category-pill active" data-category="ALL">All Items</button>
+        <button type="button" class="dl-category-pill" data-category="Dairy & Breakfast">Dairy &amp; Breakfast</button>
+        <button type="button" class="dl-category-pill" data-category="Staples & Grains">Staples &amp; Grains</button>
+        <button type="button" class="dl-category-pill" data-category="Snacks & Biscuits">Snacks &amp; Biscuits</button>
+        <button type="button" class="dl-category-pill" data-category="Beverages">Beverages</button>
+        <button type="button" class="dl-category-pill" data-category="Personal & Home Care">Personal &amp; Home Care</button>
+      </nav>
     </div>
 
-    <!-- Product Grid Container (Will hold skeletons or rendered product cards) -->
-    <section id="catalog-products-container" class="catalog-grid" aria-label="Product list">
-      <!-- Dynamic cards rendered by js/customer/catalog.js -->
+    <!-- Active Filter Summary & Result Count -->
+    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem;">
+      <h2 class="dl-heading" style="font-size: 1.15rem; margin-bottom: 0;">Catalog Items</h2>
+      <span class="text-dl-muted small" id="catalog-count-label">Loading products...</span>
+    </div>
+
+    <!-- Product Grid Container -->
+    <section id="catalog-grid" class="dl-product-grid" aria-label="Product list">
+      <!-- Dynamic cards rendered by catalog.js -->
     </section>
 
-    <!-- Error State Container (Hidden by default) -->
-    <div id="catalog-error-container" class="d-none"></div>
+    <!-- Empty State Container -->
+    <div id="catalog-empty-state" style="display: none;"></div>
+
+    <!-- Error State Container -->
+    <div id="catalog-error-state" style="display: none;"></div>
   </main>
 
-  <!-- Footer -->
-  <footer class="mt-auto py-3 text-center text-muted small border-top bg-white">
-    <div class="container d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
-      <span>DukaanLite Customer Catalog &bull; Phase 1 Shared Foundation</span>
+  <!-- CART SLIDE-IN DRAWER & BACKDROP -->
+  <div class="dl-drawer-backdrop" id="cart-drawer-backdrop" aria-hidden="true"></div>
+
+  <aside class="dl-cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-drawer-title" aria-hidden="true">
+    <div class="dl-drawer-header">
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <h2 class="dl-drawer-title" id="cart-drawer-title">Shopping Cart</h2>
+        <span class="dl-badge dl-badge-in-stock" id="drawer-item-count-badge">0 items</span>
+      </div>
+      <button type="button" class="dl-drawer-close-btn" id="btn-close-cart-drawer" aria-label="Close cart drawer">
+        &times;
+      </button>
+    </div>
+
+    <div class="dl-drawer-body" id="cart-drawer-body">
+      <!-- Items dynamically populated -->
+    </div>
+
+    <div class="dl-drawer-footer">
+      <div class="dl-cart-summary-row">
+        <span class="dl-cart-total-label">Estimated Total:</span>
+        <span class="dl-cart-total-val" id="cart-drawer-total">₹0</span>
+      </div>
+
+      <div class="mb-3">
+        <label for="drawer-notes-input" class="dl-form-label" style="font-size: 0.82rem;">Delivery Note / Landmark (optional)</label>
+        <input type="text" id="drawer-notes-input" class="dl-input" placeholder="e.g. Ring the bell twice" style="height: 38px; font-size: 0.85rem;">
+      </div>
+
+      <button type="button" class="btn-dl-primary w-100" id="btn-checkout-whatsapp" style="height: 48px; font-size: 1rem;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+          <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.41a8.177 8.177 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.98-.14.17-.29.18-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.15-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.38 1 2.55.12.17 1.74 2.66 4.21 3.73.59.25 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.12-.22-.19-.47-.31z"/>
+        </svg>
+        <span>Send Order on WhatsApp</span>
+      </button>
+
+      <p class="text-center text-dl-muted small mt-2 mb-0" style="font-size: 0.78rem;">
+        Opens WhatsApp with your prefilled grocery order.
+      </p>
+    </div>
+  </aside>
+
+  <!-- Shared Footer -->
+  <footer class="mt-auto py-3 text-center text-dl-muted small border-top" style="background: var(--dl-surface);">
+    <div class="container" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.5rem;">
+      <span>DukaanLite &bull; Local Kirana Digital Catalog</span>
       <span>
-        <a href="../index.html" class="text-muted text-decoration-none">Change Role / Sign In</a>
+        <a href="../index.html" class="text-dl-muted" style="text-decoration: underline;">Switch Role</a>
         &nbsp;&bull;&nbsp;
-        <a href="../shopkeeper/login.html" class="text-muted text-decoration-none">Shopkeeper Portal</a>
+        <a href="../shopkeeper/dashboard.html" class="text-dl-muted" style="text-decoration: underline;">Shopkeeper Area</a>
       </span>
     </div>
   </footer>
 
-  <!-- Bootstrap 5.3 JS Bundle via CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
-  <!-- DukaanLite Shared & Customer Scripts -->
+  <!-- Scripts -->
   <script src="../js/shared/storage.js"></script>
   <script src="../js/shared/ui.js"></script>
   <script src="../js/customer/catalog.js"></script>

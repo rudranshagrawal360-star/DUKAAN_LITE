@@ -3,90 +3,289 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Order Management – Shopkeeper Portal – DukaanLite</title>
+  <title>Orders – Shopkeeper Portal – DukaanLite</title>
   
-  <!-- Google Fonts: Baloo 2 & DM Sans -->
+  <!-- Inter Font from Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Bootstrap 5.3 CSS via CDN -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  
-  <!-- DukaanLite Shared Styles -->
+  <!-- DukaanLite Shared & Shopkeeper Styles -->
   <link rel="stylesheet" href="../css/shared.css">
   <link rel="stylesheet" href="../css/shopkeeper.css">
 </head>
 <body>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <a href="#main-content" class="skip-link">Skip to orders list</a>
 
-  <div class="demo-banner">
-    <span>💡 <strong>Shopkeeper Area:</strong> Order Pipeline &bull; Phase 1 Placeholder</span>
-  </div>
-
-  <nav class="navbar navbar-expand-lg shopkeeper-navbar" aria-label="Admin Navigation">
-    <div class="container">
-      <a class="navbar-brand d-flex align-items-center gap-2" href="../index.html">
-        <span>🥬 DukaanLite</span>
-        <span class="shopkeeper-badge">Admin</span>
+  <div class="dl-admin-layout">
+    
+    <!-- Left Sidebar -->
+    <aside class="dl-admin-sidebar" aria-label="Shopkeeper Navigation">
+      <a class="dl-sidebar-brand" href="../index.html">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--dl-primary-bright)" aria-hidden="true">
+          <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/>
+        </svg>
+        <span>DukaanLite</span>
       </a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar" aria-controls="adminNavbar" aria-expanded="false" aria-label="Toggle navigation" style="border: 1px solid var(--border-color); padding: 0.35rem 0.65rem;">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+      <ul class="dl-sidebar-nav">
+        <li>
+          <a href="dashboard.html" class="dl-sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="products.html" class="dl-sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span>Products</span>
+          </a>
+        </li>
+        <li>
+          <a href="orders.html" class="dl-sidebar-link active" aria-current="page">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+            <span>Orders</span>
+          </a>
+        </li>
+        <li>
+          <a href="settings.html" class="dl-sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+            <span>Settings</span>
+          </a>
+        </li>
+      </ul>
 
-      <div class="collapse navbar-collapse" id="adminNavbar">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3">
-          <li class="nav-item">
-            <a class="nav-link" href="dashboard.html">Dashboard</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="products.html">Products</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="orders.html">Orders</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="settings.html">Settings</a>
-          </li>
-        </ul>
+      <div class="dl-sidebar-footer">
+        <a href="../customer/catalog.html" class="dl-sidebar-link" style="color: var(--dl-primary-bright); background: rgba(7, 148, 72, 0.15);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+          <span>View Catalog</span>
+        </a>
+      </div>
+    </aside>
 
-        <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0">
-          <a href="../customer/catalog.html" class="btn-dukaan-outline" style="min-height: 38px; padding: 0.35rem 0.85rem; font-size: 0.85rem;">
-            🛍️ Customer Catalog
+    <!-- Main Content -->
+    <main id="main-content" class="dl-admin-main">
+      <div class="dl-admin-demo-banner">
+        <div>
+          <span>💡 <strong>Demo area.</strong> Data is saved in this browser only.</span>
+        </div>
+        <div>
+          <a href="../customer/catalog.html" class="text-dl-forest fw-semibold" style="text-decoration: underline; font-size: 0.82rem;">
+            Customer Catalog &rarr;
           </a>
         </div>
       </div>
-    </div>
-  </nav>
 
-  <main id="main-content" class="container py-4">
-    <div class="placeholder-card">
-      <div class="placeholder-icon" aria-hidden="true">🧾</div>
-      <span class="placeholder-phase-chip">Phase 4 Feature</span>
-      <h1 class="font-heading mb-2" style="font-size: 1.75rem;">Order Management</h1>
-      <p class="text-muted mb-4" style="max-width: 480px; margin: 0 auto;">
-        Review incoming WhatsApp orders, view items snapshot, and update status from Pending to Confirmed, Preparing, Ready, or Completed.
-      </p>
-
-      <div class="d-flex justify-content-center flex-wrap gap-2">
-        <a href="../customer/catalog.html" class="btn-dukaan-primary">
-          <span>Go to Customer Catalog</span>
-          <span aria-hidden="true">&rarr;</span>
-        </a>
-        <a href="dashboard.html" class="btn btn-outline-secondary" style="border-radius: var(--radius-md); min-height: 44px; display: inline-flex; align-items: center;">
-          Back to Dashboard
-        </a>
+      <div style="display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem;">
+        <div>
+          <h1 class="dl-heading mb-1" style="font-size: 1.6rem;">Order Management</h1>
+          <p class="text-dl-muted mb-0">Track order statuses from Pending to Completed</p>
+        </div>
       </div>
-    </div>
-  </main>
 
-  <footer class="mt-auto py-3 text-center text-muted small border-top bg-white">
-    <div class="container">
-      DukaanLite &bull; Shopkeeper Portal &bull; Phase 1 Foundation
-    </div>
-  </footer>
+      <!-- Filter Tabs -->
+      <div class="dl-categories-scroll mb-3" id="order-status-filters">
+        <button type="button" class="dl-category-pill active" data-status="ALL">All Orders</button>
+        <button type="button" class="dl-category-pill" data-status="Pending">Pending</button>
+        <button type="button" class="dl-category-pill" data-status="Confirmed">Confirmed</button>
+        <button type="button" class="dl-category-pill" data-status="Preparing">Preparing</button>
+        <button type="button" class="dl-category-pill" data-status="Ready">Ready</button>
+        <button type="button" class="dl-category-pill" data-status="Completed">Completed</button>
+      </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+      <!-- Desktop Orders Table -->
+      <div class="dl-table-container">
+        <table class="dl-table" aria-label="Orders management table">
+          <thead>
+            <tr>
+              <th scope="col">Order ID</th>
+              <th scope="col">Customer</th>
+              <th scope="col">Items Snapshot</th>
+              <th scope="col">Total</th>
+              <th scope="col">Status</th>
+              <th scope="col">Update Status</th>
+            </tr>
+          </thead>
+          <tbody id="orders-tbody">
+            <!-- Populated via script -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile Stacked Card List -->
+      <div class="dl-mobile-card-list" id="orders-mobile-list">
+        <!-- Populated via script -->
+      </div>
+    </main>
+
+    <!-- Mobile Bottom Tab Bar -->
+    <nav class="dl-mobile-bottom-tabs" aria-label="Mobile Navigation">
+      <a href="dashboard.html" class="dl-tab-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="products.html" class="dl-tab-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+        </svg>
+        <span>Products</span>
+      </a>
+      <a href="orders.html" class="dl-tab-item active" aria-current="page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+        </svg>
+        <span>Orders</span>
+      </a>
+      <a href="settings.html" class="dl-tab-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        <span>Settings</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <script src="../js/shared/storage.js"></script>
+  <script src="../js/shared/ui.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let orders = DukaanStorage.getOrders();
+      let activeStatusFilter = 'ALL';
+
+      const statusClassMap = {
+        'Pending': 'status-pending',
+        'Confirmed': 'status-confirmed',
+        'Preparing': 'status-preparing',
+        'Ready': 'status-ready',
+        'Completed': 'status-completed',
+        'Cancelled': 'status-cancelled'
+      };
+
+      const allowedStatuses = ["Pending", "Confirmed", "Preparing", "Ready", "Completed", "Cancelled"];
+
+      function renderOrders() {
+        const tbody = document.getElementById('orders-tbody');
+        const mobileList = document.getElementById('orders-mobile-list');
+
+        const filtered = orders.filter(o => 
+          activeStatusFilter === 'ALL' || o.status === activeStatusFilter
+        );
+
+        if (tbody) {
+          tbody.innerHTML = filtered.map(order => {
+            const statusClass = statusClassMap[order.status] || 'status-pending';
+            const itemsSummary = (order.items || []).map(i => `${i.quantity}x ${i.name} (₹${i.price})`).join('<br>');
+            const options = allowedStatuses.map(st => 
+              `<option value="${st}" ${st === order.status ? 'selected' : ''}>${st}</option>`
+            ).join('');
+
+            return `
+              <tr>
+                <td><strong>${DukaanUI.escapeHtml(order.id)}</strong></td>
+                <td>
+                  <div>${DukaanUI.escapeHtml(order.customerName || 'Customer')}</div>
+                  <div class="text-dl-muted small">${DukaanUI.escapeHtml(order.customerPhone || '')}</div>
+                </td>
+                <td style="font-size: 0.85rem; line-height: 1.4;">${itemsSummary}</td>
+                <td><strong style="color: var(--dl-forest);">₹${Number(order.estimatedTotal || 0).toLocaleString('en-IN')}</strong></td>
+                <td>
+                  <span class="dl-status-badge ${statusClass}">${DukaanUI.escapeHtml(order.status)}</span>
+                </td>
+                <td>
+                  <select class="dl-input order-status-select" data-id="${order.id}" style="height: 36px; padding: 0.2rem 0.5rem; font-size: 0.85rem; width: auto;">
+                    ${options}
+                  </select>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        }
+
+        if (mobileList) {
+          mobileList.innerHTML = filtered.map(order => {
+            const statusClass = statusClassMap[order.status] || 'status-pending';
+            const itemsSummary = (order.items || []).map(i => `&bull; ${i.quantity}x ${i.name}`).join('<br>');
+            const options = allowedStatuses.map(st => 
+              `<option value="${st}" ${st === order.status ? 'selected' : ''}>${st}</option>`
+            ).join('');
+
+            return `
+              <div class="dl-admin-item-card">
+                <div class="dl-admin-item-header">
+                  <strong>${DukaanUI.escapeHtml(order.id)}</strong>
+                  <span class="dl-status-badge ${statusClass}">${DukaanUI.escapeHtml(order.status)}</span>
+                </div>
+                <div class="text-dl-muted small">
+                  Customer: <strong>${DukaanUI.escapeHtml(order.customerName || 'Customer')}</strong>
+                </div>
+                <div style="font-size: 0.82rem; color: var(--dl-text); margin: 0.25rem 0;">
+                  ${itemsSummary}
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+                  <strong style="font-size: 1.05rem; color: var(--dl-forest);">₹${Number(order.estimatedTotal || 0).toLocaleString('en-IN')}</strong>
+                  <select class="dl-input order-status-select" data-id="${order.id}" style="height: 36px; padding: 0.2rem 0.5rem; font-size: 0.82rem; width: auto;">
+                    ${options}
+                  </select>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+
+        // Attach status update event
+        document.querySelectorAll('.order-status-select').forEach(sel => {
+          sel.addEventListener('change', (e) => {
+            const id = e.target.getAttribute('data-id');
+            const newStatus = e.target.value;
+            DukaanStorage.updateOrderStatus(id, newStatus);
+            orders = DukaanStorage.getOrders();
+            DukaanUI.showToast(`Order ${id} updated to ${newStatus}`, 'success');
+            renderOrders();
+          });
+        });
+      }
+
+      renderOrders();
+
+      // Status filter pill clicks
+      document.querySelectorAll('#order-status-filters .dl-category-pill').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          document.querySelectorAll('#order-status-filters .dl-category-pill').forEach(b => b.classList.remove('active'));
+          e.currentTarget.classList.add('active');
+          activeStatusFilter = e.currentTarget.getAttribute('data-status');
+          renderOrders();
+        });
+      });
+    });
+  </script>
 </body>
 </html>
