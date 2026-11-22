@@ -1,0 +1,131 @@
+/* ==========================================================================
+   DukaanLite - Shopkeeper Vertical Styles (Calmer, Denser & Operational)
+   ========================================================================== */
+
+/* 1. Admin Header & Navigation Accent */
+.shopkeeper-navbar {
+  border-bottom: 2px solid var(--color-primary);
+  background-color: #FFFFFF;
+  padding: 0.65rem 0;
+}
+
+.shopkeeper-badge {
+  background-color: #FEF3C7;
+  color: #92400E;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.55rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid #FDE68A;
+}
+
+/* 2. Admin Workspace Layout */
+.admin-header {
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--border-color);
+  padding: 1.25rem 0;
+  margin-bottom: 1.5rem;
+}
+
+.admin-header-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.35rem, 3.5vw, 1.6rem);
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 0.25rem;
+}
+
+/* 3. Placeholder / Coming Soon Card */
+.placeholder-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 2rem 1.25rem;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  max-width: 650px;
+  margin: 1.5rem auto;
+}
+
+.placeholder-icon {
+  font-size: 2.75rem;
+  margin-bottom: 0.75rem;
+  display: inline-block;
+}
+
+.placeholder-phase-chip {
+  background-color: var(--color-mint);
+  color: var(--color-primary-dark);
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-pill);
+  display: inline-block;
+  margin-bottom: 0.85rem;
+}
+
+/* 4. Login Card Styling */
+.auth-container {
+  max-width: 480px;
+  margin: 1.5rem auto;
+  width: 100%;
+}
+
+.auth-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 1.25rem 1rem;
+}
+
+@media (min-width: 576px) {
+  .auth-card {
+    padding: 2rem;
+  }
+}
+
+.role-tabs {
+  display: flex;
+  background-color: var(--bg-subtle);
+  padding: 0.3rem;
+  border-radius: var(--radius-md);
+  gap: 0.3rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 420px) {
+  .role-tabs {
+    flex-direction: column;
+  }
+}
+
+.role-tab-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 0.55rem 0.45rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.role-tab-btn.active {
+  background: #FFFFFF;
+  color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.demo-credentials-box {
+  background-color: var(--color-mint-light);
+  border: 1px dashed var(--color-mint-border);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 0.85rem;
+  font-size: 0.82rem;
+  margin-bottom: 1.15rem;
+}

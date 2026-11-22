@@ -1,0 +1,328 @@
+/* ==========================================================================
+   DukaanLite - Customer Vertical Styles (Bright, Playful & Friendly)
+   ========================================================================== */
+
+/* 1. Shop Header Banner */
+.customer-shop-header {
+  background: linear-gradient(135deg, #E9F5EE 0%, #D8EFE2 50%, #FAF7F2 100%);
+  border-bottom: 1px solid var(--color-mint-border);
+  padding: 1.25rem 0 1rem 0;
+  margin-bottom: 1.25rem;
+}
+
+.shop-header-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 4vw, 1.85rem);
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  margin-bottom: 0.25rem;
+}
+
+.shop-tagline {
+  color: var(--text-muted);
+  font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+  margin-bottom: 0.5rem;
+}
+
+.shop-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: #FFFFFF;
+  color: var(--color-primary-dark);
+  border: 1px solid var(--color-mint-border);
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+
+.shop-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.cart-icon-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background-color: #FFFFFF;
+  border: 1.5px solid var(--border-color);
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  color: var(--text-main);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  min-height: 40px;
+}
+
+.cart-icon-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background-color: var(--color-mint-light);
+}
+
+.cart-badge {
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-pill);
+  min-width: 1.25rem;
+  text-align: center;
+  line-height: 1;
+}
+
+/* 2. Catalog Grid: 2 cols phone, 3 cols tablet, 4 cols desktop */
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+  width: 100%;
+}
+
+@media (min-width: 576px) {
+  .catalog-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .catalog-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+/* 3. Product Card Styling */
+.product-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+  position: relative;
+  height: 100%;
+  min-width: 0; /* Prevents flex children from breaking grid */
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--color-mint-border);
+}
+
+/* Card Image Box */
+.product-image-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #F8FAF8;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--border-color-light);
+}
+
+.product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 300ms ease;
+}
+
+.product-card:hover .product-img {
+  transform: scale(1.04);
+}
+
+.product-emoji-fallback {
+  font-size: clamp(2rem, 8vw, 2.75rem);
+  line-height: 1;
+  user-select: none;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));
+}
+
+/* Badges positioned gracefully inside or over image */
+.badge-category {
+  position: absolute;
+  top: 0.4rem;
+  left: 0.4rem;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(4px);
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.15rem 0.4rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  max-width: calc(100% - 0.8rem);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  z-index: 2;
+}
+
+.badge-stock {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.15rem 0.4rem;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  line-height: 1.2;
+}
+
+.badge-stock.in-stock {
+  background-color: var(--status-in-stock-bg);
+  color: var(--status-in-stock-text);
+  border: 1px solid var(--color-mint-border);
+}
+
+.badge-stock.out-of-stock {
+  background-color: var(--status-out-stock-bg);
+  color: var(--status-out-stock-text);
+  border: 1px solid #FECACA;
+}
+
+/* Card Body */
+.product-card-body {
+  padding: 0.55rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+@media (min-width: 576px) {
+  .product-card-body {
+    padding: 0.85rem;
+  }
+}
+
+.product-title {
+  font-family: var(--font-heading);
+  font-size: clamp(0.85rem, 2.5vw, 1.05rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text-main);
+  margin-bottom: 0.2rem;
+  min-height: 2.2rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.product-unit {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-meta-row {
+  margin-top: auto;
+  padding-top: 0.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.product-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.product-price-box {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.product-price {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  font-weight: 800;
+  background: var(--color-marigold-light);
+  color: var(--color-marigold-text);
+  padding: 0.1rem 0.35rem;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  line-height: 1.2;
+}
+
+.product-card .btn-dukaan-primary {
+  width: 100%;
+  font-size: 0.82rem;
+  padding: 0.45rem 0.5rem;
+}
+
+/* 4. Staggered Fade Up Animation */
+.product-card.animate-fade-up {
+  opacity: 0;
+  animation: slideUp 350ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 5. Shimmer Skeleton Loading Cards */
+.skeleton-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-color-light);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  height: 280px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.skeleton-box {
+  background: linear-gradient(90deg, #F1EFE9 25%, #FAFAF8 50%, #F1EFE9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+.skeleton-body {
+  padding: 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+}
+
+.skeleton-line {
+  height: 12px;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-line.title { width: 85%; height: 16px; }
+.skeleton-line.sub { width: 50%; }
+.skeleton-line.price { width: 40%; height: 20px; margin-top: auto; }
+.skeleton-line.btn { width: 100%; height: 44px; margin-top: 0.35rem; }

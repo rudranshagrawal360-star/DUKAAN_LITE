@@ -1,0 +1,222 @@
+[
+  {
+    "id": "P001",
+    "name": "Amul Taaza Toned Milk",
+    "category": "Dairy & Breakfast",
+    "price": 30,
+    "unit": "500 ml packet",
+    "image": "assets/products/milk.jpg",
+    "available": true,
+    "stockQuantity": 25,
+    "updatedAt": "2026-11-20T08:00:00.000Z"
+  },
+  {
+    "id": "P002",
+    "name": "Amul Salted Butter",
+    "category": "Dairy & Breakfast",
+    "price": 58,
+    "unit": "100 g pack",
+    "image": "assets/products/butter.jpg",
+    "available": true,
+    "stockQuantity": 15,
+    "updatedAt": "2026-11-20T08:00:00.000Z"
+  },
+  {
+    "id": "P003",
+    "name": "Mother Dairy Classic Paneer",
+    "category": "Dairy & Breakfast",
+    "price": 95,
+    "unit": "200 g pack",
+    "image": "assets/products/paneer.jpg",
+    "available": true,
+    "stockQuantity": 10,
+    "updatedAt": "2026-11-20T08:00:00.000Z"
+  },
+  {
+    "id": "P004",
+    "name": "Britannia 100% Whole Wheat Bread",
+    "category": "Dairy & Breakfast",
+    "price": 50,
+    "unit": "400 g loaf",
+    "image": "assets/products/bread.jpg",
+    "available": true,
+    "stockQuantity": 8,
+    "updatedAt": "2026-11-20T08:00:00.000Z"
+  },
+  {
+    "id": "P005",
+    "name": "Aashirvaad Superior Shudh Chakki Atta",
+    "category": "Staples & Grains",
+    "price": 245,
+    "unit": "5 kg bag",
+    "image": "assets/products/atta.jpg",
+    "available": true,
+    "stockQuantity": 18,
+    "updatedAt": "2026-11-20T08:00:00.000Z"
+  },
+  {
+    "id": "P006",
+    "name": "Fortune Sunlite Refined Sunflower Oil",
+    "category": "Staples & Grains",
+    "price": 140,
+    "unit": "1 L pouch",
+    "image": "assets/products/oil.jpg",
+    "available": true,
+    "stockQuantity": 12,
+    "updatedAt": "2026-11-20T08:00:00.000Z"
+  },
+  {
+    "id": "P007",
+    "name": "Tata Salt Vacuum Evaporated Iodized",
+    "category": "Staples & Grains",
+    "price": 28,
+    "unit": "1 kg packet",
+    "image": "assets/products/salt.jpg",
+    "available": true,
+    "stockQuantity": 30,
+    "updatedAt": "2026-11-20T08:00:00.000Z"
+  },
+  {
+    "id": "P008",
+    "name": "India Gate Feast Rozzana Basmati Rice",
+    "category": "Staples & Grains",
+    "price": 115,
+    "unit": "1 kg packet",
+    "image": "assets/products/rice.jpg",
+    "available": true,
+    "stockQuantity": 14,
+    "updatedAt": "2026-11-20T08:00:00.000Z"
+  },
+  {
+    "id": "P009",
+    "name": "Tata Sampann Unpolished Toor Dal",
+    "category": "Staples & Grains",
+    "price": 175,
+    "unit": "1 kg packet",
+    "image": "assets/products/toordal.jpg",
+    "available": true,
+    "stockQuantity": 9,
+    "updatedAt": "2026-11-20T08:00:00.000Z"
+  },
+  {
+    "id": "P010",
+    "name": "Madhur Pure & Hygienic Refined Sugar",
+    "category": "Staples & Grains",
+    "price": 52,
+    "unit": "1 kg packet",
+    "image": "assets/products/sugar.jpg",
+    "available": true,
+    "stockQuantity": 20,
+    "updatedAt": "2026-11-20T08:00:00.000Z"
+  },
+  {
+    "id": "P011",
+    "name": "Parle-G Gold Glucose Biscuits",
+    "category": "Snacks & Biscuits",
+    "price": 30,
+    "unit": "250 g pack",
+    "image": "assets/products/parleg.jpg",
+    "available": true,
+    "stockQuantity": 40,
+    "updatedAt": "2026-11-20T08:00:00.000Z"
+  },
+  {
+    "id": "P012",
+    "name": "Lay's India's Magic Masala Potato Chips",
+    "category": "Snacks & Biscuits",
+    "price": 20,
+    "unit": "50 g pack",
+    "image": "assets/products/lays.jpg",
+    "available": true,
+    "stockQuantity": 25,
+    "updatedAt": "2026-11-20T08:00:00.000Z"
+  },
+  {
+    "id": "P013",
+    "name": "Haldiram's Nagpur Bhujia Sev",
+    "category": "Snacks & Biscuits",
+    "price": 55,
+    "unit": "200 g pack",
+    "image": "assets/products/bhujia.jpg",
+    "available": true,
+    "stockQuantity": 16,
+    "updatedAt": "2026-11-20T08:00:00.000Z"
+  },
+  {
+    "id": "P014",
+    "name": "Maggi 2-Minute Masala Noodles",
+    "category": "Snacks & Biscuits",
+    "price": 56,
+    "unit": "Pack of 4 (280 g)",
+    "image": "assets/products/maggi.jpg",
+    "available": true,
+    "stockQuantity": 22,
+    "updatedAt": "2026-11-20T08:00:00.000Z"
+  },
+  {
+    "id": "P015",
+    "name": "Hide & Seek Chocolate Chip Biscuits",
+    "category": "Snacks & Biscuits",
+    "price": 40,
+    "unit": "120 g pack",
+    "image": "assets/products/hideseek.jpg",
+    "available": false,
+    "stockQuantity": 0,
+    "updatedAt": "2026-11-20T08:00:00.000Z"
+  },
+  {
+    "id": "P016",
+    "name": "Tata Tea Gold Rich Taste & Aroma",
+    "category": "Beverages",
+    "price": 145,
+    "unit": "250 g pack",
+    "image": "assets/products/tea.jpg",
+    "available": true,
+    "stockQuantity": 15,
+    "updatedAt": "2026-11-20T08:00:00.000Z"
+  },
+  {
+    "id": "P017",
+    "name": "Bru Instant Coffee Chicory Mix",
+    "category": "Beverages",
+    "price": 98,
+    "unit": "100 g jar",
+    "image": "assets/products/coffee.jpg",
+    "available": true,
+    "stockQuantity": 11,
+    "updatedAt": "2026-11-20T08:00:00.000Z"
+  },
+  {
+    "id": "P018",
+    "name": "Hamdard Rooh Afza Rose Sharbat Syrup",
+    "category": "Beverages",
+    "price": 170,
+    "unit": "750 ml bottle",
+    "image": "assets/products/roohafza.jpg",
+    "available": false,
+    "stockQuantity": 0,
+    "updatedAt": "2026-11-20T08:00:00.000Z"
+  },
+  {
+    "id": "P019",
+    "name": "Dettol Original Germ Protection Bathing Soap",
+    "category": "Personal & Home Care",
+    "price": 45,
+    "unit": "125 g bar",
+    "image": "assets/products/dettol.jpg",
+    "available": true,
+    "stockQuantity": 20,
+    "updatedAt": "2026-11-20T08:00:00.000Z"
+  },
+  {
+    "id": "P020",
+    "name": "Surf Excel Easy Wash Detergent Powder",
+    "category": "Personal & Home Care",
+    "price": 135,
+    "unit": "1 kg pouch",
+    "image": "assets/products/surfexcel.jpg",
+    "available": true,
+    "stockQuantity": 12,
+    "updatedAt": "2026-11-20T08:00:00.000Z"
+  }
+]
