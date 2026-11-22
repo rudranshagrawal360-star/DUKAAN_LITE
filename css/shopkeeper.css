@@ -27,13 +27,39 @@
 .dl-sidebar-brand {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   color: #FFFFFF;
   text-decoration: none;
   font-weight: 700;
   font-size: 1.25rem;
   margin-bottom: 2rem;
-  padding: 0 0.5rem;
+  padding: 0 0.25rem;
+}
+
+/* 40px Cream rounded tile for brand logo mark on dark green sidebar */
+.dl-sidebar-logo-tile {
+  width: 40px;
+  height: 40px;
+  background-color: var(--dl-bg);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.dl-sidebar-logo-tile img {
+  width: 22px;
+  height: 25px;
+  object-fit: contain;
+}
+
+.dl-sidebar-brand-name {
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
 }
 
 .dl-sidebar-nav {
@@ -57,6 +83,7 @@
   font-weight: 500;
   text-decoration: none;
   transition: all var(--dl-transition-fast);
+  position: relative;
 }
 
 .dl-sidebar-link:hover {
@@ -64,10 +91,22 @@
   background: rgba(233, 246, 237, 0.12);
 }
 
+/* Active sidebar item with marigold left-edge indicator */
 .dl-sidebar-link.active {
   color: #FFFFFF;
-  background: rgba(233, 246, 237, 0.22);
+  background: rgba(233, 246, 237, 0.18);
   font-weight: 600;
+}
+
+.dl-sidebar-link.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 4px;
+  background-color: var(--dl-marigold);
+  border-radius: 0 4px 4px 0;
 }
 
 .dl-sidebar-link svg {
@@ -134,8 +173,20 @@
 }
 
 .dl-tab-item.active {
-  color: var(--dl-primary);
+  color: var(--dl-forest);
   font-weight: 700;
+  position: relative;
+}
+
+.dl-tab-item.active::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 28%;
+  right: 28%;
+  height: 2.5px;
+  background-color: var(--dl-marigold);
+  border-radius: 0 0 2px 2px;
 }
 
 .dl-tab-item svg {

@@ -52,6 +52,8 @@ async function capture() {
     { name: '1366px', width: 1366, height: 800, mobile: false }
   ];
 
+  const responsiveTestWidths = [320, 375, 768, 1366];
+
   const pages = [
     { name: 'index_customer', url: 'http://localhost:8085/index.html' },
     { name: 'index_shopkeeper', url: 'http://localhost:8085/index.html?role=shopkeeper' },
@@ -62,19 +64,20 @@ async function capture() {
     { name: 'shopkeeper_settings', url: 'http://localhost:8085/shopkeeper/settings.html' }
   ];
 
+  let anyOverflowFailed = false;
+
   for (const page of pages) {
-    for (const vp of viewports) {
+    // 1. Thorough overflow test across 320, 375, 768, 1366
+    for (const w of responsiveTestWidths) {
       await sendCommand(ws, 'Emulation.setDeviceMetricsOverride', {
-        width: vp.width,
-        height: vp.height,
+        width: w,
+        height: w <= 768 ? 812 : 800,
         deviceScaleFactor: 1,
-        mobile: vp.mobile
+        mobile: w <= 768
       });
-
       await sendCommand(ws, 'Page.navigate', { url: page.url });
-      await new Promise(r => setTimeout(r, 800));
+      await new Promise(r => setTimeout(r, 600));
 
-      // Check overflow
       const evalRes = await sendCommand(ws, 'Runtime.evaluate', {
         expression: `(() => {
           const docW = document.documentElement.clientWidth;
@@ -85,16 +88,39 @@ async function capture() {
       });
 
       const { docW, scrollW, hasOverflow } = evalRes.result.value;
-      console.log(`[${page.name} @ ${vp.name}] clientWidth: ${docW}, scrollWidth: ${scrollW} ${hasOverflow ? '⚠️ OVERFLOW!' : '✓ OK'}`);
+      if (hasOverflow) {
+        console.error(`❌ [${page.name} @ ${w}px] OVERFLOW DETECTED: clientWidth=${docW}, scrollWidth=${scrollW}`);
+        anyOverflowFailed = true;
+      } else {
+        console.log(`✓ [${page.name} @ ${w}px] No overflow (clientWidth=${docW}, scrollWidth=${scrollW})`);
+      }
+    }
+
+    // 2. Capture screenshots at 375px and 1366px
+    for (const vp of viewports) {
+      await sendCommand(ws, 'Emulation.setDeviceMetricsOverride', {
+        width: vp.width,
+        height: vp.height,
+        deviceScaleFactor: 1,
+        mobile: vp.mobile
+      });
+      await sendCommand(ws, 'Page.navigate', { url: page.url });
+      await new Promise(r => setTimeout(r, 600));
 
       const shot = await sendCommand(ws, 'Page.captureScreenshot', { format: 'png' });
       const filename = `screenshots/${page.name}_${vp.name}.png`;
       fs.writeFileSync(filename, Buffer.from(shot.data, 'base64'));
+      console.log(`Saved screenshot: ${filename}`);
     }
   }
 
   ws.close();
-  console.log('All screenshots captured successfully.');
+  if (anyOverflowFailed) {
+    console.error('Some pages had overflow!');
+    process.exit(1);
+  } else {
+    console.log('All responsive tests passed with zero overflow! All screenshots captured.');
+  }
 }
 
 capture().catch(err => {

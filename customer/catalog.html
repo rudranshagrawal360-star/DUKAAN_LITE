@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Customer Catalog – DukaanLite</title>
   
+  <!-- Favicons and Brand Icons -->
+  <link rel="icon" href="../assets/brand/favicon.ico" sizes="any">
+  <link rel="icon" href="../assets/brand/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../assets/brand/icon-180.png">
+  <meta name="theme-color" content="#124729">
+
   <!-- Inter Font from Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,27 +28,17 @@
   <header class="dl-app-header" style="background: var(--dl-surface); border-bottom: 1px solid var(--dl-border);">
     <div class="container">
       <div class="dl-app-header-inner">
-        <!-- Brand: Leaf icon + DukaanLite -->
-        <a class="dl-brand" href="../index.html" aria-label="DukaanLite Home">
-          <div class="dl-brand-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
-              <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/>
-            </svg>
-          </div>
-          <span class="dl-brand-text">DukaanLite</span>
+        <!-- Brand: Logo full on desktop, logo mark below 480px -->
+        <a class="dl-brand-link" href="../index.html" aria-label="DukaanLite Home">
+          <img src="../assets/brand/logo-full.png" alt="DukaanLite" class="dl-logo-full" width="134" height="36">
+          <img src="../assets/brand/logo-mark.png" alt="DukaanLite" class="dl-logo-mark" width="32" height="36">
         </a>
 
-        <!-- Right Header Items: Store Status Pill + Cart Button -->
-        <div class="d-flex align-items-center gap-3">
-          <!-- Status Pill -->
-          <div class="dl-header-pill" aria-label="Store status: Sharma General Store is currently open">
-            <span id="header-shop-name">Sharma General Store</span>
-            <span style="color: var(--dl-border);">&bull;</span>
-            <span class="dl-status-dot" aria-hidden="true"></span>
-            <span class="dl-status-open">Open</span>
-          </div>
+        <!-- Right Header Items: Catalog Link, Cart Button with Marigold Badge, Subtle Shopkeeper Link -->
+        <div class="d-flex align-items-center gap-2 gap-sm-3">
+          <a href="catalog.html" class="dl-nav-link active d-none d-sm-inline" aria-current="page">Catalog</a>
 
-          <!-- Slide-in Cart Drawer Trigger -->
+          <!-- Slide-in Cart Drawer Trigger with Marigold Badge -->
           <button type="button" class="dl-header-cart-btn" id="btn-open-cart-drawer" aria-label="Open shopping cart drawer" aria-expanded="false" aria-controls="cart-drawer">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="9" cy="21" r="1"></circle>
@@ -52,6 +48,11 @@
             <span class="d-none d-sm-inline">Cart</span>
             <span class="dl-cart-badge" id="header-cart-count">0</span>
           </button>
+
+          <!-- Subtle Link to Shopkeeper Demo Area -->
+          <a href="../shopkeeper/dashboard.html" class="dl-nav-subtle" title="Shopkeeper Demo Area">
+            🏪 <span class="d-none d-sm-inline">Shopkeeper Demo</span><span class="d-inline d-sm-none">Demo</span>
+          </a>
         </div>
       </div>
     </div>
@@ -97,12 +98,9 @@
           </div>
         </div>
 
-        <!-- Role Indicator / Switch Link -->
+        <!-- Customer Welcome Greeting -->
         <div style="display: flex; align-items: center; gap: 0.5rem;">
           <span id="customer-welcome-text" class="text-dl-muted small"></span>
-          <a href="../index.html?role=shopkeeper" class="btn-dl-secondary" style="min-height: 38px; padding: 0.35rem 0.85rem; font-size: 0.85rem;">
-            <span>🏪 Shopkeeper Demo</span>
-          </a>
         </div>
       </div>
 

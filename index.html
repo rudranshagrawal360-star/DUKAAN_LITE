@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DukaanLite – Kirana Digital Catalog &amp; WhatsApp Order Flow</title>
   
+  <!-- Favicons and Brand Icons -->
+  <link rel="icon" href="assets/brand/favicon.ico" sizes="any">
+  <link rel="icon" href="assets/brand/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/brand/icon-180.png">
+  <meta name="theme-color" content="#124729">
+
   <!-- Inter Font from Google Fonts (400, 500, 600, 700) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,13 +20,14 @@
   <link rel="stylesheet" href="css/shared.css">
   
   <style>
-    /* Specific styles for the Centred Split Role Card matching reference image */
+    /* Role Screen Layout */
     .dl-role-page-wrap {
-      min-height: calc(100vh - 80px);
+      min-height: calc(100vh - 72px);
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem 1rem 3rem 1rem;
+      padding: 0.75rem 1rem 1.5rem 1rem;
     }
 
     .dl-split-card {
@@ -32,19 +39,19 @@
       max-width: 940px;
       display: flex;
       overflow: hidden;
-      min-height: 520px;
+      min-height: 480px;
     }
 
-    /* Left Panel: Forest Green with decorative line pattern */
+    /* Left Panel: Brand Deep Green (#124729) with clean subtle grid pattern */
     .dl-split-left {
       width: 44%;
       background-color: var(--dl-forest);
       background-image: 
         radial-gradient(circle at 100% 0%, rgba(233, 246, 237, 0.08) 0%, transparent 60%),
         radial-gradient(circle at 0% 100%, rgba(233, 246, 237, 0.06) 0%, transparent 50%),
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
       color: #FFFFFF;
       padding: 2.75rem 2.25rem;
       display: flex;
@@ -53,26 +60,19 @@
       position: relative;
     }
 
-    .dl-split-left-title {
-      font-size: clamp(1.65rem, 3vw, 2.15rem);
+    .dl-split-left-tagline {
+      font-size: clamp(1.85rem, 3.2vw, 2.25rem);
       font-weight: 700;
       color: #FFFFFF;
-      line-height: 1.2;
-      margin-bottom: 0.65rem;
-      letter-spacing: -0.025em;
-    }
-
-    .dl-split-left-subtitle {
-      color: rgba(255, 255, 255, 0.82);
-      font-size: 0.95rem;
-      line-height: 1.45;
-      margin-bottom: 2.5rem;
+      line-height: 1.18;
+      margin-bottom: 2.25rem;
+      letter-spacing: -0.03em;
     }
 
     .dl-feature-list {
       display: flex;
       flex-direction: column;
-      gap: 1.15rem;
+      gap: 1.25rem;
       list-style: none;
       padding: 0;
       margin: 0;
@@ -82,9 +82,9 @@
       display: flex;
       align-items: center;
       gap: 0.85rem;
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       font-weight: 500;
-      color: rgba(255, 255, 255, 0.92);
+      color: #FFFFFF;
     }
 
     .dl-feature-icon-circle {
@@ -99,10 +99,10 @@
       color: #FFFFFF;
     }
 
-    /* Right Panel: White form area */
+    /* Right Panel: Clean form area */
     .dl-split-right {
       width: 56%;
-      padding: 2.5rem 2.75rem;
+      padding: 2.5rem 2.5rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -110,10 +110,10 @@
     }
 
     .dl-split-right-heading {
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       font-weight: 700;
-      color: var(--dl-text);
-      margin-bottom: 1.25rem;
+      color: var(--dl-ink);
+      margin-bottom: 1.15rem;
       letter-spacing: -0.02em;
     }
 
@@ -127,28 +127,24 @@
         width: 100%;
         padding: 1.5rem 1.25rem;
       }
-      .dl-split-left-title {
-        font-size: 1.45rem;
-        margin-bottom: 0.25rem;
-      }
-      .dl-split-left-subtitle {
-        margin-bottom: 1rem;
-        font-size: 0.88rem;
+      .dl-split-left-tagline {
+        font-size: 1.35rem;
+        margin-bottom: 0;
       }
       .dl-feature-list {
-        display: none; /* Collapses feature points on mobile to keep form prominent */
+        display: none; /* Collapses feature points on mobile to banner format */
       }
       .dl-split-right {
         width: 100%;
         padding: 1.5rem 1.25rem;
       }
       .dl-split-right-heading {
-        font-size: 1.3rem;
+        font-size: 1.25rem;
         margin-bottom: 1rem;
       }
     }
 
-    /* Show/Hide password toggle */
+    /* PIN Show/Hide button */
     .dl-pin-input-wrap {
       position: relative;
     }
@@ -161,9 +157,12 @@
       border: none;
       color: var(--dl-muted);
       cursor: pointer;
-      padding: 0.35rem;
+      padding: 0.35rem 0.5rem;
       font-size: 0.82rem;
       font-weight: 600;
+    }
+    .dl-pin-toggle-btn:hover {
+      color: var(--dl-forest);
     }
   </style>
 </head>
@@ -171,27 +170,14 @@
   <!-- Skip Link for Accessibility -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- Top App Header -->
+  <!-- Top App Header: Logo Only (no shop pill, no Open badge) -->
   <header class="dl-app-header">
     <div class="container" style="max-width: 940px; margin: 0 auto; padding: 0 1rem;">
       <div class="dl-app-header-inner">
-        <!-- Brand: Leaf icon + DukaanLite text (NO Kirana Flow badge) -->
-        <a class="dl-brand" href="index.html" aria-label="DukaanLite Home">
-          <div class="dl-brand-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
-              <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/>
-            </svg>
-          </div>
-          <span class="dl-brand-text">DukaanLite</span>
+        <a class="dl-brand-link" href="index.html" aria-label="DukaanLite Home">
+          <img src="assets/brand/logo-full.png" alt="DukaanLite" class="dl-logo-full" width="134" height="36">
+          <img src="assets/brand/logo-mark.png" alt="DukaanLite" class="dl-logo-mark" width="32" height="36">
         </a>
-
-        <!-- Right Header Pill: Sharma General Store • Open -->
-        <div class="dl-header-pill" aria-label="Store status: Sharma General Store is currently open">
-          <span>Sharma General Store</span>
-          <span style="color: var(--dl-border);">&bull;</span>
-          <span class="dl-status-dot" aria-hidden="true"></span>
-          <span class="dl-status-open">Open</span>
-        </div>
       </div>
     </div>
   </header>
@@ -200,15 +186,14 @@
     <!-- Centred Split Card -->
     <div class="dl-split-card">
       
-      <!-- Left Panel: Forest Green Accent -->
+      <!-- Left Panel: Brand Deep Green Accent (#124729) -->
       <section class="dl-split-left" aria-label="About DukaanLite">
-        <h1 class="dl-split-left-title">Welcome to<br>DukaanLite</h1>
-        <p class="dl-split-left-subtitle">From paper parchis to WhatsApp taps.</p>
+        <h1 class="dl-split-left-tagline">From paper parchis to WhatsApp taps.</h1>
         
         <ul class="dl-feature-list">
           <li class="dl-feature-item">
             <div class="dl-feature-icon-circle" aria-hidden="true">
-              <!-- User / No password icon -->
+              <!-- No password icon -->
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
@@ -219,7 +204,7 @@
           
           <li class="dl-feature-item">
             <div class="dl-feature-icon-circle" aria-hidden="true">
-              <!-- WhatsApp / Chat icon -->
+              <!-- WhatsApp icon -->
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
               </svg>
@@ -229,7 +214,7 @@
           
           <li class="dl-feature-item">
             <div class="dl-feature-icon-circle" aria-hidden="true">
-              <!-- Store / Check icon -->
+              <!-- Shopkeeper check icon -->
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
@@ -241,21 +226,20 @@
       </section>
 
       <!-- Right Panel: Form Area -->
-      <section class="dl-split-right" aria-label="Sign in and role selection">
+      <section class="dl-split-right" aria-label="Role selection and sign in">
         <h2 class="dl-split-right-heading">Continue as</h2>
 
         <!-- Segmented Role Toggle: Customer | Shopkeeper -->
         <div class="dl-segmented-toggle mb-3" role="tablist" aria-label="Select role">
-          <button type="button" class="dl-toggle-btn active" id="btn-tab-customer" role="tab" aria-selected="true" aria-controls="pane-customer">
+          <button type="button" class="dl-toggle-btn active" id="btn-tab-customer" role="tab" aria-selected="true" aria-controls="pane-customer" tabindex="0">
             <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <path d="M16 10a4 4 0 0 1-8 0"></path>
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
             </svg>
             <span>Customer</span>
           </button>
           
-          <button type="button" class="dl-toggle-btn" id="btn-tab-shopkeeper" role="tab" aria-selected="false" aria-controls="pane-shopkeeper">
+          <button type="button" class="dl-toggle-btn" id="btn-tab-shopkeeper" role="tab" aria-selected="false" aria-controls="pane-shopkeeper" tabindex="-1">
             <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
               <polyline points="9 22 9 12 15 12 15 22"></polyline>
@@ -266,55 +250,57 @@
 
         <!-- CUSTOMER PANE -->
         <div id="pane-customer" role="tabpanel" aria-labelledby="btn-tab-customer">
-          <!-- Mint Info Strip -->
-          <div class="dl-mint-strip mb-3">
-            <span class="dl-mint-strip-text">Testing the app?</span>
-            <button type="button" class="btn-dl-strip" id="btn-fill-sample-customer">Use sample customer</button>
-          </div>
-
           <form id="customer-role-form" novalidate>
             <div class="mb-3">
-              <label for="customer-name-field" class="dl-form-label">Name (optional)</label>
+              <label for="customer-name-field" class="dl-form-label">
+                <span class="dl-label-bold">Name</span> <span class="dl-label-opt">(optional)</span>
+              </label>
               <input type="text" id="customer-name-field" class="dl-input" placeholder="e.g. Priya Sharma" autocomplete="name">
             </div>
 
             <div class="mb-3">
-              <label for="customer-phone-field" class="dl-form-label">WhatsApp number (optional)</label>
+              <label for="customer-phone-field" class="dl-form-label">
+                <span class="dl-label-bold">WhatsApp number</span> <span class="dl-label-opt">(optional)</span>
+              </label>
               <div class="dl-input-group">
                 <span class="dl-input-prefix">+91</span>
-                <input type="tel" id="customer-phone-field" class="dl-input-field" placeholder="98765 01234" maxlength="10" pattern="[0-9]{10}" autocomplete="tel-national">
+                <input type="tel" id="customer-phone-field" class="dl-input-field" placeholder="98765 01234" maxlength="11" autocomplete="tel-national" aria-describedby="customer-phone-error">
               </div>
               <div id="customer-phone-error" class="text-danger small mt-1 d-none" role="alert">
-                Please enter a valid 10-digit mobile number.
+                Enter a valid 10-digit mobile number.
               </div>
             </div>
 
-            <button type="submit" class="btn-dl-primary w-100 mb-3">
+            <button type="submit" class="btn-dl-primary w-100 mb-2">
               <span>Continue to catalog</span>
               <span aria-hidden="true">&rarr;</span>
             </button>
 
+            <p class="text-center text-dl-muted small mb-2" style="font-size: 0.82rem;">
+              Leave blank to browse as a guest.
+            </p>
+
             <div class="text-center">
-              <a href="customer/catalog.html" class="text-dl-muted small text-decoration-underline" style="font-size: 0.88rem;">
-                Browse as guest
-              </a>
+              <button type="button" id="btn-fill-sample-customer" class="dl-text-link-btn" style="background: none; border: none; color: var(--dl-muted); font-size: 0.82rem; cursor: pointer; text-decoration: underline; padding: 0;">
+                Testing? Use sample customer.
+              </button>
             </div>
           </form>
         </div>
 
         <!-- SHOPKEEPER PANE -->
         <div id="pane-shopkeeper" role="tabpanel" aria-labelledby="btn-tab-shopkeeper" style="display: none;">
-          <!-- Shopkeeper Demo Notice -->
-          <div class="dl-mint-strip mb-3">
-            <span class="dl-mint-strip-text">Demo PIN only. Not real security. (PIN: <strong>1234</strong>)</span>
-            <button type="button" class="btn-dl-strip" id="btn-fill-sample-pin">Fill 1234</button>
-          </div>
+          <p class="text-dl-muted small mb-3" style="font-size: 0.85rem; line-height: 1.4;">
+            Demo PIN only. Not real security. &bull; <strong>Demo PIN: 1234</strong>
+          </p>
 
           <form id="shopkeeper-role-form" novalidate>
             <div class="mb-3">
-              <label for="shopkeeper-pin-field" class="dl-form-label">Store Access PIN</label>
+              <label for="shopkeeper-pin-field" class="dl-form-label">
+                <span class="dl-label-bold">Store Access PIN</span>
+              </label>
               <div class="dl-pin-input-wrap">
-                <input type="password" id="shopkeeper-pin-field" class="dl-input" placeholder="Enter 4-digit PIN" maxlength="6" required autocomplete="current-password">
+                <input type="password" id="shopkeeper-pin-field" class="dl-input" placeholder="Enter PIN" maxlength="6" autocomplete="current-password" aria-describedby="shopkeeper-pin-error">
                 <button type="button" id="btn-toggle-pin-visibility" class="dl-pin-toggle-btn" aria-label="Show or hide PIN">
                   Show
                 </button>
@@ -324,21 +310,30 @@
               </div>
             </div>
 
-            <button type="submit" class="btn-dl-primary w-100 mb-3">
+            <button type="submit" class="btn-dl-primary w-100 mb-2">
               <span>Open dashboard</span>
               <span aria-hidden="true">&rarr;</span>
             </button>
 
+            <p class="text-center text-dl-muted small mb-2" style="font-size: 0.82rem;">
+              Kirana store management &amp; orders portal.
+            </p>
+
             <div class="text-center">
-              <a href="customer/catalog.html" class="text-dl-muted small" style="font-size: 0.88rem; text-decoration: none;">
-                &larr; Switch to customer view
-              </a>
+              <button type="button" id="btn-fill-sample-pin" class="dl-text-link-btn" style="background: none; border: none; color: var(--dl-muted); font-size: 0.82rem; cursor: pointer; text-decoration: underline; padding: 0;">
+                Testing? Fill demo PIN 1234.
+              </button>
             </div>
           </form>
         </div>
 
       </section>
     </div>
+
+    <!-- Footnote under the card -->
+    <p class="dl-role-footnote">
+      Demo data is saved in this browser and is not shared across devices.
+    </p>
   </main>
 
   <!-- DukaanLite Scripts -->
@@ -355,28 +350,51 @@
       const tabShopkeeper = document.getElementById('btn-tab-shopkeeper');
       const paneCustomer = document.getElementById('pane-customer');
       const paneShopkeeper = document.getElementById('pane-shopkeeper');
+      const phoneInput = document.getElementById('customer-phone-field');
+      const phoneError = document.getElementById('customer-phone-error');
 
       function switchRole(role) {
         if (role === 'shopkeeper') {
           tabShopkeeper.classList.add('active');
           tabShopkeeper.setAttribute('aria-selected', 'true');
+          tabShopkeeper.setAttribute('tabindex', '0');
           tabCustomer.classList.remove('active');
           tabCustomer.setAttribute('aria-selected', 'false');
+          tabCustomer.setAttribute('tabindex', '-1');
           paneCustomer.style.display = 'none';
           paneShopkeeper.style.display = 'block';
           document.getElementById('shopkeeper-pin-field').focus();
         } else {
           tabCustomer.classList.add('active');
           tabCustomer.setAttribute('aria-selected', 'true');
+          tabCustomer.setAttribute('tabindex', '0');
           tabShopkeeper.classList.remove('active');
           tabShopkeeper.setAttribute('aria-selected', 'false');
+          tabShopkeeper.setAttribute('tabindex', '-1');
           paneCustomer.style.display = 'block';
           paneShopkeeper.style.display = 'none';
+          document.getElementById('customer-name-field').focus();
         }
       }
 
       tabCustomer.addEventListener('click', () => switchRole('customer'));
       tabShopkeeper.addEventListener('click', () => switchRole('shopkeeper'));
+
+      // Keyboard arrow-key support between tabs
+      tabCustomer.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          switchRole('shopkeeper');
+          tabShopkeeper.focus();
+        }
+      });
+      tabShopkeeper.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          switchRole('customer');
+          tabCustomer.focus();
+        }
+      });
 
       // Check query parameter ?role=shopkeeper
       const urlParams = new URLSearchParams(window.location.search);
@@ -384,17 +402,36 @@
         switchRole('shopkeeper');
       }
 
+      // Phone field input handler: strip non-digits and format as "98765 01234"
+      phoneInput.addEventListener('input', (e) => {
+        let digits = e.target.value.replace(/\D/g, '');
+        if (digits.length > 10) {
+          digits = digits.slice(0, 10);
+        }
+        if (digits.length > 5) {
+          e.target.value = digits.slice(0, 5) + ' ' + digits.slice(5);
+        } else {
+          e.target.value = digits;
+        }
+        if (digits.length === 10 && /^[6-9]/.test(digits)) {
+          phoneError.classList.add('d-none');
+          phoneInput.removeAttribute('aria-invalid');
+        }
+      });
+
       // Sample customer autofill
       document.getElementById('btn-fill-sample-customer').addEventListener('click', () => {
         document.getElementById('customer-name-field').value = 'Priya Sharma';
-        document.getElementById('customer-phone-field').value = '9876501234';
-        document.getElementById('customer-phone-error').classList.add('d-none');
+        phoneInput.value = '98765 01234';
+        phoneError.classList.add('d-none');
+        phoneInput.removeAttribute('aria-invalid');
       });
 
       // Sample PIN autofill
       document.getElementById('btn-fill-sample-pin').addEventListener('click', () => {
         document.getElementById('shopkeeper-pin-field').value = '1234';
         document.getElementById('shopkeeper-pin-error').classList.add('d-none');
+        document.getElementById('shopkeeper-pin-field').removeAttribute('aria-invalid');
       });
 
       // Show/Hide PIN toggle
@@ -414,19 +451,27 @@
       document.getElementById('customer-role-form').addEventListener('submit', (e) => {
         e.preventDefault();
         const name = document.getElementById('customer-name-field').value.trim();
-        const phone = document.getElementById('customer-phone-field').value.trim().replace(/\D/g, '');
-        const phoneError = document.getElementById('customer-phone-error');
+        const digits = phoneInput.value.replace(/\D/g, '');
 
-        if (phone && phone.length !== 10) {
-          phoneError.classList.remove('d-none');
-          return;
+        // If phone entered, validate 10 digits starting 6-9
+        if (digits.length > 0) {
+          const isValidPhone = digits.length === 10 && /^[6-9]/.test(digits);
+          if (!isValidPhone) {
+            phoneError.classList.remove('d-none');
+            phoneInput.setAttribute('aria-invalid', 'true');
+            phoneInput.focus();
+            return;
+          }
         }
-        phoneError.classList.add('d-none');
 
+        phoneError.classList.add('d-none');
+        phoneInput.removeAttribute('aria-invalid');
+
+        // Save digits only
         DukaanStorage.setActiveUser({
           role: 'customer',
           name: name || 'Guest Customer',
-          phone: phone || ''
+          phone: digits
         });
 
         window.location.href = 'customer/catalog.html';
@@ -435,16 +480,18 @@
       // Shopkeeper form submission
       document.getElementById('shopkeeper-role-form').addEventListener('submit', (e) => {
         e.preventDefault();
-        const pin = document.getElementById('shopkeeper-pin-field').value.trim();
+        const pin = pinField.value.trim();
         const pinError = document.getElementById('shopkeeper-pin-error');
 
         if (pin !== '1234') {
           pinError.classList.remove('d-none');
+          pinField.setAttribute('aria-invalid', 'true');
           pinField.focus();
           return;
         }
 
         pinError.classList.add('d-none');
+        pinField.removeAttribute('aria-invalid');
         DukaanStorage.setActiveUser({
           role: 'shopkeeper',
           storeId: 'sharma_store'

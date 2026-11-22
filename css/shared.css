@@ -13,11 +13,13 @@
   --dl-border: #DDE3E0;
 
   /* Greens & Brand Accents */
-  --dl-forest: #13482A;
+  --dl-forest: #124729;           /* Brand deep green: panels, sidebar, headings */
   --dl-primary: #0A7D3E;          /* Primary buttons and green text (~5:1 on white) */
-  --dl-primary-bright: #079448;   /* Icons, dots, decor only, NEVER text */
   --dl-primary-hover: #086A35;
-  --dl-ink: #0F3D26;              /* Headings, high-contrast dark green-black */
+  --dl-leaf: #229D52;             /* Decor and icons only, never small text */
+  --dl-marigold: #F4AA2E;         /* Accent, always with dark text on top */
+  --dl-primary-bright: #229D52;   /* Icons, dots, decor only, never small text */
+  --dl-ink: #124729;              /* Headings, high-contrast brand deep green */
 
   /* Neutral Typography (WCAG AA Compliant) */
   --dl-text: #26332C;             /* Body text, crisp readability */
@@ -42,10 +44,10 @@
   --dl-radius-pill: 999px;
 
   /* Elevation */
-  --dl-shadow-card: 0 10px 30px rgba(19, 72, 42, 0.07), 0 2px 8px rgba(19, 72, 42, 0.04);
-  --dl-shadow-hover: 0 14px 36px rgba(19, 72, 42, 0.12), 0 4px 12px rgba(19, 72, 42, 0.06);
+  --dl-shadow-card: 0 10px 30px rgba(18, 71, 41, 0.07), 0 2px 8px rgba(18, 71, 41, 0.04);
+  --dl-shadow-hover: 0 14px 36px rgba(18, 71, 41, 0.12), 0 4px 12px rgba(18, 71, 41, 0.06);
   --dl-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.04);
-  --dl-shadow-drawer: -4px 0 24px rgba(19, 72, 42, 0.15);
+  --dl-shadow-drawer: -4px 0 24px rgba(18, 71, 41, 0.15);
 
   /* Spacing Scale (4 / 8 / 12 / 16 / 24 / 32) */
   --dl-space-1: 4px;
@@ -200,6 +202,35 @@ input:focus:not(:focus-visible) {
   gap: var(--dl-space-3);
 }
 
+/* Brand Logo (Logo full on desktop, Logo mark below 480px) */
+.dl-brand-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  min-height: 36px;
+}
+
+.dl-logo-full {
+  display: inline-block;
+  height: 36px;
+  width: auto;
+}
+
+.dl-logo-mark {
+  display: none;
+  height: 36px;
+  width: auto;
+}
+
+@media (max-width: 480px) {
+  .dl-logo-full {
+    display: none;
+  }
+  .dl-logo-mark {
+    display: inline-block;
+  }
+}
+
 .dl-brand {
   display: inline-flex;
   align-items: center;
@@ -209,21 +240,6 @@ input:focus:not(:focus-visible) {
   font-weight: 700;
   font-size: 1.35rem;
   letter-spacing: -0.02em;
-}
-
-.dl-brand-icon {
-  width: 28px;
-  height: 28px;
-  color: var(--dl-primary-bright);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.dl-brand-text {
-  font-weight: 700;
-  color: var(--dl-forest);
 }
 
 /* Right Status Pill in Header: "Sharma General Store • Open" */
@@ -334,6 +350,24 @@ input:focus:not(:focus-visible) {
   font-size: 0.88rem;
   color: var(--dl-text);
   margin-bottom: 0.35rem;
+}
+
+.dl-label-bold {
+  font-weight: 600;
+  color: var(--dl-text);
+}
+
+.dl-label-opt {
+  font-weight: 400;
+  color: var(--dl-muted);
+}
+
+.dl-role-footnote {
+  text-align: center;
+  color: var(--dl-muted);
+  font-size: 13px;
+  margin-top: 1.25rem;
+  margin-bottom: 0;
 }
 
 .dl-input {
