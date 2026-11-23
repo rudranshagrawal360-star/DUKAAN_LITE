@@ -15,9 +15,11 @@
 const CATEGORY_EMOJIS = {
   "Dairy & Breakfast": "🥛",
   "Staples & Grains": "🌾",
+  "Spices & Masalas": "🌶️",
   "Snacks & Biscuits": "🍪",
   "Beverages": "☕",
   "Personal & Home Care": "🧼",
+  "Fresh Fruits": "🥭",
   "Default": "🛒"
 };
 
