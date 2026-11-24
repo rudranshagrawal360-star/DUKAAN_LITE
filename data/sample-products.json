@@ -5,7 +5,7 @@
     "category": "Dairy & Breakfast",
     "price": 27,
     "unit": "500 ml pouch",
-    "image": "assets/products/amul_milk.jpg",
+    "image": "assets/products/svg/p001.svg",
     "available": true,
     "stockQuantity": 30,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -16,7 +16,7 @@
     "category": "Dairy & Breakfast",
     "price": 310,
     "unit": "500 ml glass jar",
-    "image": "assets/products/amul_ghee.jpg",
+    "image": "assets/products/svg/p002.svg",
     "available": true,
     "stockQuantity": 14,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -27,7 +27,7 @@
     "category": "Staples & Grains",
     "price": 245,
     "unit": "5 kg bag",
-    "image": "assets/products/aashirvaad_atta.jpg",
+    "image": "assets/products/svg/p003.svg",
     "available": true,
     "stockQuantity": 20,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -38,7 +38,7 @@
     "category": "Staples & Grains",
     "price": 85,
     "unit": "500 g pouch",
-    "image": "assets/products/india_gate_rice.jpg",
+    "image": "assets/products/svg/p004.svg",
     "available": true,
     "stockQuantity": 18,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -49,7 +49,7 @@
     "category": "Staples & Grains",
     "price": 175,
     "unit": "1 kg pouch",
-    "image": "assets/products/tata_toor_dal.jpg",
+    "image": "assets/products/svg/p005.svg",
     "available": true,
     "stockQuantity": 15,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -60,7 +60,7 @@
     "category": "Staples & Grains",
     "price": 140,
     "unit": "1 L pouch",
-    "image": "assets/products/fortune_sunflower_oil.jpg",
+    "image": "assets/products/svg/p006.svg",
     "available": true,
     "stockQuantity": 16,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -71,7 +71,7 @@
     "category": "Staples & Grains",
     "price": 155,
     "unit": "1 L bottle",
-    "image": "assets/products/fortune_mustard_oil.jpg",
+    "image": "assets/products/svg/p007.svg",
     "available": true,
     "stockQuantity": 12,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -82,7 +82,7 @@
     "category": "Staples & Grains",
     "price": 28,
     "unit": "1 kg pack",
-    "image": "assets/products/tata_salt.jpg",
+    "image": "assets/products/svg/p008.svg",
     "available": true,
     "stockQuantity": 40,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -93,7 +93,7 @@
     "category": "Spices & Masalas",
     "price": 82,
     "unit": "100 g box",
-    "image": "assets/products/everest_garam_masala.jpg",
+    "image": "assets/products/svg/p009.svg",
     "available": true,
     "stockQuantity": 22,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -104,7 +104,7 @@
     "category": "Spices & Masalas",
     "price": 95,
     "unit": "100 g box",
-    "image": "assets/products/mdh_deggi_mirch.jpg",
+    "image": "assets/products/svg/p010.svg",
     "available": true,
     "stockQuantity": 15,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -115,7 +115,7 @@
     "category": "Snacks & Biscuits",
     "price": 56,
     "unit": "Pack of 4 (280 g)",
-    "image": "assets/products/maggi_noodles.jpg",
+    "image": "assets/products/svg/p011.svg",
     "available": true,
     "stockQuantity": 25,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -126,7 +126,7 @@
     "category": "Snacks & Biscuits",
     "price": 15,
     "unit": "100 g pack",
-    "image": "assets/products/parle_g_gold.jpg",
+    "image": "assets/products/svg/p012.svg",
     "available": true,
     "stockQuantity": 45,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -137,7 +137,7 @@
     "category": "Snacks & Biscuits",
     "price": 35,
     "unit": "200 g pack",
-    "image": "assets/products/good_day_cookies.jpg",
+    "image": "assets/products/svg/p013.svg",
     "available": true,
     "stockQuantity": 20,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -148,7 +148,7 @@
     "category": "Snacks & Biscuits",
     "price": 30,
     "unit": "150 g pack",
-    "image": "assets/products/britannia_bourbon.jpg",
+    "image": "assets/products/svg/p014.svg",
     "available": true,
     "stockQuantity": 24,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -159,7 +159,7 @@
     "category": "Snacks & Biscuits",
     "price": 40,
     "unit": "120 g pack",
-    "image": "assets/products/oreo_biscuits.jpg",
+    "image": "assets/products/svg/p015.svg",
     "available": true,
     "stockQuantity": 18,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -170,7 +170,7 @@
     "category": "Snacks & Biscuits",
     "price": 90,
     "unit": "400 g pouch",
-    "image": "assets/products/haldirams_bhujia.jpg",
+    "image": "assets/products/svg/p016.svg",
     "available": true,
     "stockQuantity": 15,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -181,7 +181,7 @@
     "category": "Snacks & Biscuits",
     "price": 90,
     "unit": "130 g bar",
-    "image": "assets/products/dairy_milk_chocolate.jpg",
+    "image": "assets/products/svg/p017.svg",
     "available": true,
     "stockQuantity": 16,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -192,7 +192,7 @@
     "category": "Snacks & Biscuits",
     "price": 25,
     "unit": "41.5 g bar",
-    "image": "assets/products/kitkat_chocolate.jpg",
+    "image": "assets/products/svg/p018.svg",
     "available": false,
     "stockQuantity": 0,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -203,7 +203,7 @@
     "category": "Beverages",
     "price": 260,
     "unit": "500 g pouch",
-    "image": "assets/products/tata_tea_gold.jpg",
+    "image": "assets/products/svg/p019.svg",
     "available": true,
     "stockQuantity": 14,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -214,7 +214,7 @@
     "category": "Beverages",
     "price": 240,
     "unit": "500 g carton",
-    "image": "assets/products/red_label_tea.jpg",
+    "image": "assets/products/svg/p020.svg",
     "available": true,
     "stockQuantity": 12,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -225,7 +225,7 @@
     "category": "Beverages",
     "price": 390,
     "unit": "200 g jar",
-    "image": "assets/products/nescafe_coffee.jpg",
+    "image": "assets/products/svg/p021.svg",
     "available": true,
     "stockQuantity": 10,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -236,7 +236,7 @@
     "category": "Personal & Home Care",
     "price": 140,
     "unit": "Pack of 4 (440 g)",
-    "image": "assets/products/dettol_soap.jpg",
+    "image": "assets/products/svg/p022.svg",
     "available": true,
     "stockQuantity": 20,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -247,7 +247,7 @@
     "category": "Personal & Home Care",
     "price": 65,
     "unit": "150 g tube",
-    "image": "assets/products/colgate_toothpaste.jpg",
+    "image": "assets/products/svg/p023.svg",
     "available": true,
     "stockQuantity": 25,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -258,7 +258,7 @@
     "category": "Personal & Home Care",
     "price": 190,
     "unit": "340 ml bottle",
-    "image": "assets/products/clinic_plus_shampoo.jpg",
+    "image": "assets/products/svg/p024.svg",
     "available": true,
     "stockQuantity": 11,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -269,7 +269,7 @@
     "category": "Personal & Home Care",
     "price": 145,
     "unit": "1 kg carton",
-    "image": "assets/products/surf_excel.jpg",
+    "image": "assets/products/svg/p025.svg",
     "available": true,
     "stockQuantity": 14,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -280,7 +280,7 @@
     "category": "Personal & Home Care",
     "price": 25,
     "unit": "300 g bar",
-    "image": "assets/products/vim_bar.jpg",
+    "image": "assets/products/svg/p026.svg",
     "available": true,
     "stockQuantity": 35,
     "updatedAt": "2026-11-23T08:00:00.000Z"
@@ -291,7 +291,7 @@
     "category": "Fresh Fruits",
     "price": 600,
     "unit": "1 Dozen Box (12 pcs)",
-    "image": "assets/products/alphonso_mangoes.jpg",
+    "image": "assets/products/svg/p027.svg",
     "available": false,
     "stockQuantity": 0,
     "updatedAt": "2026-11-23T08:00:00.000Z"

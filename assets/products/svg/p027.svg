@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="100%" height="100%">
+  <defs>
+    <linearGradient id="g-mint" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F2F9F5"/>
+      <stop offset="100%" stop-color="#E2F1E8"/>
+    </linearGradient>
+    <linearGradient id="g-green" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0E8A45"/>
+      <stop offset="100%" stop-color="#086A35"/>
+    </linearGradient>
+    <linearGradient id="g-gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F7BC56"/>
+      <stop offset="100%" stop-color="#F4AA2E"/>
+    </linearGradient>
+    <linearGradient id="g-forest" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#185934"/>
+      <stop offset="100%" stop-color="#124729"/>
+    </linearGradient>
+    <filter id="drop-shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#124729" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <!-- Product Illustration Shape -->
+  <g filter="url(#drop-shadow)">
+    
+    <!-- Mango Produce Illustration -->
+    <g transform="translate(80, 72)">
+      <!-- Leaf -->
+      <path d="M-4 -36 C-14 -46 -2 -54 10 -46 C8 -38 0 -34 -4 -36 Z" fill="#0A7D3E" stroke="#124729" stroke-width="2"/>
+      <line x1="2" y1="-46" x2="-4" y2="-36" stroke="#124729" stroke-width="1.5"/>
+      <!-- Stem -->
+      <line x1="0" y1="-34" x2="0" y2="-24" stroke="#124729" stroke-width="3" stroke-linecap="round"/>
+      <!-- Mango 1 -->
+      <path d="M-8 -22 C18 -26 36 -6 32 20 C28 42 2 48 -18 36 C-34 26 -30 -16 -8 -22 Z" fill="url(#g-gold)" stroke="#124729" stroke-width="2.5"/>
+      <ellipse cx="-4" cy="4" rx="8" ry="14" fill="#F7BC56" opacity="0.6"/>
+      <!-- Marigold blush -->
+      <circle cx="16" cy="18" r="7" fill="#E88A1A" opacity="0.4"/>
+    </g>
+    
+  </g>
+
+  <!-- Typography Banner Label -->
+  <g transform="translate(80, 114)">
+    <rect x="-48" y="-10" width="96" height="20" rx="4" fill="#FFFFFF" stroke="#DDE3E0" stroke-width="1"/>
+    <text x="0" y="3" font-family="'Inter', system-ui, sans-serif" font-size="8.5" font-weight="700" fill="#124729" text-anchor="middle" letter-spacing="0.5">ALPHONSO</text>
+  </g>
+</svg>

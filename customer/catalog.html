@@ -36,11 +36,11 @@
   <!-- Accessibility Skip Link -->
   <a href="#main-content" class="skip-link">Skip to product catalog</a>
 
-  <!-- Standardised Top App Header -->
-  <header class="dl-app-header" style="background: var(--dl-surface); border-bottom: 1px solid var(--dl-border);">
+  <!-- Top App Header with Sticky Search -->
+  <header class="dl-app-header">
     <div class="container">
-      <div class="dl-app-header-inner">
-        <!-- Brand: Logo full on desktop, logo mark below 480px -->
+      <div class="dl-app-header-inner flex-wrap gap-2">
+        <!-- Brand Link -->
         <a class="dl-brand-link" href="../index.html" aria-label="DukaanLite Home">
           <img src="../assets/brand/logo-full.png" alt="DukaanLite" class="dl-logo-full" width="134" height="36"
                data-logo-light="../assets/brand/logo-full.png" data-logo-dark="../assets/brand/logo-full-dark.png">
@@ -48,13 +48,27 @@
                data-logo-light="../assets/brand/logo-mark.png" data-logo-dark="../assets/brand/logo-mark-dark.png">
         </a>
 
-        <!-- Right Header Items: Cart Button, Theme Toggle, Shopkeeper link -->
-        <div class="d-flex align-items-center gap-2 gap-sm-3">
+        <!-- Sticky Header Search (Full width on phones) -->
+        <div class="dl-header-search-wrap">
+          <span class="dl-search-icon" aria-hidden="true">
+            <i class="bi bi-search"></i>
+          </span>
+          <input type="search" id="catalog-search-input" class="dl-search-input" placeholder="Search milk, atta, biscuits..." aria-label="Search catalog products">
+        </div>
+
+        <!-- Right Header Items: My Orders, Cart Button, Theme Toggle, Shopkeeper link -->
+        <div class="d-flex align-items-center gap-2 gap-sm-3 ms-auto">
+          <!-- My Orders Link -->
+          <button type="button" class="dl-nav-link btn-my-orders-trigger" id="btn-header-my-orders" aria-label="View previous orders">
+            <i class="bi bi-clock-history"></i>
+            <span class="d-none d-md-inline">My orders</span>
+          </button>
+
           <!-- Slide-in Cart Drawer Trigger with Marigold Badge -->
           <button type="button" class="dl-header-cart-btn" id="btn-open-cart-drawer" aria-label="Open shopping cart drawer" aria-expanded="false" aria-controls="cart-drawer">
             <i class="bi bi-bag" aria-hidden="true"></i>
             <span class="d-none d-sm-inline">Cart</span>
-            <span class="dl-cart-badge" id="header-cart-count">0</span>
+            <span class="dl-cart-badge dl-tabular-nums" id="header-cart-count">0</span>
           </button>
 
           <!-- Theme Toggle -->
@@ -74,66 +88,75 @@
     </div>
   </header>
 
-  <!-- Mint Hero Strip -->
-  <section class="dl-customer-hero" aria-label="Store details">
+  <!-- Compact Shop Strip with Scalloped Awning Edge -->
+  <section class="dl-shop-strip dl-scalloped-awning" aria-label="Store summary">
     <div class="container">
-      <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
-          <h1 class="dl-shop-title" id="hero-shop-title">Sharma General Store</h1>
-          <span class="dl-open-chip">
-            <span class="dl-status-dot" aria-hidden="true"></span>
-            <span id="hero-shop-hours">Open 8 am to 9 pm</span>
+      <div class="dl-shop-strip-inner">
+        <div class="dl-shop-strip-main">
+          <h1 class="dl-shop-strip-title" id="hero-shop-title">Sharma General Store</h1>
+          <span class="dl-shop-strip-dot">•</span>
+          <span class="dl-shop-strip-hours" id="hero-shop-hours">
+            <i class="bi bi-clock me-1"></i>Open 8:00 AM – 9:00 PM
           </span>
         </div>
-        <p class="dl-shop-tagline" id="hero-shop-tagline">
-          Fresh groceries &amp; daily essentials at fair neighborhood prices
-        </p>
+        <div id="customer-welcome-text" class="text-dl-muted small"></div>
       </div>
     </div>
   </section>
 
-  <!-- Main Catalog Content -->
-  <main id="main-content" class="container" style="padding-bottom: 3rem;">
-    
-    <!-- Controls: Search & Category Pills -->
-    <div class="dl-catalog-controls">
-      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;">
-        <!-- Search Field -->
-        <div style="flex: 1 1 240px; max-width: 380px;">
-          <div class="dl-search-wrap">
-            <span class="dl-search-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-            </span>
-            <input type="search" id="catalog-search-input" class="dl-input dl-search-input" placeholder="Search milk, atta, biscuits..." aria-label="Search catalog products">
-          </div>
-        </div>
-
-        <!-- Customer Welcome Greeting -->
-        <div style="display: flex; align-items: center; gap: 0.5rem;">
-          <span id="customer-welcome-text" class="text-dl-muted small"></span>
-        </div>
-      </div>
-
-      <!-- Category Filter Pills -->
-      <nav class="dl-categories-scroll" id="category-pills-nav" aria-label="Filter by grocery category">
-        <button type="button" class="dl-category-pill active" data-category="ALL">All Items</button>
-        <button type="button" class="dl-category-pill" data-category="Dairy & Breakfast">Dairy &amp; Breakfast</button>
-        <button type="button" class="dl-category-pill" data-category="Staples & Grains">Staples &amp; Grains</button>
-        <button type="button" class="dl-category-pill" data-category="Spices & Masalas">Spices &amp; Masalas</button>
-        <button type="button" class="dl-category-pill" data-category="Snacks & Biscuits">Snacks &amp; Biscuits</button>
-        <button type="button" class="dl-category-pill" data-category="Beverages">Beverages</button>
-        <button type="button" class="dl-category-pill" data-category="Personal & Home Care">Personal &amp; Home Care</button>
-        <button type="button" class="dl-category-pill" data-category="Fresh Fruits">Fresh Fruits</button>
+  <!-- Sticky Categories Rail with Scroll-Snap and Fading Edges -->
+  <div class="dl-categories-rail-outer">
+    <div class="container p-0">
+      <nav class="dl-categories-rail" id="category-pills-nav" aria-label="Filter by grocery category">
+        <button type="button" class="dl-category-pill active" data-category="ALL">
+          <i class="bi bi-grid"></i>
+          <span>All Items</span>
+        </button>
+        <button type="button" class="dl-category-pill" data-category="Dairy & Breakfast">
+          <i class="bi bi-cup-hot"></i>
+          <span>Dairy &amp; Breakfast</span>
+        </button>
+        <button type="button" class="dl-category-pill" data-category="Staples & Grains">
+          <i class="bi bi-basket"></i>
+          <span>Staples &amp; Grains</span>
+        </button>
+        <button type="button" class="dl-category-pill" data-category="Spices & Masalas">
+          <i class="bi bi-fire"></i>
+          <span>Spices &amp; Masalas</span>
+        </button>
+        <button type="button" class="dl-category-pill" data-category="Snacks & Biscuits">
+          <i class="bi bi-cookie"></i>
+          <span>Snacks &amp; Biscuits</span>
+        </button>
+        <button type="button" class="dl-category-pill" data-category="Beverages">
+          <i class="bi bi-cup-straw"></i>
+          <span>Beverages</span>
+        </button>
+        <button type="button" class="dl-category-pill" data-category="Personal & Home Care">
+          <i class="bi bi-droplet"></i>
+          <span>Personal &amp; Home Care</span>
+        </button>
+        <button type="button" class="dl-category-pill" data-category="Fresh Fruits">
+          <i class="bi bi-apple"></i>
+          <span>Fresh Fruits</span>
+        </button>
       </nav>
     </div>
+  </div>
 
-    <!-- Active Filter Summary & Result Count -->
-    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem;">
-      <h2 class="dl-heading" style="font-size: 1.15rem; margin-bottom: 0;">Catalog Items</h2>
-      <span class="text-dl-muted small" id="catalog-count-label">Loading products...</span>
+  <!-- Main Catalog Content -->
+  <main id="main-content" class="container" style="padding-bottom: 5rem;">
+    <!-- Filter and Sort Bar (Result count shown only when filtering/searching) -->
+    <div class="dl-catalog-filter-bar">
+      <div id="search-results-count" class="text-dl-muted small font-weight-medium" style="display: none;"></div>
+      <div class="ms-auto">
+        <select id="catalog-sort-select" class="dl-sort-select" aria-label="Sort products">
+          <option value="relevance">Sort: Relevance</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="alpha-asc">Name: A to Z</option>
+        </select>
+      </div>
     </div>
 
     <!-- Product Grid Container -->
@@ -148,57 +171,145 @@
     <div id="catalog-error-state" style="display: none;"></div>
   </main>
 
-  <!-- CART SLIDE-IN DRAWER & BACKDROP -->
+  <!-- Sticky Phone Cart Bar (Slides up when cart has items) -->
+  <div class="dl-mobile-cart-bar" id="mobile-cart-bar" style="display: none;">
+    <div class="dl-mobile-cart-info">
+      <i class="bi bi-bag-check-fill"></i>
+      <span class="dl-tabular-nums" id="mobile-cart-items">0 items</span>
+      <span>•</span>
+      <span class="dl-tabular-nums" id="mobile-cart-total">₹0</span>
+    </div>
+    <button type="button" class="dl-mobile-cart-btn" id="btn-mobile-view-cart">
+      <span>View list</span>
+      <i class="bi bi-arrow-right"></i>
+    </button>
+  </div>
+
+  <!-- CART SLIDE-IN DRAWER & BACKDROP (Parchi Slip Style) -->
   <div class="dl-drawer-backdrop" id="cart-drawer-backdrop" aria-hidden="true"></div>
 
   <aside class="dl-cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-drawer-title" aria-hidden="true">
     <div class="dl-drawer-header">
-      <div style="display: flex; align-items: center; gap: 0.5rem;">
+      <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-bag"></i>
         <h2 class="dl-drawer-title" id="cart-drawer-title">Shopping Cart</h2>
-        <span class="dl-badge dl-badge-in-stock" id="drawer-item-count-badge">0 items</span>
+        <span class="dl-badge dl-tabular-nums" id="drawer-item-count-badge">0 items</span>
       </div>
       <button type="button" class="dl-drawer-close-btn" id="btn-close-cart-drawer" aria-label="Close cart drawer">
-        &times;
+        <i class="bi bi-x-lg"></i>
       </button>
     </div>
 
-    <div class="dl-drawer-body" id="cart-drawer-body">
-      <!-- Items dynamically populated -->
+    <div class="dl-drawer-body p-3" id="cart-drawer-body">
+      <!-- Parchi Slip inside Drawer -->
+      <div class="dl-parchi-card p-3 mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-1">
+          <span class="dl-parchi-shop" id="cart-parchi-shop">Sharma General Store</span>
+          <span class="dl-parchi-badge">Order Slip</span>
+        </div>
+        <div class="text-dl-muted small" id="cart-parchi-date">Today's list</div>
+
+        <!-- Dashed tear line -->
+        <div class="dl-parchi-tear"></div>
+
+        <!-- Cart Item Lines -->
+        <div id="cart-parchi-items-list">
+          <!-- Populated dynamically -->
+        </div>
+
+        <!-- Dashed tear line -->
+        <div class="dl-parchi-tear"></div>
+
+        <div class="d-flex justify-content-between align-items-baseline">
+          <span class="font-weight-bold">Estimated Total</span>
+          <span class="dl-heading mb-0 dl-tabular-nums" id="cart-drawer-total" style="font-size: 1.25rem; color: var(--dl-forest);">₹0</span>
+        </div>
+      </div>
+
+      <!-- Optional delivery notes input -->
+      <div class="mb-3">
+        <label for="drawer-notes-input" class="dl-form-label small">Delivery note / landmark (optional)</label>
+        <input type="text" id="drawer-notes-input" class="dl-input" placeholder="e.g. Leave with guard, ring bell twice" style="height: 38px; font-size: 0.85rem;">
+      </div>
     </div>
 
     <div class="dl-drawer-footer">
-      <div class="dl-cart-summary-row">
-        <span class="dl-cart-total-label">Estimated Total:</span>
-        <span class="dl-cart-total-val" id="cart-drawer-total">₹0</span>
-      </div>
-
-      <div class="mb-3">
-        <label for="drawer-notes-input" class="dl-form-label" style="font-size: 0.82rem;">Delivery Note / Landmark (optional)</label>
-        <input type="text" id="drawer-notes-input" class="dl-input" placeholder="e.g. Ring the bell twice" style="height: 38px; font-size: 0.85rem;">
-      </div>
-
-      <button type="button" class="btn-dl-primary w-100" id="btn-checkout-whatsapp" style="height: 48px; font-size: 1rem;">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
-          <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.41a8.177 8.177 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.98-.14.17-.29.18-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.15-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.38 1 2.55.12.17 1.74 2.66 4.21 3.73.59.25 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.12-.22-.19-.47-.31z"/>
-        </svg>
-        <span>Send Order on WhatsApp</span>
+      <button type="button" class="btn-dl-primary w-100" id="btn-checkout-whatsapp" style="height: 48px; font-size: 0.98rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;">
+        <i class="bi bi-whatsapp"></i>
+        <span>Order on WhatsApp</span>
       </button>
-
-      <p class="text-center text-dl-muted small mt-2 mb-0" style="font-size: 0.78rem;">
-        Opens WhatsApp with your prefilled grocery order.
-      </p>
     </div>
   </aside>
 
-  <!-- Shared Footer -->
+  <!-- Success Bottom Sheet / Modal (After WhatsApp Order) -->
+  <div class="dl-modal-backdrop" id="order-success-modal-backdrop" style="display: none;"></div>
+  <div class="dl-bottom-sheet" id="order-success-sheet" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="success-sheet-title">
+    <div class="text-center mb-3">
+      <i class="bi bi-check-circle-fill" style="font-size: 2.75rem; color: var(--dl-primary);"></i>
+      <h3 class="dl-heading mt-2 mb-1" id="success-sheet-title" style="font-size: 1.25rem;">Order Prepared for WhatsApp</h3>
+      <p class="text-dl-muted small mb-0">
+        Send the message in WhatsApp so the shop sees it.
+      </p>
+    </div>
+
+    <!-- Parchi summary card -->
+    <div class="dl-parchi-card p-3 mb-3" style="font-size: 0.85rem;">
+      <div class="d-flex justify-content-between align-items-center mb-1">
+        <span class="text-dl-muted">Order ID</span>
+        <strong class="dl-tabular-nums" id="success-sheet-order-id">#ORD-0000</strong>
+      </div>
+      <div class="d-flex justify-content-between align-items-center mb-1">
+        <span class="text-dl-muted">Items</span>
+        <span class="dl-tabular-nums" id="success-sheet-items-count">0 items</span>
+      </div>
+      <div class="d-flex justify-content-between align-items-center pt-1 border-top border-light">
+        <strong>Total</strong>
+        <strong class="dl-tabular-nums text-dl-forest" id="success-sheet-total">₹0</strong>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column gap-2">
+      <a href="#" id="btn-success-track-order" class="btn-dl-primary w-100 text-center py-2" style="min-height: 44px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">
+        <span>Track order</span>
+        <i class="bi bi-arrow-right ms-1"></i>
+      </a>
+      <button type="button" id="btn-success-close" class="btn-dl-secondary w-100 py-2" style="min-height: 44px;">
+        Continue shopping
+      </button>
+    </div>
+  </div>
+
+  <!-- My Orders Drawer -->
+  <div class="dl-drawer-backdrop" id="my-orders-backdrop" aria-hidden="true"></div>
+  <aside class="dl-cart-drawer" id="my-orders-drawer" role="dialog" aria-modal="true" aria-labelledby="my-orders-title" aria-hidden="true">
+    <div class="dl-drawer-header">
+      <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-clock-history"></i>
+        <h2 class="dl-drawer-title" id="my-orders-title">My Orders</h2>
+      </div>
+      <button type="button" class="dl-drawer-close-btn" id="btn-close-my-orders" aria-label="Close orders drawer">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="dl-drawer-body p-3" id="my-orders-list">
+      <!-- Populated dynamically -->
+    </div>
+  </aside>
+
+  <!-- Quiet Footer Disclosure -->
   <footer class="mt-auto py-3 text-center text-dl-muted small border-top" style="background: var(--dl-surface);">
     <div class="container">
       <span>Data stays in this browser.</span>
     </div>
   </footer>
 
+  <!-- Flying Arc Ghost Image Placeholder -->
+  <div id="flying-img-container" style="position: fixed; pointer-events: none; z-index: 1099;"></div>
+
   <!-- Scripts -->
   <script src="../js/shared/theme.js"></script>
+  <script src="../js/shared/live.js"></script>
   <script src="../js/shared/storage.js"></script>
   <script src="../js/shared/ui.js"></script>
   <script src="../js/customer/catalog.js"></script>

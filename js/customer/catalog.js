@@ -2,115 +2,118 @@
  * ============================================================================
  * DukaanLite - Customer Catalog & Cart Drawer Logic (js/customer/catalog.js)
  * ============================================================================
- * Handles:
- * 1. Product catalog rendering, search, and category filtering.
- * 2. Cart state, dynamic stepper transformations on cards.
- * 3. Flying arc animation from product card to header cart icon.
- * 4. Slide-in Cart Drawer with live subtotals, quantity adjustments,
- *    and structured WhatsApp order formatting.
+ * Features:
+ * 1. Product catalog rendering with flat vector SVG illustrations.
+ * 2. Search, category rail filtering, and sorting (Relevance, Price, Name).
+ * 3. Results count summary shown strictly when filtering or searching.
+ * 4. Add-to-cart in-place morph into [ - 1 + ] stepper.
+ * 5. Flying arc animation from card to cart and pop animation on badge.
+ * 6. Sticky phone bottom bar sliding up when cart has items.
+ * 7. Parchi slip styled cart drawer with line items, dashed tear lines, total.
+ * 8. Order checkout: saves order as Pending with statusHistory and opens
+ *    WhatsApp, followed by a Success Sheet with a "Track order" link.
+ * 9. My Orders drawer showing previous browser orders.
  * ============================================================================
  */
-
-// Category fallback emojis
-const CATEGORY_EMOJIS = {
-  "Dairy & Breakfast": "🥛",
-  "Staples & Grains": "🌾",
-  "Spices & Masalas": "🌶️",
-  "Snacks & Biscuits": "🍪",
-  "Beverages": "☕",
-  "Personal & Home Care": "🧼",
-  "Fresh Fruits": "🥭",
-  "Default": "🛒"
-};
 
 // In-memory cart state: maps productId -> quantity
 const cart = new Map();
 let allProducts = [];
 let activeCategory = 'ALL';
 let searchQuery = '';
+let currentSort = 'relevance';
 
 /**
- * Returns category emoji for image fallbacks.
- */
-function getCategoryEmoji(category) {
-  return CATEGORY_EMOJIS[category] || CATEGORY_EMOJIS["Default"];
-}
-
-/**
- * Populates header and hero text from store settings.
+ * Populates header and shop strip text from store settings.
  */
 function initStoreInfo() {
   const settings = DukaanStorage.getSettings();
   if (settings) {
-    const hName = document.getElementById('header-shop-name');
     const heroTitle = document.getElementById('hero-shop-title');
-    const heroTagline = document.getElementById('hero-shop-tagline');
     const heroHours = document.getElementById('hero-shop-hours');
+    const cartParchiShop = document.getElementById('cart-parchi-shop');
 
-    if (hName) hName.textContent = settings.shopName || "Sharma General Store";
     if (heroTitle) heroTitle.textContent = settings.shopName || "Sharma General Store";
-    if (heroTagline) heroTagline.textContent = settings.tagline || "Fresh groceries & daily essentials at fair neighborhood prices";
-    if (heroHours) heroHours.textContent = settings.operatingHours || "Open 8 am to 9 pm";
+    if (cartParchiShop) cartParchiShop.textContent = settings.shopName || "Sharma General Store";
+    if (heroHours) {
+      heroHours.innerHTML = `<i class="bi bi-clock me-1"></i>${DukaanUI.escapeHtml(settings.operatingHours || "Open 8:00 AM – 9:00 PM")}`;
+    }
   }
 
-  // Greeting for returning demo customer
+  // Greeting for returning customer if name is stored
   const activeUser = DukaanStorage.getActiveUser();
   const welcomeText = document.getElementById('customer-welcome-text');
   if (welcomeText && activeUser && activeUser.role === 'customer' && activeUser.name) {
-    welcomeText.textContent = `👋 Hi, ${activeUser.name}`;
+    welcomeText.textContent = `Hi, ${activeUser.name}`;
   }
 }
 
 /**
- * Renders shimmer skeleton placeholder cards while loading.
+ * Returns total count of items in the cart.
  */
-function renderSkeletons(container, count = 8) {
-  if (!container) return;
-  container.innerHTML = '';
-  for (let i = 0; i < count; i++) {
-    const el = document.createElement('div');
-    el.className = 'dl-skeleton-card';
-    el.innerHTML = `
-      <div class="skeleton-box dl-skeleton-img"></div>
-      <div class="dl-skeleton-body">
-        <div class="skeleton-box" style="height: 14px; width: 45%; border-radius: 4px;"></div>
-        <div class="skeleton-box" style="height: 18px; width: 80%; border-radius: 4px;"></div>
-        <div class="skeleton-box" style="height: 14px; width: 40%; border-radius: 4px;"></div>
-        <div class="skeleton-box" style="height: 22px; width: 35%; margin-top: auto; border-radius: 4px;"></div>
-        <div class="skeleton-box" style="height: 40px; width: 100%; border-radius: 8px; margin-top: 6px;"></div>
-      </div>
-    `;
-    container.appendChild(el);
-  }
+function getCartTotalCount() {
+  let count = 0;
+  cart.forEach((qty) => { count += qty; });
+  return count;
 }
 
 /**
- * Updates cart badge counts and triggers pop animation.
+ * Returns total monetary value of items in the cart.
  */
-function updateCartBadges() {
-  let totalCount = 0;
-  for (const qty of cart.values()) {
-    totalCount += qty;
+function getCartEstimatedTotal() {
+  let total = 0;
+  cart.forEach((qty, pid) => {
+    const product = allProducts.find(p => p.id === pid);
+    if (product) {
+      total += (product.price * qty);
+    }
+  });
+  return total;
+}
+
+/**
+ * Updates cart badges in header, drawer, and mobile bottom bar.
+ */
+function updateCartUI() {
+  const totalCount = getCartTotalCount();
+  const totalAmount = getCartEstimatedTotal();
+
+  // Header badge
+  const headerBadge = document.getElementById('header-cart-count');
+  if (headerBadge) {
+    headerBadge.textContent = totalCount;
   }
 
-  const badge = document.getElementById('header-cart-count');
+  // Drawer badge
   const drawerBadge = document.getElementById('drawer-item-count-badge');
-
-  if (badge) {
-    badge.textContent = totalCount;
-    badge.classList.remove('pop');
-    void badge.offsetWidth; // Trigger reflow
-    badge.classList.add('pop');
-  }
-
   if (drawerBadge) {
     drawerBadge.textContent = `${totalCount} item${totalCount === 1 ? '' : 's'}`;
+  }
+
+  // Drawer total
+  const drawerTotal = document.getElementById('cart-drawer-total');
+  if (drawerTotal) {
+    drawerTotal.textContent = `₹${totalAmount.toLocaleString('en-IN')}`;
+  }
+
+  // Mobile Bottom Bar
+  const mobileBar = document.getElementById('mobile-cart-bar');
+  const mobileItems = document.getElementById('mobile-cart-items');
+  const mobileTotal = document.getElementById('mobile-cart-total');
+
+  if (mobileBar) {
+    if (totalCount > 0) {
+      mobileBar.style.display = 'flex';
+      if (mobileItems) mobileItems.textContent = `${totalCount} item${totalCount === 1 ? '' : 's'}`;
+      if (mobileTotal) mobileTotal.textContent = `₹${totalAmount.toLocaleString('en-IN')}`;
+    } else {
+      mobileBar.style.display = 'none';
+    }
   }
 }
 
 /**
  * Executes a smooth flying arc animation using the Web Animations API.
- * Arc flies from the clicked card's image to the header cart button.
  */
 function animateFlyToCart(sourceEl) {
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -123,215 +126,282 @@ function animateFlyToCart(sourceEl) {
   const targetRect = cartBtn.getBoundingClientRect();
 
   const flyEl = document.createElement('div');
-  flyEl.className = 'dl-flying-crumb';
-  flyEl.innerHTML = '🛒';
-  flyEl.style.left = `${startRect.left + startRect.width / 2 - 22}px`;
-  flyEl.style.top = `${startRect.top + startRect.height / 2 - 22}px`;
+  flyEl.style.position = 'fixed';
+  flyEl.style.zIndex = '1100';
+  flyEl.style.width = '24px';
+  flyEl.style.height = '24px';
+  flyEl.style.borderRadius = '50%';
+  flyEl.style.backgroundColor = 'var(--dl-primary)';
+  flyEl.style.boxShadow = '0 4px 12px rgba(10, 125, 62, 0.4)';
+  flyEl.style.pointerEvents = 'none';
+  flyEl.style.left = `${startRect.left + startRect.width / 2 - 12}px`;
+  flyEl.style.top = `${startRect.top + startRect.height / 2 - 12}px`;
+
   document.body.appendChild(flyEl);
 
-  const startX = startRect.left + startRect.width / 2;
-  const startY = startRect.top + startRect.height / 2;
-  const targetX = targetRect.left + targetRect.width / 2;
-  const targetY = targetRect.top + targetRect.height / 2;
+  const deltaX = (targetRect.left + targetRect.width / 2) - (startRect.left + startRect.width / 2);
+  const deltaY = (targetRect.top + targetRect.height / 2) - (startRect.top + startRect.height / 2);
 
-  // Web Animations API
-  const animation = flyEl.animate([
-    {
-      transform: 'translate(0, 0) scale(1)',
-      opacity: 1
-    },
-    {
-      transform: `translate(${(targetX - startX) * 0.5}px, ${(targetY - startY) * 0.3 - 60}px) scale(0.85)`,
-      opacity: 0.9,
-      offset: 0.5
-    },
-    {
-      transform: `translate(${targetX - startX}px, ${targetY - startY}px) scale(0.25)`,
-      opacity: 0.2
-    }
+  const anim = flyEl.animate([
+    { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+    { transform: `translate(${deltaX * 0.4}px, ${deltaY * 0.2 - 50}px) scale(0.9)`, opacity: 0.95, offset: 0.45 },
+    { transform: `translate(${deltaX}px, ${deltaY}px) scale(0.3)`, opacity: 0.2 }
   ], {
-    duration: 550,
-    easing: 'cubic-bezier(0.2, 0.8, 0.3, 1)',
-    fill: 'forwards'
+    duration: 380,
+    easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)'
   });
 
-  animation.onfinish = () => {
+  anim.onfinish = () => {
     flyEl.remove();
-    cartBtn.classList.remove('bounce');
-    void cartBtn.offsetWidth;
-    cartBtn.classList.add('bounce');
+    // Pop the cart badge
+    const badge = document.getElementById('header-cart-count');
+    if (badge) {
+      badge.animate([
+        { transform: 'scale(1)' },
+        { transform: 'scale(1.4)' },
+        { transform: 'scale(1)' }
+      ], { duration: 250, easing: 'ease-out' });
+    }
   };
 }
 
 /**
- * Generates card action HTML: either "+ Add to List" or "- qty +" stepper.
+ * Filter and sort products according to activeCategory, searchQuery, and currentSort.
+ */
+function getFilteredAndSortedProducts() {
+  let list = allProducts.slice();
+
+  // Category filter
+  if (activeCategory !== 'ALL') {
+    list = list.filter(p => p.category.toLowerCase() === activeCategory.toLowerCase());
+  }
+
+  // Search filter
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    list = list.filter(p =>
+      p.name.toLowerCase().includes(q) ||
+      p.category.toLowerCase().includes(q) ||
+      (p.unit && p.unit.toLowerCase().includes(q))
+    );
+  }
+
+  // Sorting
+  if (currentSort === 'price-asc') {
+    list.sort((a, b) => a.price - b.price);
+  } else if (currentSort === 'price-desc') {
+    list.sort((a, b) => b.price - a.price);
+  } else if (currentSort === 'alpha-asc') {
+    list.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  return list;
+}
+
+/**
+ * Updates the filter summary label. Shown ONLY when filtering or searching.
+ */
+function updateResultsCountLabel(filteredCount) {
+  const countLabel = document.getElementById('search-results-count');
+  if (!countLabel) return;
+
+  const isFiltering = activeCategory !== 'ALL';
+  const isSearching = searchQuery.length > 0;
+
+  if (isFiltering || isSearching) {
+    countLabel.style.display = 'block';
+    if (isSearching && isFiltering) {
+      countLabel.textContent = `${filteredCount} item${filteredCount === 1 ? '' : 's'} matching "${searchQuery}" in ${activeCategory}`;
+    } else if (isSearching) {
+      countLabel.textContent = `${filteredCount} item${filteredCount === 1 ? '' : 's'} matching "${searchQuery}"`;
+    } else {
+      countLabel.textContent = `${filteredCount} item${filteredCount === 1 ? '' : 's'} in ${activeCategory}`;
+    }
+  } else {
+    countLabel.style.display = 'none';
+  }
+}
+
+/**
+ * Generates the right-side action HTML for a product card:
+ * either ADD button, Stepper [- 1 +], or Unavailable button.
  */
 function renderCardActionHTML(productId, isAvailable) {
   if (!isAvailable) {
     return `
-      <button type="button" class="btn-dl-primary" disabled aria-disabled="true">
+      <button type="button" class="btn btn-sm btn-secondary disabled" disabled style="min-height: 36px; font-size: 0.8rem; border-radius: var(--dl-radius-btn);">
         Unavailable
       </button>
     `;
   }
 
-  const qty = cart.get(productId) || 0;
-  if (qty > 0) {
+  const currentQty = cart.get(productId) || 0;
+
+  if (currentQty === 0) {
     return `
-      <div class="dl-card-stepper" data-product-id="${productId}">
-        <button type="button" class="dl-stepper-btn btn-stepper-dec" aria-label="Decrease quantity">&minus;</button>
-        <span class="dl-stepper-qty" aria-live="polite">${qty}</span>
-        <button type="button" class="dl-stepper-btn btn-stepper-inc" aria-label="Increase quantity">&plus;</button>
-      </div>
+      <button type="button" class="dl-btn-add btn-add-to-cart" data-product-id="${DukaanUI.escapeHtml(productId)}" aria-label="Add to cart">
+        <span>+ ADD</span>
+      </button>
     `;
   }
 
   return `
-    <button type="button" class="btn-dl-primary btn-add-to-cart" data-product-id="${productId}">
-      <span aria-hidden="true">+</span> Add to List
-    </button>
+    <div class="dl-card-stepper-compact" role="group" aria-label="Adjust quantity">
+      <button type="button" class="dl-stepper-btn-compact btn-stepper-dec" data-product-id="${DukaanUI.escapeHtml(productId)}" aria-label="Decrease quantity">
+        &minus;
+      </button>
+      <span class="dl-stepper-qty-compact dl-tabular-nums" aria-live="polite">${currentQty}</span>
+      <button type="button" class="dl-stepper-btn-compact btn-stepper-inc" data-product-id="${DukaanUI.escapeHtml(productId)}" aria-label="Increase quantity">
+        &plus;
+      </button>
+    </div>
   `;
 }
 
 /**
- * Builds HTML for an individual product card.
- */
-function buildProductCardHTML(product, index) {
-  const isAvailable = product.available === true;
-  const emoji = getCategoryEmoji(product.category);
-  const staggerDelay = Math.min(index * 30, 360);
-
-  const stockBadge = isAvailable
-    ? `<span class="dl-badge dl-badge-in-stock">✓ In Stock</span>`
-    : `<span class="dl-badge dl-badge-out-stock">✕ Unavailable</span>`;
-
-  return `
-    <article class="dl-product-card animate-fade-up" style="animation-delay: ${staggerDelay}ms;" data-id="${DukaanUI.escapeHtml(product.id)}">
-      <div class="dl-product-card-image-wrap">
-        <span class="dl-card-category-label">${DukaanUI.escapeHtml(product.category)}</span>
-        <img src="../${DukaanUI.escapeHtml(product.image)}" 
-             alt="${DukaanUI.escapeHtml(product.name)}" 
-             class="dl-product-img" 
-             loading="lazy"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-        <div class="dl-product-emoji-fallback" style="display: none;" aria-hidden="true">${emoji}</div>
-      </div>
-      <div class="dl-product-card-body">
-        <h3 class="dl-product-title" title="${DukaanUI.escapeHtml(product.name)}">
-          ${DukaanUI.escapeHtml(product.name)}
-        </h3>
-        <div class="dl-product-unit">${DukaanUI.escapeHtml(product.unit || 'Standard Pack')}</div>
-
-        <div class="dl-product-meta-row">
-          <div class="dl-product-price-row">
-            <span class="dl-product-price">₹${Number(product.price).toLocaleString('en-IN')}</span>
-            ${stockBadge}
-          </div>
-          <div class="dl-card-actions" id="action-slot-${product.id}">
-            ${renderCardActionHTML(product.id, isAvailable)}
-          </div>
-        </div>
-      </div>
-    </article>
-  `;
-}
-
-/**
- * Renders filtered products into the main grid.
+ * Renders the product grid cards.
  */
 function renderProductList() {
-  const container = document.getElementById('catalog-grid');
+  const grid = document.getElementById('catalog-grid');
   const emptyState = document.getElementById('catalog-empty-state');
-  const countLabel = document.getElementById('catalog-count-label');
+  if (!grid) return;
 
-  if (!container) return;
-
-  const filtered = allProducts.filter(p => {
-    const matchesCat = activeCategory === 'ALL' || p.category === activeCategory;
-    const matchesSearch = !searchQuery || 
-      p.name.toLowerCase().includes(searchQuery) || 
-      p.category.toLowerCase().includes(searchQuery);
-    return matchesCat && matchesSearch;
-  });
+  const filtered = getFilteredAndSortedProducts();
+  updateResultsCountLabel(filtered.length);
 
   if (filtered.length === 0) {
-    container.innerHTML = '';
+    grid.innerHTML = '';
     if (emptyState) {
       emptyState.style.display = 'block';
-      DukaanUI.renderEmptyState(
-        emptyState,
-        `No items found matching "${searchQuery || activeCategory}". Try searching for another item or clear your filters.`,
-        "Clear Filters",
-        () => {
-          document.getElementById('catalog-search-input').value = '';
+      emptyState.innerHTML = `
+        <div class="dl-parchi-card p-4 text-center my-4">
+          <i class="bi bi-search text-dl-muted" style="font-size: 2rem;"></i>
+          <h3 class="dl-heading mt-2 mb-1" style="font-size: 1.15rem;">No items found</h3>
+          <p class="text-dl-muted small mb-3">Try searching with a different keyword or view all categories.</p>
+          <button type="button" class="btn-dl-secondary btn-sm mx-auto" id="btn-clear-filters">
+            Show all items
+          </button>
+        </div>
+      `;
+      const clearBtn = document.getElementById('btn-clear-filters');
+      if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+          activeCategory = 'ALL';
           searchQuery = '';
-          setActiveCategory('ALL');
-        }
-      );
+          const searchInput = document.getElementById('catalog-search-input');
+          if (searchInput) searchInput.value = '';
+          document.querySelectorAll('.dl-category-pill').forEach(b => b.classList.toggle('active', b.getAttribute('data-category') === 'ALL'));
+          renderProductList();
+        });
+      }
     }
-    if (countLabel) countLabel.textContent = '0 items found';
     return;
   }
 
   if (emptyState) emptyState.style.display = 'none';
 
-  const html = filtered.map((p, idx) => buildProductCardHTML(p, idx)).join('');
-  container.innerHTML = html;
+  grid.innerHTML = filtered.map(product => {
+    const isUnavailable = !product.available;
+    const isLowStock = product.available && product.stockQuantity <= 5;
+    const imgPath = product.image.startsWith('../') ? product.image : `../${product.image}`;
 
-  const inStockCount = filtered.filter(p => p.available).length;
-  if (countLabel) {
-    countLabel.textContent = `Showing ${filtered.length} products (${inStockCount} available)`;
-  }
+    // Badges: NO "In stock" badge! Only Low stock or Unavailable
+    let badgeHTML = '';
+    if (isUnavailable) {
+      badgeHTML = `<span class="dl-badge dl-badge-out-stock" style="position: absolute; top: 0.5rem; left: 0.5rem; z-index: 2;">Unavailable</span>`;
+    } else if (isLowStock) {
+      badgeHTML = `<span class="dl-badge" style="position: absolute; top: 0.5rem; left: 0.5rem; z-index: 2; background-color: var(--dl-warning-bg); color: var(--dl-warning-text); border: 1px solid var(--dl-warning);">Low stock</span>`;
+    }
 
-  bindCardActionEvents(container);
+    return `
+      <article class="dl-product-card ${isUnavailable ? 'unavailable' : ''}" data-product-id="${DukaanUI.escapeHtml(product.id)}">
+        <div class="dl-product-card-image-wrap">
+          ${badgeHTML}
+          <img src="${imgPath}" alt="${DukaanUI.escapeHtml(product.name)}" class="dl-product-svg-img" loading="lazy">
+        </div>
+
+        <div class="dl-product-card-body">
+          <h3 class="dl-product-title" title="${DukaanUI.escapeHtml(product.name)}">
+            ${DukaanUI.escapeHtml(product.name)}
+          </h3>
+
+          <div class="dl-product-unit text-dl-muted">
+            ${DukaanUI.escapeHtml(product.unit || '')}
+          </div>
+
+          <div class="dl-product-bottom-row">
+            <div class="dl-product-price-wrap">
+              <span class="dl-product-price dl-tabular-nums">₹${product.price}</span>
+            </div>
+            <div class="dl-card-action-slot" data-slot-id="${DukaanUI.escapeHtml(product.id)}">
+              ${renderCardActionHTML(product.id, product.available)}
+            </div>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  bindCardActionEvents(grid);
 }
 
 /**
- * Binds click events for "Add to List" and card steppers.
+ * Updates a single product card action slot without re-rendering the entire grid.
+ */
+function updateCardActionSlot(productId) {
+  const slot = document.querySelector(`.dl-card-action-slot[data-slot-id="${productId}"]`);
+  if (!slot) return;
+  const product = allProducts.find(p => p.id === productId);
+  if (!product) return;
+
+  slot.innerHTML = renderCardActionHTML(productId, product.available);
+  bindCardActionEvents(slot);
+}
+
+/**
+ * Attach click handlers for ADD and stepper buttons.
  */
 function bindCardActionEvents(container) {
-  // Add to List buttons
+  // Add to cart buttons
   container.querySelectorAll('.btn-add-to-cart').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const prodId = e.currentTarget.getAttribute('data-product-id');
       const card = e.currentTarget.closest('.dl-product-card');
       const imgWrap = card ? card.querySelector('.dl-product-card-image-wrap') : null;
 
-      // Animate flying arc
+      // Flying arc animation
       if (imgWrap) animateFlyToCart(imgWrap);
 
-      // Increase quantity
       cart.set(prodId, 1);
-      updateCartBadges();
+      updateCartUI();
       updateCardActionSlot(prodId);
       renderCartDrawerBody();
     });
   });
 
-  // Stepper buttons
+  // Stepper increment
   container.querySelectorAll('.btn-stepper-inc').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const stepper = e.currentTarget.closest('.dl-card-stepper');
-      const prodId = stepper.getAttribute('data-product-id');
-      const cur = cart.get(prodId) || 0;
-      cart.set(prodId, cur + 1);
-      updateCartBadges();
+      const prodId = e.currentTarget.getAttribute('data-product-id');
+      const current = cart.get(prodId) || 0;
+      cart.set(prodId, current + 1);
+      updateCartUI();
       updateCardActionSlot(prodId);
       renderCartDrawerBody();
     });
   });
 
+  // Stepper decrement
   container.querySelectorAll('.btn-stepper-dec').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const stepper = e.currentTarget.closest('.dl-card-stepper');
-      const prodId = stepper.getAttribute('data-product-id');
-      const cur = cart.get(prodId) || 0;
-      if (cur <= 1) {
+      const prodId = e.currentTarget.getAttribute('data-product-id');
+      const current = cart.get(prodId) || 0;
+      if (current <= 1) {
         cart.delete(prodId);
       } else {
-        cart.set(prodId, cur - 1);
+        cart.set(prodId, current - 1);
       }
-      updateCartBadges();
+      updateCartUI();
       updateCardActionSlot(prodId);
       renderCartDrawerBody();
     });
@@ -339,294 +409,330 @@ function bindCardActionEvents(container) {
 }
 
 /**
- * Refreshes an individual product card's action slot without re-rendering the whole grid.
- */
-function updateCardActionSlot(productId) {
-  const slot = document.getElementById(`action-slot-${productId}`);
-  if (!slot) return;
-
-  const product = allProducts.find(p => p.id === productId);
-  if (!product) return;
-
-  slot.innerHTML = renderCardActionHTML(productId, product.available);
-
-  // Rebind events for that specific card slot
-  const newAddBtn = slot.querySelector('.btn-add-to-cart');
-  if (newAddBtn) {
-    newAddBtn.addEventListener('click', () => {
-      const card = slot.closest('.dl-product-card');
-      const imgWrap = card ? card.querySelector('.dl-product-card-image-wrap') : null;
-      if (imgWrap) animateFlyToCart(imgWrap);
-      cart.set(productId, 1);
-      updateCartBadges();
-      updateCardActionSlot(productId);
-      renderCartDrawerBody();
-    });
-  }
-
-  const incBtn = slot.querySelector('.btn-stepper-inc');
-  if (incBtn) {
-    incBtn.addEventListener('click', () => {
-      const cur = cart.get(productId) || 0;
-      cart.set(productId, cur + 1);
-      updateCartBadges();
-      updateCardActionSlot(productId);
-      renderCartDrawerBody();
-    });
-  }
-
-  const decBtn = slot.querySelector('.btn-stepper-dec');
-  if (decBtn) {
-    decBtn.addEventListener('click', () => {
-      const cur = cart.get(productId) || 0;
-      if (cur <= 1) {
-        cart.delete(productId);
-      } else {
-        cart.set(productId, cur - 1);
-      }
-      updateCartBadges();
-      updateCardActionSlot(productId);
-      renderCartDrawerBody();
-    });
-  }
-}
-
-/**
- * Sets active category filter pill.
- */
-function setActiveCategory(cat) {
-  activeCategory = cat;
-  document.querySelectorAll('.dl-category-pill').forEach(btn => {
-    if (btn.getAttribute('data-category') === cat) {
-      btn.classList.add('active');
-    } else {
-      btn.classList.remove('active');
-    }
-  });
-  renderProductList();
-}
-
-/**
- * Renders the contents of the slide-in cart drawer.
+ * Renders the line items inside the parchi slip in the cart drawer.
  */
 function renderCartDrawerBody() {
-  const body = document.getElementById('cart-drawer-body');
-  const totalDisplay = document.getElementById('cart-drawer-total');
+  const listEl = document.getElementById('cart-parchi-items-list');
   const checkoutBtn = document.getElementById('btn-checkout-whatsapp');
-
-  if (!body) return;
+  if (!listEl) return;
 
   if (cart.size === 0) {
-    body.innerHTML = `
-      <div style="text-align: center; padding: 3rem 1rem;">
-        <div style="font-size: 3rem; margin-bottom: 0.75rem;" aria-hidden="true">🛒</div>
-        <h4 style="font-weight: 600; margin-bottom: 0.35rem; color: var(--dl-ink);">Your cart is empty</h4>
-        <p class="text-dl-muted small">Add fresh groceries from the catalog to prepare your WhatsApp order.</p>
+    listEl.innerHTML = `
+      <div class="text-center py-4 text-dl-muted small">
+        <i class="bi bi-cart3 d-block mb-1" style="font-size: 1.5rem;"></i>
+        Your shopping list is empty.<br>Tap + ADD on items to build your list.
       </div>
     `;
-    if (totalDisplay) totalDisplay.textContent = '₹0';
     if (checkoutBtn) checkoutBtn.disabled = true;
     return;
   }
 
-  let totalAmount = 0;
-  let itemsHTML = '';
+  if (checkoutBtn) checkoutBtn.disabled = false;
 
-  for (const [prodId, qty] of cart.entries()) {
-    const product = allProducts.find(p => p.id === prodId);
-    if (!product) continue;
+  let itemsHtml = '';
+  cart.forEach((quantity, productId) => {
+    const product = allProducts.find(p => p.id === productId);
+    if (!product) return;
+    const subtotal = product.price * quantity;
 
-    const lineTotal = product.price * qty;
-    totalAmount += lineTotal;
-    const emoji = getCategoryEmoji(product.category);
-
-    itemsHTML += `
-      <div class="dl-cart-item" data-id="${product.id}">
-        <div style="font-size: 1.75rem; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: #F6F8F6; border-radius: 8px;">
-          ${emoji}
-        </div>
-        <div class="dl-cart-item-info">
-          <div class="dl-cart-item-title" title="${DukaanUI.escapeHtml(product.name)}">
+    itemsHtml += `
+      <div class="d-flex justify-content-between align-items-center py-2 border-bottom border-light">
+        <div style="flex: 1; min-width: 0; padding-right: 0.5rem;">
+          <div class="font-weight-medium" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
             ${DukaanUI.escapeHtml(product.name)}
           </div>
-          <div class="dl-cart-item-sub">
-            ₹${product.price} / ${DukaanUI.escapeHtml(product.unit)} &bull; <strong>₹${lineTotal}</strong>
+          <div class="text-dl-muted small">
+            ${DukaanUI.escapeHtml(product.unit || '')} &bull; ₹${product.price}
           </div>
         </div>
-        <div class="dl-cart-item-stepper">
-          <button type="button" class="dl-drawer-stepper-btn btn-drawer-dec" data-id="${product.id}" aria-label="Decrease quantity">&minus;</button>
-          <span class="dl-drawer-stepper-qty">${qty}</span>
-          <button type="button" class="dl-drawer-stepper-btn btn-drawer-inc" data-id="${product.id}" aria-label="Increase quantity">&plus;</button>
+
+        <div class="d-flex align-items-center gap-2">
+          <div class="dl-card-stepper-compact">
+            <button type="button" class="dl-stepper-btn-compact btn-drawer-dec" data-product-id="${DukaanUI.escapeHtml(productId)}">&minus;</button>
+            <span class="dl-stepper-qty-compact dl-tabular-nums">${quantity}</span>
+            <button type="button" class="dl-stepper-btn-compact btn-drawer-inc" data-product-id="${DukaanUI.escapeHtml(productId)}">&plus;</button>
+          </div>
+          <span class="dl-tabular-nums font-weight-bold ms-2" style="min-width: 44px; text-align: right;">₹${subtotal}</span>
         </div>
       </div>
     `;
-  }
+  });
 
-  body.innerHTML = itemsHTML;
-  if (totalDisplay) totalDisplay.textContent = `₹${totalAmount.toLocaleString('en-IN')}`;
-  if (checkoutBtn) checkoutBtn.disabled = false;
+  listEl.innerHTML = itemsHtml;
 
-  // Drawer stepper listeners
-  body.querySelectorAll('.btn-drawer-inc').forEach(btn => {
+  // Bind drawer stepper events
+  listEl.querySelectorAll('.btn-drawer-inc').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const id = e.currentTarget.getAttribute('data-id');
-      const cur = cart.get(id) || 0;
-      cart.set(id, cur + 1);
-      updateCartBadges();
-      updateCardActionSlot(id);
+      const pid = e.currentTarget.getAttribute('data-product-id');
+      const current = cart.get(pid) || 0;
+      cart.set(pid, current + 1);
+      updateCartUI();
+      updateCardActionSlot(pid);
       renderCartDrawerBody();
     });
   });
 
-  body.querySelectorAll('.btn-drawer-dec').forEach(btn => {
+  listEl.querySelectorAll('.btn-drawer-dec').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const id = e.currentTarget.getAttribute('data-id');
-      const cur = cart.get(id) || 0;
-      if (cur <= 1) {
-        cart.delete(id);
+      const pid = e.currentTarget.getAttribute('data-product-id');
+      const current = cart.get(pid) || 0;
+      if (current <= 1) {
+        cart.delete(pid);
       } else {
-        cart.set(id, cur - 1);
+        cart.set(pid, current - 1);
       }
-      updateCartBadges();
-      updateCardActionSlot(id);
+      updateCartUI();
+      updateCardActionSlot(pid);
       renderCartDrawerBody();
     });
   });
 }
 
 /**
- * Initializes drawer opening and closing behavior.
+ * Formats WhatsApp message and triggers the WhatsApp checkout flow.
  */
-function initCartDrawer() {
+function handleWhatsAppCheckout() {
+  if (cart.size === 0) {
+    DukaanUI.showToast('Your shopping list is empty.', 'warning');
+    return;
+  }
+
+  const settings = DukaanStorage.getSettings();
+  const activeUser = DukaanStorage.getActiveUser() || { name: 'Customer', phone: '' };
+  const rawStorePhone = (settings.whatsappNumber || '919800000000').replace(/\D/g, '');
+  const deliveryNotes = (document.getElementById('drawer-notes-input') || {}).value || '';
+
+  const orderItems = [];
+  let totalSum = 0;
+
+  cart.forEach((qty, pid) => {
+    const p = allProducts.find(item => item.id === pid);
+    if (p) {
+      const lineSubtotal = p.price * qty;
+      totalSum += lineSubtotal;
+      orderItems.push({
+        id: p.id,
+        name: p.name,
+        unit: p.unit,
+        price: p.price,
+        quantity: qty,
+        subtotal: lineSubtotal
+      });
+    }
+  });
+
+  const orderId = `ORD-${Date.now().toString().slice(-4)}`;
+  const now = new Date().toISOString();
+
+  // Clean structured WhatsApp message
+  let message = `*Order from ${settings.shopName || 'Store'}*\n`;
+  message += `--------------------------\n`;
+  orderItems.forEach(i => {
+    message += `• ${i.quantity} x ${i.name} (${i.unit || ''}) - ₹${i.subtotal}\n`;
+  });
+  message += `--------------------------\n`;
+  message += `*Estimated Total:* ₹${totalSum}\n`;
+  message += `*Customer:* ${activeUser.name || 'Customer'}${activeUser.phone ? ` (+91 ${activeUser.phone})` : ''}\n`;
+  if (deliveryNotes.trim()) {
+    message += `*Note:* ${deliveryNotes.trim()}\n`;
+  }
+  message += `--------------------------\n`;
+  message += `Order ID: #${orderId}`;
+
+  // Save order to central storage as Pending
+  const newOrder = {
+    id: orderId,
+    createdAt: now,
+    customerName: activeUser.name || 'Customer',
+    customerPhone: activeUser.phone || '',
+    items: orderItems,
+    estimatedTotal: totalSum,
+    status: 'Pending',
+    statusHistory: [
+      { status: 'Pending', at: now }
+    ],
+    notes: deliveryNotes.trim()
+  };
+
+  DukaanStorage.addOrder(newOrder);
+
+  // Close Cart drawer
+  closeCartDrawer();
+
+  // Open WhatsApp in new window
+  const waUrl = `https://wa.me/${rawStorePhone}?text=${encodeURIComponent(message)}`;
+  window.open(waUrl, '_blank', 'noopener,noreferrer');
+
+  // Display Success Bottom Sheet
+  showOrderSuccessSheet(newOrder);
+
+  // Reset cart
+  cart.clear();
+  updateCartUI();
+  allProducts.forEach(p => updateCardActionSlot(p.id));
+  renderCartDrawerBody();
+}
+
+/**
+ * Displays the Success Sheet with order summary and "Track order" link.
+ */
+function showOrderSuccessSheet(order) {
+  const backdrop = document.getElementById('order-success-modal-backdrop');
+  const sheet = document.getElementById('order-success-sheet');
+  if (!sheet || !backdrop) return;
+
+  document.getElementById('success-sheet-order-id').textContent = '#' + order.id;
+  document.getElementById('success-sheet-items-count').textContent = `${(order.items || []).length} items`;
+  document.getElementById('success-sheet-total').textContent = `₹${order.estimatedTotal}`;
+
+  const trackBtn = document.getElementById('btn-success-track-order');
+  if (trackBtn) {
+    trackBtn.href = `track.html?id=${encodeURIComponent(order.id)}`;
+  }
+
+  backdrop.style.display = 'block';
+  sheet.style.display = 'block';
+
+  const closeBtn = document.getElementById('btn-success-close');
+  if (closeBtn) {
+    closeBtn.onclick = () => {
+      backdrop.style.display = 'none';
+      sheet.style.display = 'none';
+    };
+  }
+}
+
+/**
+ * Opens and closes the Slide-In Cart Drawer.
+ */
+function openCartDrawer() {
   const drawer = document.getElementById('cart-drawer');
   const backdrop = document.getElementById('cart-drawer-backdrop');
-  const openBtn = document.getElementById('btn-open-cart-drawer');
-  const closeBtn = document.getElementById('btn-close-cart-drawer');
-
-  function openDrawer() {
-    renderCartDrawerBody();
+  if (drawer && backdrop) {
     drawer.classList.add('open');
+    backdrop.classList.add('active');
     drawer.setAttribute('aria-hidden', 'false');
-    backdrop.classList.add('open');
-    openBtn.setAttribute('aria-expanded', 'true');
-    closeBtn.focus();
+    renderCartDrawerBody();
   }
+}
 
-  function closeDrawer() {
+function closeCartDrawer() {
+  const drawer = document.getElementById('cart-drawer');
+  const backdrop = document.getElementById('cart-drawer-backdrop');
+  if (drawer && backdrop) {
     drawer.classList.remove('open');
+    backdrop.classList.remove('active');
     drawer.setAttribute('aria-hidden', 'true');
-    backdrop.classList.remove('open');
-    openBtn.setAttribute('aria-expanded', 'false');
-    openBtn.focus();
-  }
-
-  if (openBtn) openBtn.addEventListener('click', openDrawer);
-  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
-  if (backdrop) backdrop.addEventListener('click', closeDrawer);
-
-  // Close on ESC key
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && drawer.classList.contains('open')) {
-      closeDrawer();
-    }
-  });
-
-  // WhatsApp Order Handoff
-  const checkoutBtn = document.getElementById('btn-checkout-whatsapp');
-  if (checkoutBtn) {
-    checkoutBtn.addEventListener('click', () => {
-      if (cart.size === 0) return;
-
-      const settings = DukaanStorage.getSettings();
-      const activeUser = DukaanStorage.getActiveUser() || { name: 'Customer', phone: '' };
-      const notes = (document.getElementById('drawer-notes-input').value || '').trim();
-
-      const itemsSnapshot = [];
-      let grandTotal = 0;
-
-      for (const [prodId, qty] of cart.entries()) {
-        const prod = allProducts.find(p => p.id === prodId);
-        if (prod) {
-          const subtotal = prod.price * qty;
-          grandTotal += subtotal;
-          itemsSnapshot.push({
-            name: prod.name,
-            unit: prod.unit,
-            price: prod.price,
-            quantity: qty,
-            subtotal: subtotal
-          });
-        }
-      }
-
-      // Record order snapshot in local storage so shopkeeper can view it
-      const newOrder = {
-        id: `ORD-${Date.now().toString().slice(-4)}`,
-        customerName: activeUser.name || 'Customer',
-        customerPhone: activeUser.phone || '',
-        items: itemsSnapshot,
-        estimatedTotal: grandTotal,
-        status: 'Pending',
-        notes: notes
-      };
-      DukaanStorage.addOrder(newOrder);
-
-      // Build structured WhatsApp message
-      let msg = `*New Order - DukaanLite*\n`;
-      msg += `Store: ${settings.shopName || 'Sharma General Store'}\n`;
-      msg += `Customer: ${activeUser.name || 'Customer'}\n`;
-      if (activeUser.phone) msg += `Phone: +91 ${activeUser.phone}\n`;
-      msg += `--------------------------\n`;
-      itemsSnapshot.forEach(item => {
-        msg += `• ${item.quantity}x ${item.name} (${item.unit}) - ₹${item.subtotal}\n`;
-      });
-      msg += `--------------------------\n`;
-      msg += `*Estimated Total: ₹${grandTotal}*\n`;
-      if (notes) msg += `Note: ${notes}\n`;
-      msg += `\n_Generated via DukaanLite_`;
-
-      const targetPhone = settings.whatsappNumber || '919876543210';
-      const waUrl = `https://wa.me/${targetPhone}?text=${encodeURIComponent(msg)}`;
-
-      DukaanUI.showToast('Preparing WhatsApp order...', 'success');
-      setTimeout(() => {
-        window.open(waUrl, '_blank', 'noopener,noreferrer');
-      }, 350);
-    });
   }
 }
 
 /**
- * Initializes catalog page events.
+ * Initializes My Orders Drawer.
+ */
+function initMyOrdersDrawer() {
+  const drawer = document.getElementById('my-orders-drawer');
+  const backdrop = document.getElementById('my-orders-backdrop');
+  const listEl = document.getElementById('my-orders-list');
+  const openBtn = document.getElementById('btn-header-my-orders');
+  const closeBtn = document.getElementById('btn-close-my-orders');
+
+  function open() {
+    const orders = DukaanStorage.getMyOrders();
+    if (!orders.length) {
+      listEl.innerHTML = `
+        <div class="text-center py-4 text-dl-muted small">
+          <i class="bi bi-clock-history d-block mb-1" style="font-size: 1.5rem;"></i>
+          No orders placed yet in this browser.
+        </div>
+      `;
+    } else {
+      listEl.innerHTML = orders.map(o => `
+        <div class="dl-parchi-card p-3 mb-2" style="font-size: 0.85rem;">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <strong>#${DukaanUI.escapeHtml(o.id)}</strong>
+            <span class="dl-status-badge status-${o.status.toLowerCase()}">${DukaanUI.escapeHtml(o.status)}</span>
+          </div>
+          <div class="text-dl-muted small mb-2">
+            ${new Date(o.createdAt).toLocaleDateString([], { month: 'short', day: 'numeric' })} &bull; ${(o.items || []).length} items &bull; <strong class="dl-tabular-nums">₹${o.estimatedTotal}</strong>
+          </div>
+          <a href="track.html?id=${encodeURIComponent(o.id)}" class="btn-dl-secondary w-100 text-center py-1" style="font-size: 0.82rem; min-height: 32px; display: block; text-decoration: none;">
+            Track this order &rarr;
+          </a>
+        </div>
+      `).join('');
+    }
+    drawer.classList.add('open');
+    backdrop.classList.add('active');
+  }
+
+  function close() {
+    drawer.classList.remove('open');
+    backdrop.classList.remove('active');
+  }
+
+  if (openBtn) openBtn.addEventListener('click', open);
+  if (closeBtn) closeBtn.addEventListener('click', close);
+  if (backdrop) backdrop.addEventListener('click', close);
+}
+
+/**
+ * Master initialization function called on DOMContentLoaded.
  */
 function initCatalog() {
-  const container = document.getElementById('catalog-grid');
-  renderSkeletons(container, 8);
-
   initStoreInfo();
-  initCartDrawer();
 
-  setTimeout(() => {
-    allProducts = DukaanStorage.getProducts();
-    renderProductList();
+  // Load products from Storage Layer
+  allProducts = DukaanStorage.getProducts();
 
-    // Category pills click
-    document.querySelectorAll('.dl-category-pill').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const cat = e.currentTarget.getAttribute('data-category');
-        setActiveCategory(cat);
-      });
+  // Render products
+  renderProductList();
+  updateCartUI();
+
+  // Wire search input
+  const searchInput = document.getElementById('catalog-search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim().toLowerCase();
+      renderProductList();
     });
+  }
 
-    // Real-time search
-    const searchInput = document.getElementById('catalog-search-input');
-    if (searchInput) {
-      searchInput.addEventListener('input', (e) => {
-        searchQuery = e.target.value.trim().toLowerCase();
-        renderProductList();
-      });
-    }
-  }, 220);
+  // Wire sort select
+  const sortSelect = document.getElementById('catalog-sort-select');
+  if (sortSelect) {
+    sortSelect.addEventListener('change', (e) => {
+      currentSort = e.target.value;
+      renderProductList();
+    });
+  }
+
+  // Wire Category Rail pills
+  document.querySelectorAll('.dl-category-pill').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      document.querySelectorAll('.dl-category-pill').forEach(b => b.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+      activeCategory = e.currentTarget.getAttribute('data-category');
+      renderProductList();
+    });
+  });
+
+  // Wire Cart Drawer open/close
+  const openCartBtn = document.getElementById('btn-open-cart-drawer');
+  const closeCartBtn = document.getElementById('btn-close-cart-drawer');
+  const cartBackdrop = document.getElementById('cart-drawer-backdrop');
+  const mobileViewCartBtn = document.getElementById('btn-mobile-view-cart');
+
+  if (openCartBtn) openCartBtn.addEventListener('click', openCartDrawer);
+  if (closeCartBtn) closeCartBtn.addEventListener('click', closeCartDrawer);
+  if (cartBackdrop) cartBackdrop.addEventListener('click', closeCartDrawer);
+  if (mobileViewCartBtn) mobileViewCartBtn.addEventListener('click', openCartDrawer);
+
+  // Wire WhatsApp checkout
+  const checkoutBtn = document.getElementById('btn-checkout-whatsapp');
+  if (checkoutBtn) checkoutBtn.addEventListener('click', handleWhatsAppCheckout);
+
+  // Wire My Orders drawer
+  initMyOrdersDrawer();
 }
 
 document.addEventListener('DOMContentLoaded', () => {

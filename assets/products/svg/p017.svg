@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="100%" height="100%">
+  <defs>
+    <linearGradient id="g-mint" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F2F9F5"/>
+      <stop offset="100%" stop-color="#E2F1E8"/>
+    </linearGradient>
+    <linearGradient id="g-green" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0E8A45"/>
+      <stop offset="100%" stop-color="#086A35"/>
+    </linearGradient>
+    <linearGradient id="g-gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F7BC56"/>
+      <stop offset="100%" stop-color="#F4AA2E"/>
+    </linearGradient>
+    <linearGradient id="g-forest" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#185934"/>
+      <stop offset="100%" stop-color="#124729"/>
+    </linearGradient>
+    <filter id="drop-shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#124729" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <!-- Product Illustration Shape -->
+  <g filter="url(#drop-shadow)">
+    
+    <!-- Carton Box 3D perspective -->
+    <rect x="42" y="32" width="76" height="96" rx="6" fill="url(#g-mint)" stroke="#124729" stroke-width="2.5"/>
+    <!-- Top Flap detail -->
+    <line x1="42" y1="46" x2="118" y2="46" stroke="#DDE3E0" stroke-width="1.5"/>
+    <rect x="52" y="56" width="56" height="46" rx="4" fill="#FFFFFF" stroke="#DDE3E0" stroke-width="1"/>
+    <circle cx="80" cy="79" r="15" fill="#431407"/>
+    <circle cx="80" cy="79" r="6" fill="#F4AA2E"/>
+    
+  </g>
+
+  <!-- Typography Banner Label -->
+  <g transform="translate(80, 114)">
+    <rect x="-48" y="-10" width="96" height="20" rx="4" fill="#FFFFFF" stroke="#DDE3E0" stroke-width="1"/>
+    <text x="0" y="3" font-family="'Inter', system-ui, sans-serif" font-size="8.5" font-weight="700" fill="#124729" text-anchor="middle" letter-spacing="0.5">MILK CHOCOLATE</text>
+  </g>
+</svg>

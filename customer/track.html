@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Order – DukaanLite</title>
+
+  <!-- Pre-paint theme: runs before CSS to prevent flash -->
+  <script>
+    (function(){
+      var t=localStorage.getItem('dukaanlite_theme_v1');
+      var d=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme',t||(d?'dark':'light'));
+    })();
+  </script>
+
+  <!-- Favicons and Brand Icons -->
+  <link rel="icon" href="../assets/brand/favicon.ico" sizes="any">
+  <link rel="icon" href="../assets/brand/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../assets/brand/icon-180.png">
+  <meta name="theme-color" content="#124729">
+
+  <!-- Inter Font from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- DukaanLite Shared & Customer Styles -->
+  <link rel="stylesheet" href="../css/shared.css">
+  <link rel="stylesheet" href="../css/customer.css">
+</head>
+<body>
+  <!-- Accessibility Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to order tracking</a>
+
+  <!-- Top App Header -->
+  <header class="dl-app-header">
+    <div class="container">
+      <div class="dl-app-header-inner">
+        <!-- Brand Link -->
+        <a class="dl-brand-link" href="catalog.html" aria-label="Back to Catalog">
+          <img src="../assets/brand/logo-full.png" alt="DukaanLite" class="dl-logo-full" width="134" height="36"
+               data-logo-light="../assets/brand/logo-full.png" data-logo-dark="../assets/brand/logo-full-dark.png">
+          <img src="../assets/brand/logo-mark.png" alt="DukaanLite" class="dl-logo-mark" width="32" height="36"
+               data-logo-light="../assets/brand/logo-mark.png" data-logo-dark="../assets/brand/logo-mark-dark.png">
+        </a>
+
+        <!-- Right Header Items -->
+        <div class="d-flex align-items-center gap-2 gap-sm-3">
+          <a href="catalog.html" class="dl-nav-link d-inline-flex align-items-center gap-1">
+            <i class="bi bi-arrow-left"></i>
+            <span class="d-none d-sm-inline">Catalog</span>
+          </a>
+
+          <!-- My Orders Button -->
+          <button type="button" class="dl-nav-link btn-my-orders-trigger" id="btn-open-my-orders" aria-label="View previous orders">
+            <i class="bi bi-clock-history"></i>
+            <span class="d-none d-sm-inline">My orders</span>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button type="button" class="dl-theme-toggle" aria-label="Switch to dark mode">
+            <span class="dl-theme-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </span>
+          </button>
+
+          <!-- For Shopkeepers Link -->
+          <a href="../shopkeeper/dashboard.html" class="dl-nav-subtle" title="Shopkeeper Portal">
+            <i class="bi bi-shop"></i>
+            <span class="d-none d-sm-inline">For shopkeepers</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Tracking Container -->
+  <main id="main-content" class="container py-4" style="max-width: 680px;">
+    <!-- Loading state -->
+    <div id="tracking-loading" class="text-center py-5">
+      <div class="spinner-border text-success" role="status" style="width: 2.5rem; height: 2.5rem;">
+        <span class="visually-hidden">Loading order details...</span>
+      </div>
+      <p class="text-dl-muted small mt-2">Loading order details...</p>
+    </div>
+
+    <!-- Error state -->
+    <div id="tracking-error" class="dl-parchi-card p-4 text-center" style="display: none;">
+      <i class="bi bi-exclamation-circle text-danger" style="font-size: 2.5rem;"></i>
+      <h2 class="dl-heading mt-2 mb-1" style="font-size: 1.25rem;">Order Not Found</h2>
+      <p class="text-dl-muted small mb-3">We couldn't locate this order in your browser storage.</p>
+      <a href="catalog.html" class="btn-dl-primary d-inline-flex align-items-center gap-1 mx-auto">
+        <i class="bi bi-arrow-left"></i>
+        <span>Return to Catalog</span>
+      </a>
+    </div>
+
+    <!-- Tracking Content Area -->
+    <div id="tracking-content" style="display: none;">
+      <!-- Order Header Card -->
+      <div class="dl-track-header-card mb-3">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+          <div>
+            <span class="text-dl-muted small">ORDER ID</span>
+            <h1 class="dl-heading mb-0 dl-tabular-nums" id="track-order-id" style="font-size: 1.35rem;">#ORD-0000</h1>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <!-- Pulsing Live indicator -->
+            <span class="dl-live-pill" title="Live cross-tab sync active">
+              <span class="dl-live-dot" aria-hidden="true"></span>
+              <span>Live</span>
+            </span>
+            <span class="dl-status-badge" id="track-status-badge">Pending</span>
+          </div>
+        </div>
+
+        <div class="text-dl-muted small mt-2" id="track-order-date">
+          Placed today
+        </div>
+      </div>
+
+      <!-- Cancelled Stopped State Alert (if cancelled) -->
+      <div id="track-cancelled-alert" class="dl-track-alert-cancelled mb-3" style="display: none;">
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-x-circle-fill text-danger" style="font-size: 1.2rem;"></i>
+          <strong>Order Cancelled</strong>
+        </div>
+        <p class="small text-dl-muted mb-0 mt-1" id="track-cancelled-text">
+          This order was cancelled by the store.
+        </p>
+      </div>
+
+      <!-- Large Status Stepper Card -->
+      <div class="dl-parchi-card p-3 p-sm-4 mb-3">
+        <h2 class="dl-heading mb-3" style="font-size: 1.05rem;">Live Order Status</h2>
+
+        <div class="dl-stepper" id="order-stepper">
+          <!-- Step 1: Pending -->
+          <div class="dl-step" data-step="Pending" id="step-pending">
+            <div class="dl-step-marker">
+              <i class="bi bi-hourglass-split"></i>
+            </div>
+            <div class="dl-step-content">
+              <div class="d-flex justify-content-between align-items-baseline">
+                <span class="dl-step-title">Order Placed</span>
+                <span class="dl-step-time dl-tabular-nums" id="time-pending"></span>
+              </div>
+              <p class="dl-step-sub">Waiting for the shop to confirm.</p>
+            </div>
+          </div>
+
+          <!-- Step 2: Confirmed -->
+          <div class="dl-step" data-step="Confirmed" id="step-confirmed">
+            <div class="dl-step-marker">
+              <i class="bi bi-check2"></i>
+            </div>
+            <div class="dl-step-content">
+              <div class="d-flex justify-content-between align-items-baseline">
+                <span class="dl-step-title">Order Confirmed</span>
+                <span class="dl-step-time dl-tabular-nums" id="time-confirmed"></span>
+              </div>
+              <p class="dl-step-sub">Shopkeeper confirmed your order.</p>
+            </div>
+          </div>
+
+          <!-- Step 3: Preparing -->
+          <div class="dl-step" data-step="Preparing" id="step-preparing">
+            <div class="dl-step-marker">
+              <i class="bi bi-box-seam"></i>
+            </div>
+            <div class="dl-step-content">
+              <div class="d-flex justify-content-between align-items-baseline">
+                <span class="dl-step-title">Packing Items</span>
+                <span class="dl-step-time dl-tabular-nums" id="time-preparing"></span>
+              </div>
+              <p class="dl-step-sub">Items being packed at the counter.</p>
+            </div>
+          </div>
+
+          <!-- Step 4: Ready -->
+          <div class="dl-step" data-step="Ready" id="step-ready">
+            <div class="dl-step-marker">
+              <i class="bi bi-bag-check"></i>
+            </div>
+            <div class="dl-step-content">
+              <div class="d-flex justify-content-between align-items-baseline">
+                <span class="dl-step-title">Order Ready</span>
+                <span class="dl-step-time dl-tabular-nums" id="time-ready"></span>
+              </div>
+              <p class="dl-step-sub">Ready for pickup or out for delivery.</p>
+            </div>
+          </div>
+
+          <!-- Step 5: Completed -->
+          <div class="dl-step" data-step="Completed" id="step-completed">
+            <div class="dl-step-marker">
+              <i class="bi bi-check-circle-fill"></i>
+            </div>
+            <div class="dl-step-content">
+              <div class="d-flex justify-content-between align-items-baseline">
+                <span class="dl-step-title">Completed</span>
+                <span class="dl-step-time dl-tabular-nums" id="time-completed"></span>
+              </div>
+              <p class="dl-step-sub">Delivered &amp; completed.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Parchi Slip: Order Receipt Summary -->
+      <div class="dl-parchi-card p-3 p-sm-4 mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-1">
+          <span class="dl-parchi-shop font-weight-bold" id="parchi-shop-name">Sharma General Store</span>
+          <span class="dl-parchi-badge">Order Receipt</span>
+        </div>
+        <div class="text-dl-muted small mb-2" id="parchi-customer-line">Customer: Priya S.</div>
+
+        <!-- Dashed tear line with cutouts -->
+        <div class="dl-parchi-tear"></div>
+
+        <!-- Item list -->
+        <div class="dl-parchi-items" id="parchi-items-list">
+          <!-- Populated dynamically -->
+        </div>
+
+        <!-- Note if present -->
+        <div id="parchi-note-wrap" class="mt-2 text-dl-muted small fst-italic" style="display: none;">
+          Note: <span id="parchi-note-text"></span>
+        </div>
+
+        <!-- Dashed tear line with cutouts -->
+        <div class="dl-parchi-tear"></div>
+
+        <!-- Totals -->
+        <div class="d-flex justify-content-between align-items-baseline">
+          <span class="font-weight-bold">Estimated Total</span>
+          <span class="dl-heading mb-0 dl-tabular-nums" id="parchi-total-amount" style="font-size: 1.25rem; color: var(--dl-forest);">₹0</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="d-flex flex-column gap-2 mb-4">
+        <!-- Message Shop on WhatsApp -->
+        <a href="#" target="_blank" rel="noopener noreferrer" id="btn-message-shop" class="btn-dl-primary w-100 text-center py-2" style="min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none;">
+          <i class="bi bi-whatsapp"></i>
+          <span>Message the shop on WhatsApp</span>
+        </a>
+
+        <a href="catalog.html" class="btn-dl-secondary w-100 text-center py-2" style="min-height: 44px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">
+          Back to Catalog
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- My Orders Drawer -->
+  <div class="dl-drawer-backdrop" id="my-orders-backdrop" aria-hidden="true"></div>
+  <aside class="dl-cart-drawer" id="my-orders-drawer" role="dialog" aria-modal="true" aria-labelledby="my-orders-title" aria-hidden="true">
+    <div class="dl-drawer-header">
+      <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-clock-history"></i>
+        <h2 class="dl-drawer-title" id="my-orders-title">My Orders</h2>
+      </div>
+      <button type="button" class="dl-drawer-close-btn" id="btn-close-my-orders" aria-label="Close orders drawer">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="dl-drawer-body p-3" id="my-orders-list">
+      <!-- Populated dynamically -->
+    </div>
+  </aside>
+
+  <!-- Quiet Footer Disclosure -->
+  <footer class="mt-auto py-3 text-center text-dl-muted small border-top" style="background: var(--dl-surface);">
+    <div class="container">
+      <span>Data stays in this browser.</span>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/shared/theme.js"></script>
+  <script src="../js/shared/live.js"></script>
+  <script src="../js/shared/storage.js"></script>
+  <script src="../js/shared/ui.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.DukaanTheme) DukaanTheme.init();
+
+      const params = new URLSearchParams(window.location.search);
+      const orderId = params.get('id');
+
+      const loadingEl = document.getElementById('tracking-loading');
+      const errorEl = document.getElementById('tracking-error');
+      const contentEl = document.getElementById('tracking-content');
+
+      let currentOrder = null;
+
+      function formatTime(isoString) {
+        if (!isoString) return '';
+        try {
+          const d = new Date(isoString);
+          return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        } catch (e) {
+          return '';
+        }
+      }
+
+      function renderOrder(order) {
+        if (!order) {
+          loadingEl.style.display = 'none';
+          errorEl.style.display = 'block';
+          contentEl.style.display = 'none';
+          return;
+        }
+
+        currentOrder = order;
+        loadingEl.style.display = 'none';
+        errorEl.style.display = 'none';
+        contentEl.style.display = 'block';
+
+        // Header info
+        document.getElementById('track-order-id').textContent = '#' + order.id;
+        document.getElementById('track-order-date').textContent = 'Placed on ' + new Date(order.createdAt).toLocaleDateString([], {
+          month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+        });
+
+        // Status badge
+        const badge = document.getElementById('track-status-badge');
+        badge.textContent = order.status;
+        badge.className = 'dl-status-badge status-' + order.status.toLowerCase();
+
+        // Check for Cancelled
+        const cancelledAlert = document.getElementById('track-cancelled-alert');
+        if (order.status === 'Cancelled') {
+          cancelledAlert.style.display = 'block';
+          document.querySelectorAll('.dl-step').forEach(s => s.classList.add('dl-step-dimmed'));
+        } else {
+          cancelledAlert.style.display = 'none';
+          document.querySelectorAll('.dl-step').forEach(s => s.classList.remove('dl-step-dimmed'));
+        }
+
+        // Stepper progression
+        const stepOrder = ['Pending', 'Confirmed', 'Preparing', 'Ready', 'Completed'];
+        const currentIdx = stepOrder.indexOf(order.status);
+
+        // Build statusHistory lookup map
+        const historyMap = {};
+        if (order.statusHistory && Array.isArray(order.statusHistory)) {
+          order.statusHistory.forEach(h => {
+            historyMap[h.status] = h.at;
+          });
+        }
+        if (!historyMap['Pending']) {
+          historyMap['Pending'] = order.createdAt;
+        }
+
+        stepOrder.forEach((stepName, idx) => {
+          const stepEl = document.getElementById('step-' + stepName.toLowerCase());
+          const timeEl = document.getElementById('time-' + stepName.toLowerCase());
+
+          if (historyMap[stepName]) {
+            timeEl.textContent = formatTime(historyMap[stepName]);
+          } else {
+            timeEl.textContent = '';
+          }
+
+          if (order.status === 'Cancelled') {
+            stepEl.classList.remove('completed', 'active');
+            if (historyMap[stepName]) {
+              stepEl.classList.add('completed');
+            }
+          } else {
+            if (idx < currentIdx) {
+              stepEl.className = 'dl-step completed';
+            } else if (idx === currentIdx) {
+              stepEl.className = 'dl-step active';
+            } else {
+              stepEl.className = 'dl-step';
+            }
+          }
+        });
+
+        // Parchi Receipt Details
+        const settings = DukaanStorage.getSettings();
+        document.getElementById('parchi-shop-name').textContent = settings.shopName || 'Sharma General Store';
+        document.getElementById('parchi-customer-line').textContent = 'Customer: ' + (order.customerName || 'Guest');
+
+        const itemsList = document.getElementById('parchi-items-list');
+        itemsList.innerHTML = (order.items || []).map(i => `
+          <div class="d-flex justify-content-between align-items-center py-1 border-bottom border-light">
+            <div>
+              <span class="font-weight-medium">${DukaanUI.escapeHtml(i.name)}</span>
+              <span class="text-dl-muted small"> &times; ${i.quantity}</span>
+              ${i.unit ? `<div class="text-dl-muted" style="font-size: 0.72rem;">${DukaanUI.escapeHtml(i.unit)}</div>` : ''}
+            </div>
+            <span class="dl-tabular-nums font-weight-medium">₹${i.subtotal || (i.price * i.quantity)}</span>
+          </div>
+        `).join('');
+
+        if (order.notes) {
+          document.getElementById('parchi-note-wrap').style.display = 'block';
+          document.getElementById('parchi-note-text').textContent = order.notes;
+        } else {
+          document.getElementById('parchi-note-wrap').style.display = 'none';
+        }
+
+        document.getElementById('parchi-total-amount').textContent = '₹' + (order.estimatedTotal || 0);
+
+        // Prefill WhatsApp link
+        const rawPhone = (settings.whatsappNumber || '919800000000').replace(/\D/g, '');
+        const messageText = encodeURIComponent(`Hi ${settings.shopName || 'Store'}, regarding my order #${order.id}`);
+        document.getElementById('btn-message-shop').href = `https://wa.me/${rawPhone}?text=${messageText}`;
+      }
+
+      // Initial fetch
+      if (!orderId) {
+        // Fallback: check my orders
+        const myOrders = DukaanStorage.getMyOrders();
+        if (myOrders.length) {
+          renderOrder(myOrders[0]);
+        } else {
+          renderOrder(null);
+        }
+      } else {
+        const order = DukaanStorage.getOrderById(orderId);
+        renderOrder(order);
+      }
+
+      // Live updates subscriber: when order status changes in another tab
+      if (window.DukaanLive) {
+        DukaanLive.subscribe('ORDER_UPDATED', (data) => {
+          if (data && currentOrder && data.orderId === currentOrder.id) {
+            const updated = DukaanStorage.getOrderById(currentOrder.id);
+            if (updated) {
+              renderOrder(updated);
+              DukaanUI.showToast(`Order status updated to "${updated.status}"`, 'info');
+            }
+          }
+        });
+      }
+
+      // Storage event listener fallback
+      window.addEventListener('storage', (e) => {
+        if (e.key === DukaanStorage.STORAGE_KEYS.ORDERS && currentOrder) {
+          const updated = DukaanStorage.getOrderById(currentOrder.id);
+          if (updated && updated.status !== currentOrder.status) {
+            renderOrder(updated);
+            DukaanUI.showToast(`Order status updated to "${updated.status}"`, 'info');
+          }
+        }
+      });
+
+      // My Orders Drawer
+      const ordersDrawer = document.getElementById('my-orders-drawer');
+      const ordersBackdrop = document.getElementById('my-orders-backdrop');
+      const ordersList = document.getElementById('my-orders-list');
+
+      function openMyOrders() {
+        const myOrders = DukaanStorage.getMyOrders();
+        if (!myOrders.length) {
+          ordersList.innerHTML = `
+            <div class="text-center py-4">
+              <i class="bi bi-inbox text-dl-muted" style="font-size: 2rem;"></i>
+              <p class="text-dl-muted small mt-2">No orders placed yet in this browser.</p>
+            </div>
+          `;
+        } else {
+          ordersList.innerHTML = myOrders.map(o => `
+            <div class="dl-parchi-card p-3 mb-2" style="font-size: 0.85rem;">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <strong>#${DukaanUI.escapeHtml(o.id)}</strong>
+                <span class="dl-status-badge status-${o.status.toLowerCase()}">${DukaanUI.escapeHtml(o.status)}</span>
+              </div>
+              <div class="text-dl-muted small mb-2">
+                ${new Date(o.createdAt).toLocaleDateString([], { month: 'short', day: 'numeric' })} &bull; ${(o.items || []).length} items &bull; <strong class="dl-tabular-nums">₹${o.estimatedTotal}</strong>
+              </div>
+              <a href="track.html?id=${encodeURIComponent(o.id)}" class="btn-dl-secondary w-100 text-center py-1" style="font-size: 0.82rem; min-height: 32px; display: block; text-decoration: none;">
+                Track this order &rarr;
+              </a>
+            </div>
+          `).join('');
+        }
+        ordersDrawer.classList.add('open');
+        ordersBackdrop.classList.add('active');
+      }
+
+      function closeMyOrders() {
+        ordersDrawer.classList.remove('open');
+        ordersBackdrop.classList.remove('active');
+      }
+
+      document.getElementById('btn-open-my-orders').addEventListener('click', openMyOrders);
+      document.getElementById('btn-close-my-orders').addEventListener('click', closeMyOrders);
+      ordersBackdrop.addEventListener('click', closeMyOrders);
+    });
+  </script>
+</body>
+</html>

@@ -20,7 +20,8 @@ const STORAGE_KEYS = {
   ORDERS: 'dukaanlite_orders_v1',
   SETTINGS: 'dukaanlite_settings_v1',
   ACTIVE_USER: 'dukaanlite_active_user_v1',
-  THEME: 'dukaanlite_theme_v1'
+  THEME: 'dukaanlite_theme_v1',
+  MY_ORDERS: 'dukaanlite_my_orders_v1'
 };
 
 // 2. Default Store Settings
@@ -47,6 +48,13 @@ const DEFAULT_ORDERS = [
     ],
     estimatedTotal: 84,
     status: "Completed",
+    statusHistory: [
+      { status: "Pending", at: new Date(Date.now() - 3600000 * 2).toISOString() },
+      { status: "Confirmed", at: new Date(Date.now() - 3600000 * 1.8).toISOString() },
+      { status: "Preparing", at: new Date(Date.now() - 3600000 * 1.5).toISOString() },
+      { status: "Ready", at: new Date(Date.now() - 3600000 * 1.2).toISOString() },
+      { status: "Completed", at: new Date(Date.now() - 3600000 * 1.0).toISOString() }
+    ],
     notes: "Leave with security guard."
   },
   {
@@ -61,6 +69,11 @@ const DEFAULT_ORDERS = [
     ],
     estimatedTotal: 413,
     status: "Preparing",
+    statusHistory: [
+      { status: "Pending", at: new Date(Date.now() - 3600000 * 5).toISOString() },
+      { status: "Confirmed", at: new Date(Date.now() - 3600000 * 4.6).toISOString() },
+      { status: "Preparing", at: new Date(Date.now() - 3600000 * 4.1).toISOString() }
+    ],
     notes: "Pack in a cardboard box."
   },
   {
@@ -74,6 +87,10 @@ const DEFAULT_ORDERS = [
     ],
     estimatedTotal: 330,
     status: "Confirmed",
+    statusHistory: [
+      { status: "Pending", at: new Date(Date.now() - 3600000 * 8).toISOString() },
+      { status: "Confirmed", at: new Date(Date.now() - 3600000 * 7.5).toISOString() }
+    ],
     notes: "Call on arrival."
   },
   {
@@ -87,6 +104,9 @@ const DEFAULT_ORDERS = [
     ],
     estimatedTotal: 422,
     status: "Pending",
+    statusHistory: [
+      { status: "Pending", at: new Date(Date.now() - 3600000 * 12).toISOString() }
+    ],
     notes: "Doorbell broken – please knock."
   }
 ];
@@ -94,45 +114,45 @@ const DEFAULT_ORDERS = [
 // 4. Brand-free seed products (fictional generic names, existing product photos)
 const DEFAULT_PRODUCTS = [
   // Dairy & Breakfast
-  { id: "P001", name: "Toned Milk", category: "Dairy & Breakfast", price: 27, unit: "500 ml pouch", image: "assets/products/amul_milk.jpg", available: true, stockQuantity: 30, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P002", name: "Pure Ghee", category: "Dairy & Breakfast", price: 310, unit: "500 ml glass jar", image: "assets/products/amul_ghee.jpg", available: true, stockQuantity: 14, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P001", name: "Toned Milk", category: "Dairy & Breakfast", price: 27, unit: "500 ml pouch", image: "assets/products/svg/p001.svg", available: true, stockQuantity: 30, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P002", name: "Pure Ghee", category: "Dairy & Breakfast", price: 310, unit: "500 ml glass jar", image: "assets/products/svg/p002.svg", available: true, stockQuantity: 14, updatedAt: "2026-11-23T08:00:00.000Z" },
 
   // Staples & Grains
-  { id: "P003", name: "Chakki Atta", category: "Staples & Grains", price: 245, unit: "5 kg bag", image: "assets/products/aashirvaad_atta.jpg", available: true, stockQuantity: 20, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P004", name: "Basmati Rice", category: "Staples & Grains", price: 85, unit: "500 g pouch", image: "assets/products/india_gate_rice.jpg", available: true, stockQuantity: 18, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P005", name: "Toor Dal", category: "Staples & Grains", price: 175, unit: "1 kg pouch", image: "assets/products/tata_toor_dal.jpg", available: true, stockQuantity: 15, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P006", name: "Refined Sunflower Oil", category: "Staples & Grains", price: 140, unit: "1 L pouch", image: "assets/products/fortune_sunflower_oil.jpg", available: true, stockQuantity: 16, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P007", name: "Kachi Ghani Mustard Oil", category: "Staples & Grains", price: 155, unit: "1 L bottle", image: "assets/products/fortune_mustard_oil.jpg", available: true, stockQuantity: 12, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P008", name: "Iodised Salt", category: "Staples & Grains", price: 28, unit: "1 kg pack", image: "assets/products/tata_salt.jpg", available: true, stockQuantity: 40, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P003", name: "Chakki Atta", category: "Staples & Grains", price: 245, unit: "5 kg bag", image: "assets/products/svg/p003.svg", available: true, stockQuantity: 20, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P004", name: "Basmati Rice", category: "Staples & Grains", price: 85, unit: "500 g pouch", image: "assets/products/svg/p004.svg", available: true, stockQuantity: 18, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P005", name: "Toor Dal", category: "Staples & Grains", price: 175, unit: "1 kg pouch", image: "assets/products/svg/p005.svg", available: true, stockQuantity: 15, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P006", name: "Refined Sunflower Oil", category: "Staples & Grains", price: 140, unit: "1 L pouch", image: "assets/products/svg/p006.svg", available: true, stockQuantity: 16, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P007", name: "Kachi Ghani Mustard Oil", category: "Staples & Grains", price: 155, unit: "1 L bottle", image: "assets/products/svg/p007.svg", available: true, stockQuantity: 12, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P008", name: "Iodised Salt", category: "Staples & Grains", price: 28, unit: "1 kg pack", image: "assets/products/svg/p008.svg", available: true, stockQuantity: 40, updatedAt: "2026-11-23T08:00:00.000Z" },
 
   // Spices & Masalas
-  { id: "P009", name: "Garam Masala", category: "Spices & Masalas", price: 82, unit: "100 g box", image: "assets/products/everest_garam_masala.jpg", available: true, stockQuantity: 22, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P010", name: "Red Chilli Powder", category: "Spices & Masalas", price: 95, unit: "100 g box", image: "assets/products/mdh_deggi_mirch.jpg", available: true, stockQuantity: 15, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P009", name: "Garam Masala", category: "Spices & Masalas", price: 82, unit: "100 g box", image: "assets/products/svg/p009.svg", available: true, stockQuantity: 22, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P010", name: "Red Chilli Powder", category: "Spices & Masalas", price: 95, unit: "100 g box", image: "assets/products/svg/p010.svg", available: true, stockQuantity: 15, updatedAt: "2026-11-23T08:00:00.000Z" },
 
   // Snacks & Biscuits
-  { id: "P011", name: "Instant Noodles", category: "Snacks & Biscuits", price: 56, unit: "Pack of 4 (280 g)", image: "assets/products/maggi_noodles.jpg", available: true, stockQuantity: 25, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P012", name: "Glucose Biscuits", category: "Snacks & Biscuits", price: 15, unit: "100 g pack", image: "assets/products/parle_g_gold.jpg", available: true, stockQuantity: 45, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P013", name: "Cashew Cookies", category: "Snacks & Biscuits", price: 35, unit: "200 g pack", image: "assets/products/good_day_cookies.jpg", available: true, stockQuantity: 20, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P014", name: "Chocolate Cream Biscuits", category: "Snacks & Biscuits", price: 30, unit: "150 g pack", image: "assets/products/britannia_bourbon.jpg", available: true, stockQuantity: 24, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P015", name: "Vanilla Cream Biscuits", category: "Snacks & Biscuits", price: 40, unit: "120 g pack", image: "assets/products/oreo_biscuits.jpg", available: true, stockQuantity: 18, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P016", name: "Bhujia Sev", category: "Snacks & Biscuits", price: 90, unit: "400 g pouch", image: "assets/products/haldirams_bhujia.jpg", available: true, stockQuantity: 15, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P017", name: "Milk Chocolate Bar", category: "Snacks & Biscuits", price: 90, unit: "130 g bar", image: "assets/products/dairy_milk_chocolate.jpg", available: true, stockQuantity: 16, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P018", name: "Crisp Wafer Bar", category: "Snacks & Biscuits", price: 25, unit: "41.5 g bar", image: "assets/products/kitkat_chocolate.jpg", available: false, stockQuantity: 0, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P011", name: "Instant Noodles", category: "Snacks & Biscuits", price: 56, unit: "Pack of 4 (280 g)", image: "assets/products/svg/p011.svg", available: true, stockQuantity: 25, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P012", name: "Glucose Biscuits", category: "Snacks & Biscuits", price: 15, unit: "100 g pack", image: "assets/products/svg/p012.svg", available: true, stockQuantity: 45, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P013", name: "Cashew Cookies", category: "Snacks & Biscuits", price: 35, unit: "200 g pack", image: "assets/products/svg/p013.svg", available: true, stockQuantity: 20, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P014", name: "Chocolate Cream Biscuits", category: "Snacks & Biscuits", price: 30, unit: "150 g pack", image: "assets/products/svg/p014.svg", available: true, stockQuantity: 24, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P015", name: "Vanilla Cream Biscuits", category: "Snacks & Biscuits", price: 40, unit: "120 g pack", image: "assets/products/svg/p015.svg", available: true, stockQuantity: 18, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P016", name: "Bhujia Sev", category: "Snacks & Biscuits", price: 90, unit: "400 g pouch", image: "assets/products/svg/p016.svg", available: true, stockQuantity: 15, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P017", name: "Milk Chocolate Bar", category: "Snacks & Biscuits", price: 90, unit: "130 g bar", image: "assets/products/svg/p017.svg", available: true, stockQuantity: 16, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P018", name: "Crisp Wafer Bar", category: "Snacks & Biscuits", price: 25, unit: "41.5 g bar", image: "assets/products/svg/p018.svg", available: false, stockQuantity: 0, updatedAt: "2026-11-23T08:00:00.000Z" },
 
   // Beverages
-  { id: "P019", name: "Masala Chai Dust", category: "Beverages", price: 260, unit: "500 g pouch", image: "assets/products/tata_tea_gold.jpg", available: true, stockQuantity: 14, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P020", name: "CTC Leaf Tea", category: "Beverages", price: 240, unit: "500 g carton", image: "assets/products/red_label_tea.jpg", available: true, stockQuantity: 12, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P021", name: "Instant Coffee", category: "Beverages", price: 390, unit: "200 g jar", image: "assets/products/nescafe_coffee.jpg", available: true, stockQuantity: 10, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P019", name: "Masala Chai Dust", category: "Beverages", price: 260, unit: "500 g pouch", image: "assets/products/svg/p019.svg", available: true, stockQuantity: 14, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P020", name: "CTC Leaf Tea", category: "Beverages", price: 240, unit: "500 g carton", image: "assets/products/svg/p020.svg", available: true, stockQuantity: 12, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P021", name: "Instant Coffee", category: "Beverages", price: 390, unit: "200 g jar", image: "assets/products/svg/p021.svg", available: true, stockQuantity: 10, updatedAt: "2026-11-23T08:00:00.000Z" },
 
   // Personal & Home Care
-  { id: "P022", name: "Antiseptic Bath Soap", category: "Personal & Home Care", price: 140, unit: "Pack of 4 (440 g)", image: "assets/products/dettol_soap.jpg", available: true, stockQuantity: 20, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P023", name: "Toothpaste", category: "Personal & Home Care", price: 65, unit: "150 g tube", image: "assets/products/colgate_toothpaste.jpg", available: true, stockQuantity: 25, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P024", name: "Nourishing Shampoo", category: "Personal & Home Care", price: 190, unit: "340 ml bottle", image: "assets/products/clinic_plus_shampoo.jpg", available: true, stockQuantity: 11, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P025", name: "Detergent Powder", category: "Personal & Home Care", price: 145, unit: "1 kg carton", image: "assets/products/surf_excel.jpg", available: true, stockQuantity: 14, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P026", name: "Dishwash Bar", category: "Personal & Home Care", price: 25, unit: "300 g bar", image: "assets/products/vim_bar.jpg", available: true, stockQuantity: 35, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P022", name: "Antiseptic Bath Soap", category: "Personal & Home Care", price: 140, unit: "Pack of 4 (440 g)", image: "assets/products/svg/p022.svg", available: true, stockQuantity: 20, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P023", name: "Toothpaste", category: "Personal & Home Care", price: 65, unit: "150 g tube", image: "assets/products/svg/p023.svg", available: true, stockQuantity: 25, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P024", name: "Nourishing Shampoo", category: "Personal & Home Care", price: 190, unit: "340 ml bottle", image: "assets/products/svg/p024.svg", available: true, stockQuantity: 11, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P025", name: "Detergent Powder", category: "Personal & Home Care", price: 145, unit: "1 kg carton", image: "assets/products/svg/p025.svg", available: true, stockQuantity: 14, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P026", name: "Dishwash Bar", category: "Personal & Home Care", price: 25, unit: "300 g bar", image: "assets/products/svg/p026.svg", available: true, stockQuantity: 35, updatedAt: "2026-11-23T08:00:00.000Z" },
 
   // Fresh Fruits
-  { id: "P027", name: "Alphonso Mangoes", category: "Fresh Fruits", price: 600, unit: "1 Dozen Box (12 pcs)", image: "assets/products/alphonso_mangoes.jpg", available: false, stockQuantity: 0, updatedAt: "2026-11-23T08:00:00.000Z" }
+  { id: "P027", name: "Alphonso Mangoes", category: "Fresh Fruits", price: 600, unit: "1 Dozen Box (12 pcs)", image: "assets/products/svg/p027.svg", available: false, stockQuantity: 0, updatedAt: "2026-11-23T08:00:00.000Z" }
 ];
 
 /**
@@ -168,7 +188,7 @@ function safeSetItem(key, value) {
 // Public Storage API Functions
 // ============================================================================
 
-const SEED_VERSION_KEY = 'dukaanlite_catalog_seed_v3';
+const SEED_VERSION_KEY = 'dukaanlite_catalog_seed_v4';
 
 /**
  * Retrieve all products.
@@ -234,8 +254,26 @@ function addOrder(order) {
   order.createdAt = order.createdAt || new Date().toISOString();
   order.status = order.status || "Pending";
   
+  if (!order.statusHistory || !Array.isArray(order.statusHistory) || order.statusHistory.length === 0) {
+    order.statusHistory = [{ status: order.status, at: order.createdAt }];
+  }
+  
   orders.unshift(order); // Add newest order to the top
-  return safeSetItem(STORAGE_KEYS.ORDERS, orders);
+  const saved = safeSetItem(STORAGE_KEYS.ORDERS, orders);
+  
+  if (saved) {
+    // Record in local my-orders list
+    const myOrders = safeGetItem(STORAGE_KEYS.MY_ORDERS, []);
+    if (!myOrders.includes(order.id)) {
+      myOrders.unshift(order.id);
+      safeSetItem(STORAGE_KEYS.MY_ORDERS, myOrders);
+    }
+    // Broadcast live event across open tabs
+    if (typeof window !== 'undefined' && window.DukaanLive) {
+      window.DukaanLive.broadcast('ORDER_CREATED', order);
+    }
+  }
+  return saved;
 }
 
 /**
@@ -259,9 +297,51 @@ function updateOrderStatus(orderId, newStatus) {
     return false;
   }
 
+  const now = new Date().toISOString();
   orders[orderIndex].status = newStatus;
-  orders[orderIndex].updatedAt = new Date().toISOString();
-  return safeSetItem(STORAGE_KEYS.ORDERS, orders);
+  orders[orderIndex].updatedAt = now;
+  
+  if (!orders[orderIndex].statusHistory) {
+    orders[orderIndex].statusHistory = [
+      { status: "Pending", at: orders[orderIndex].createdAt || now }
+    ];
+  }
+  orders[orderIndex].statusHistory.push({ status: newStatus, at: now });
+  
+  const saved = safeSetItem(STORAGE_KEYS.ORDERS, orders);
+  if (saved && typeof window !== 'undefined' && window.DukaanLive) {
+    window.DukaanLive.broadcast('ORDER_UPDATED', {
+      orderId,
+      newStatus,
+      order: orders[orderIndex]
+    });
+  }
+  return saved;
+}
+
+/**
+ * Retrieve a single order by ID.
+ * @param {string} orderId
+ * @returns {Object|null}
+ */
+function getOrderById(orderId) {
+  if (!orderId) return null;
+  const orders = getOrders();
+  return orders.find(o => o.id === orderId) || null;
+}
+
+/**
+ * Retrieve list of orders created in this browser session.
+ * @returns {Array<Object>}
+ */
+function getMyOrders() {
+  const myIds = safeGetItem(STORAGE_KEYS.MY_ORDERS, []);
+  const allOrders = getOrders();
+  if (!myIds.length) {
+    // If no explicit local orders saved yet, return recent orders for demonstration
+    return allOrders.slice(0, 3);
+  }
+  return allOrders.filter(o => myIds.includes(o.id));
 }
 
 /**
@@ -354,6 +434,8 @@ if (typeof window !== 'undefined') {
     getSettings,
     saveSettings,
     resetDemoData,
+    getOrderById,
+    getMyOrders,
     getActiveUser,
     setActiveUser,
     clearActiveUser,

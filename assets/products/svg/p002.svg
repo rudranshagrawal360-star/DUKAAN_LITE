@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="100%" height="100%">
+  <defs>
+    <linearGradient id="g-mint" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F2F9F5"/>
+      <stop offset="100%" stop-color="#E2F1E8"/>
+    </linearGradient>
+    <linearGradient id="g-green" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0E8A45"/>
+      <stop offset="100%" stop-color="#086A35"/>
+    </linearGradient>
+    <linearGradient id="g-gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F7BC56"/>
+      <stop offset="100%" stop-color="#F4AA2E"/>
+    </linearGradient>
+    <linearGradient id="g-forest" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#185934"/>
+      <stop offset="100%" stop-color="#124729"/>
+    </linearGradient>
+    <filter id="drop-shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#124729" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <!-- Product Illustration Shape -->
+  <g filter="url(#drop-shadow)">
+    
+    <!-- Jar Lid -->
+    <rect x="52" y="24" width="56" height="14" rx="3" fill="url(#g-gold)" stroke="#124729" stroke-width="2.5"/>
+    <line x1="56" y1="28" x2="104" y2="28" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+    <!-- Jar Neck -->
+    <rect x="58" y="38" width="44" height="6" fill="#DDE3E0" stroke="#124729" stroke-width="2"/>
+    <!-- Jar Glass Body -->
+    <rect x="44" y="44" width="72" height="84" rx="14" fill="url(#g-mint)" stroke="#124729" stroke-width="2.5"/>
+    <!-- Jar Label Band -->
+    <rect x="45.5" y="60" width="69" height="42" fill="#FFFFFF" stroke="#DDE3E0" stroke-width="1"/>
+    <circle cx="80" cy="80" r="14" fill="#F4AA2E"/>
+    <circle cx="80" cy="80" r="10" fill="#FFFFFF"/>
+    <circle cx="80" cy="80" r="3" fill="#124729"/>
+    
+  </g>
+
+  <!-- Typography Banner Label -->
+  <g transform="translate(80, 114)">
+    <rect x="-48" y="-10" width="96" height="20" rx="4" fill="#FFFFFF" stroke="#DDE3E0" stroke-width="1"/>
+    <text x="0" y="3" font-family="'Inter', system-ui, sans-serif" font-size="8.5" font-weight="700" fill="#124729" text-anchor="middle" letter-spacing="0.5">PURE GHEE</text>
+  </g>
+</svg>

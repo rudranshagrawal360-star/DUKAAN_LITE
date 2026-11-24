@@ -58,6 +58,7 @@ async function capture() {
     { name: 'index_customer', url: 'http://localhost:8085/index.html' },
     { name: 'index_shopkeeper', url: 'http://localhost:8085/index.html?role=shopkeeper' },
     { name: 'customer_catalog', url: 'http://localhost:8085/customer/catalog.html' },
+    { name: 'customer_track', url: 'http://localhost:8085/customer/track.html?id=ORD-1001' },
     { name: 'shopkeeper_dashboard', url: 'http://localhost:8085/shopkeeper/dashboard.html' },
     { name: 'shopkeeper_products', url: 'http://localhost:8085/shopkeeper/products.html' },
     { name: 'shopkeeper_orders', url: 'http://localhost:8085/shopkeeper/orders.html' },

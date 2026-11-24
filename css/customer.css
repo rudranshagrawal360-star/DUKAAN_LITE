@@ -727,3 +727,619 @@
 [data-theme="dark"] .dl-nav-subtle {
   color: var(--dl-muted);
 }
+
+/* ==========================================================================
+   STAGE B: CUSTOMER ENHANCEMENTS (Awning, Parchi, Stepper, Mobile Bar)
+   ========================================================================== */
+
+/* 1. Compact Shop Strip with Scalloped Awning Edge */
+.dl-shop-strip {
+  background: var(--dl-surface);
+  border-bottom: 2px solid var(--dl-border);
+  padding: 0.85rem 0 0.95rem 0;
+  position: relative;
+  z-index: 10;
+}
+
+.dl-shop-strip::after {
+  content: "";
+  position: absolute;
+  bottom: -9px;
+  left: 0;
+  right: 0;
+  height: 9px;
+  background-image: radial-gradient(circle at 8px 0, var(--dl-surface) 8px, transparent 8.5px);
+  background-size: 16px 9px;
+  background-repeat: repeat-x;
+  filter: drop-shadow(0 2px 1px rgba(18, 71, 41, 0.08));
+  pointer-events: none;
+  z-index: 10;
+}
+
+.dl-shop-strip-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.dl-shop-strip-main {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.dl-shop-strip-title {
+  font-family: var(--dl-font);
+  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+  font-weight: 700;
+  color: var(--dl-ink);
+  letter-spacing: -0.02em;
+  margin-bottom: 0;
+}
+
+.dl-shop-strip-dot {
+  color: var(--dl-muted);
+  font-size: 0.85rem;
+}
+
+.dl-shop-strip-hours {
+  color: var(--dl-muted);
+  font-size: 0.82rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* 2. Categories Rail: Sticky with scroll-snap and fading edges */
+.dl-categories-rail-outer {
+  position: sticky;
+  top: 57px;
+  z-index: 1005;
+  background: var(--dl-bg);
+  border-bottom: 1px solid var(--dl-border);
+  padding: 0.5rem 0;
+  mask-image: linear-gradient(to right, transparent 0, black 16px, black calc(100% - 16px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, black 16px, black calc(100% - 16px), transparent 100%);
+}
+
+.dl-categories-rail {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0 1rem;
+}
+
+.dl-categories-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.dl-category-pill {
+  scroll-snap-align: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--dl-radius-pill);
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+  background-color: var(--dl-surface);
+  border: 1px solid var(--dl-border);
+  color: var(--dl-muted);
+  cursor: pointer;
+  transition: all var(--dl-transition-fast);
+  flex-shrink: 0;
+}
+
+.dl-category-pill:hover {
+  border-color: var(--dl-primary);
+  color: var(--dl-primary);
+}
+
+.dl-category-pill.active {
+  background-color: var(--dl-primary);
+  border-color: var(--dl-primary);
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+/* 3. Catalog Filter & Sort Bar */
+.dl-catalog-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  min-height: 36px;
+}
+
+.dl-sort-select {
+  height: 36px;
+  font-size: 0.82rem;
+  padding: 0.25rem 2rem 0.25rem 0.75rem;
+  border: 1px solid var(--dl-border);
+  border-radius: var(--dl-radius-btn);
+  background-color: var(--dl-surface);
+  color: var(--dl-text);
+  font-family: var(--dl-font);
+  cursor: pointer;
+}
+
+/* 4. Product Card Enhancements (Contain, 1:1, Price left, ADD right) */
+.dl-product-card-image-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: var(--dl-surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 1rem;
+  border-bottom: 1px solid var(--dl-border);
+}
+
+.dl-product-svg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform var(--dl-dur-base) var(--dl-ease-out);
+}
+
+.dl-product-card:hover .dl-product-svg-img {
+  transform: scale(1.06);
+}
+
+.dl-product-card.unavailable .dl-product-svg-img {
+  filter: grayscale(1);
+  opacity: 0.45;
+}
+
+.dl-product-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.dl-product-price {
+  font-family: var(--dl-font);
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-weight: 700;
+  color: var(--dl-forest);
+}
+
+.dl-btn-add {
+  background-color: var(--dl-surface);
+  color: var(--dl-primary);
+  border: 1.5px solid var(--dl-primary);
+  border-radius: var(--dl-radius-btn);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.85rem;
+  min-height: 36px;
+  cursor: pointer;
+  transition: all var(--dl-transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dl-btn-add:hover {
+  background-color: var(--dl-primary);
+  color: #FFFFFF;
+}
+
+.dl-card-stepper-compact {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--dl-mint);
+  border: 1.5px solid var(--dl-primary);
+  border-radius: var(--dl-radius-btn);
+  height: 36px;
+  padding: 2px;
+}
+
+.dl-stepper-btn-compact {
+  background: var(--dl-primary);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.dl-stepper-btn-compact:hover {
+  background-color: var(--dl-primary-hover);
+}
+
+.dl-stepper-qty-compact {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--dl-forest);
+  min-width: 24px;
+  text-align: center;
+}
+
+/* 5. Parchi Slip Pattern (White slip, dashed tear line, side notches) */
+.dl-parchi-card {
+  background: var(--dl-surface);
+  border: 1px solid var(--dl-border);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--dl-shadow-card);
+}
+
+.dl-parchi-shop {
+  font-family: var(--dl-font);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--dl-ink);
+}
+
+.dl-parchi-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--dl-muted);
+  background: var(--dl-surface-2);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+.dl-parchi-tear {
+  position: relative;
+  border-top: 1.5px dashed var(--dl-border);
+  margin: 0.85rem -1rem;
+}
+
+.dl-parchi-tear::before,
+.dl-parchi-tear::after {
+  content: "";
+  position: absolute;
+  top: -8px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: var(--dl-bg);
+  border: 1px solid var(--dl-border);
+}
+
+.dl-parchi-tear::before {
+  left: -8px;
+}
+
+.dl-parchi-tear::after {
+  right: -8px;
+}
+
+/* 6. Sticky Phone Cart Bar */
+.dl-mobile-cart-bar {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 1040;
+  background-color: var(--dl-primary);
+  color: #FFFFFF;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 8px 24px rgba(10, 125, 62, 0.35);
+  animation: dlSlideUp 250ms var(--dl-ease-out) forwards;
+}
+
+.dl-mobile-cart-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.dl-mobile-cart-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #FFFFFF;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+}
+
+.dl-mobile-cart-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+@media (min-width: 768px) {
+  .dl-mobile-cart-bar {
+    display: none !important;
+  }
+}
+
+/* 7. Live Tracking Stepper */
+.dl-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background-color: rgba(10, 125, 62, 0.12);
+  color: var(--dl-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--dl-radius-pill);
+}
+
+.dl-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--dl-primary);
+  display: inline-block;
+  animation: dlPulse 1.8s infinite;
+}
+
+@keyframes dlPulse {
+  0% { transform: scale(0.9); opacity: 0.8; box-shadow: 0 0 0 0 rgba(10, 125, 62, 0.7); }
+  70% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 0 5px rgba(10, 125, 62, 0); }
+  100% { transform: scale(0.9); opacity: 0.8; box-shadow: 0 0 0 0 rgba(10, 125, 62, 0); }
+}
+
+.dl-stepper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.dl-step {
+  display: flex;
+  gap: 1rem;
+  position: relative;
+  padding-bottom: 1.5rem;
+}
+
+.dl-step:last-child {
+  padding-bottom: 0;
+}
+
+/* Connecting progress line */
+.dl-step::before {
+  content: "";
+  position: absolute;
+  left: 17px;
+  top: 36px;
+  bottom: 0;
+  width: 2px;
+  background-color: var(--dl-border);
+  transition: background-color var(--dl-dur-base) var(--dl-ease-out);
+}
+
+.dl-step:last-child::before {
+  display: none;
+}
+
+.dl-step.completed::before {
+  background-color: var(--dl-primary);
+}
+
+.dl-step-marker {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--dl-surface);
+  border: 2px solid var(--dl-border);
+  color: var(--dl-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 2;
+  transition: all var(--dl-dur-base) var(--dl-ease-out);
+}
+
+.dl-step.active .dl-step-marker {
+  background-color: var(--dl-primary);
+  border-color: var(--dl-primary);
+  color: #FFFFFF;
+  box-shadow: 0 0 0 4px var(--dl-mint);
+}
+
+.dl-step.completed .dl-step-marker {
+  background-color: var(--dl-forest);
+  border-color: var(--dl-forest);
+  color: #FFFFFF;
+}
+
+.dl-step-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.dl-step-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--dl-ink);
+}
+
+.dl-step-time {
+  font-size: 0.78rem;
+  color: var(--dl-muted);
+}
+
+.dl-step-sub {
+  font-size: 0.82rem;
+  color: var(--dl-muted);
+  margin-top: 0.15rem;
+  margin-bottom: 0;
+}
+
+.dl-step-dimmed {
+  opacity: 0.45;
+}
+
+.dl-track-alert-cancelled {
+  background-color: var(--dl-error-bg);
+  border: 1px solid var(--dl-error);
+  border-radius: var(--dl-radius-btn);
+  padding: 0.75rem 1rem;
+  color: var(--dl-error-text);
+}
+
+/* 8. Success Bottom Sheet */
+.dl-bottom-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1060;
+  background: var(--dl-surface);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 1.5rem 1.25rem;
+  box-shadow: 0 -8px 32px rgba(18, 71, 41, 0.2);
+  max-width: 540px;
+  margin: 0 auto;
+  animation: dlSlideUp 250ms var(--dl-ease-out) forwards;
+}
+
+.dl-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 71, 41, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: 1050;
+}
+
+/* Dark mode tweaks for Stage B components */
+[data-theme="dark"] .dl-shop-strip::after {
+  background-image: radial-gradient(circle at 8px 0, var(--dl-surface) 8px, transparent 8.5px);
+  filter: none;
+}
+
+[data-theme="dark"] .dl-live-pill {
+  background-color: rgba(61, 190, 117, 0.15);
+  color: var(--dl-primary);
+}
+
+[data-theme="dark"] .dl-live-dot {
+  background-color: var(--dl-primary);
+}
+
+[data-theme="dark"] .dl-step.completed .dl-step-marker {
+  background-color: var(--dl-primary);
+  border-color: var(--dl-primary);
+  color: #0B1F14;
+}
+
+[data-theme="dark"] .dl-step.active .dl-step-marker {
+  background-color: var(--dl-surface);
+  border-color: var(--dl-primary);
+  color: var(--dl-primary);
+  box-shadow: 0 0 0 4px #152B1E;
+}
+
+[data-theme="dark"] .dl-mobile-cart-bar {
+  background-color: var(--dl-primary);
+  color: #0B1F14;
+}
+
+[data-theme="dark"] .dl-mobile-cart-btn {
+  background: rgba(0, 0, 0, 0.15);
+  border-color: rgba(0, 0, 0, 0.25);
+  color: #0B1F14;
+}
+
+/* Header Search Wrap (Full width on phones) */
+.dl-header-search-wrap {
+  position: relative;
+  flex: 1 1 240px;
+  max-width: 360px;
+}
+
+.dl-header-search-wrap .dl-search-input {
+  width: 100%;
+  height: 38px;
+  padding-left: 2.25rem;
+  padding-right: 0.75rem;
+  font-size: 0.85rem;
+  border-radius: var(--dl-radius-btn);
+  border: 1px solid var(--dl-border);
+  background: var(--dl-surface-2);
+  color: var(--dl-text);
+  font-family: var(--dl-font);
+}
+
+.dl-header-search-wrap .dl-search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--dl-muted);
+  pointer-events: none;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .dl-header-search-wrap {
+    order: 3;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 0.35rem;
+  }
+}
+
+.btn-my-orders-trigger {
+  background: none;
+  border: none;
+  color: var(--dl-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--dl-radius-btn);
+  transition: all var(--dl-transition-fast);
+}
+
+.btn-my-orders-trigger:hover {
+  background-color: var(--dl-mint);
+  color: var(--dl-primary);
+}
+
+[data-theme="dark"] .btn-my-orders-trigger:hover {
+  background-color: var(--dl-surface-2);
+  color: var(--dl-primary);
+}
+
+.dl-track-header-card {
+  background: var(--dl-surface);
+  border: 1px solid var(--dl-border);
+  border-radius: var(--dl-radius-card);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--dl-shadow-card);
+}
