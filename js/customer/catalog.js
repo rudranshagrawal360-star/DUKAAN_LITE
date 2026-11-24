@@ -629,4 +629,7 @@ function initCatalog() {
   }, 220);
 }
 
-document.addEventListener('DOMContentLoaded', initCatalog);
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.DukaanTheme) DukaanTheme.init();
+  initCatalog();
+});

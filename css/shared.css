@@ -1,29 +1,29 @@
 /* ==========================================================================
    DukaanLite - Core Design System & Tokens
-   Matching Design Reference (docs/design/login-reference.png)
    ========================================================================== */
 
-/* 1. Design Tokens (CSS Variables) */
+/* 1. Design Tokens — Light Mode (default) */
 :root {
   /* Surface & Background */
   --dl-bg: #F8F7F2;
   --dl-surface: #FFFFFF;
+  --dl-surface-2: #F3F5F3;
   --dl-track: #E2E6E9;
   --dl-mint: #E9F6ED;
   --dl-border: #DDE3E0;
 
   /* Greens & Brand Accents */
-  --dl-forest: #124729;           /* Brand deep green: panels, sidebar, headings */
+  --dl-forest: #124729;           /* Brand deep green: panels, sidebar */
   --dl-primary: #0A7D3E;          /* Primary buttons and green text (~5:1 on white) */
   --dl-primary-hover: #086A35;
   --dl-leaf: #229D52;             /* Decor and icons only, never small text */
-  --dl-marigold: #F4AA2E;         /* Accent, always with dark text on top */
-  --dl-primary-bright: #229D52;   /* Icons, dots, decor only, never small text */
-  --dl-ink: #124729;              /* Headings, high-contrast brand deep green */
+  --dl-marigold: #F4AA2E;         /* Accent: always with dark text on top */
+  --dl-primary-bright: #229D52;   /* Icons, dots, decor only */
+  --dl-ink: #124729;              /* Headings */
 
-  /* Neutral Typography (WCAG AA Compliant) */
-  --dl-text: #26332C;             /* Body text, crisp readability */
-  --dl-muted: #5B665F;            /* Muted labels (Passes 4.5:1 on white & #F8F7F2) */
+  /* Neutral Typography (WCAG AA) */
+  --dl-text: #26332C;
+  --dl-muted: #5B665F;            /* 4.5:1 on white and #F8F7F2 */
   --dl-placeholder: #76827A;
 
   /* Feedback */
@@ -43,13 +43,14 @@
   --dl-radius-input: 10px;
   --dl-radius-pill: 999px;
 
-  /* Elevation */
-  --dl-shadow-card: 0 10px 30px rgba(18, 71, 41, 0.07), 0 2px 8px rgba(18, 71, 41, 0.04);
+  /* Elevation — one level only, for floating elements */
+  --dl-shadow-card: 0 2px 8px rgba(18, 71, 41, 0.08), 0 1px 3px rgba(18, 71, 41, 0.04);
+  --dl-shadow-float: 0 8px 24px rgba(18, 71, 41, 0.14), 0 2px 8px rgba(18, 71, 41, 0.07);
   --dl-shadow-hover: 0 14px 36px rgba(18, 71, 41, 0.12), 0 4px 12px rgba(18, 71, 41, 0.06);
-  --dl-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.04);
-  --dl-shadow-drawer: -4px 0 24px rgba(18, 71, 41, 0.15);
+  --dl-shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.06);
+  --dl-shadow-drawer: -4px 0 32px rgba(18, 71, 41, 0.18);
 
-  /* Spacing Scale (4 / 8 / 12 / 16 / 24 / 32) */
+  /* Spacing Scale: 4 / 8 / 12 / 16 / 24 / 32 */
   --dl-space-1: 4px;
   --dl-space-2: 8px;
   --dl-space-3: 12px;
@@ -57,12 +58,77 @@
   --dl-space-5: 24px;
   --dl-space-6: 32px;
 
-  /* Minimum Accessible Touch Target */
+  /* Touch targets */
   --touch-target-min: 44px;
 
-  /* Transitions */
+  /* Motion tokens */
+  --dl-ease-out: cubic-bezier(.2,.8,.2,1);
+  --dl-dur-fast: 150ms;
+  --dl-dur-base: 250ms;
+  --dl-dur-slow: 400ms;
   --dl-transition-fast: 150ms ease;
-  --dl-transition-normal: 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  --dl-transition-normal: 250ms var(--dl-ease-out);
+}
+
+/* 1b. Dark Mode Tokens */
+[data-theme="dark"] {
+  --dl-bg: #0F1A14;
+  --dl-surface: #16241C;
+  --dl-surface-2: #1D2E24;
+  --dl-track: #2A3D32;
+  --dl-mint: #152B1E;
+  --dl-border: #2A3D32;
+
+  --dl-forest: #0B2417;
+  --dl-primary: #3DBE75;          /* 4.5:1 on #16241C */
+  --dl-primary-hover: #35A866;
+  --dl-leaf: #3DBE75;
+  --dl-marigold: #F4AA2E;         /* unchanged — always with dark text */
+  --dl-primary-bright: #3DBE75;
+  --dl-ink: #E8EFE9;
+
+  --dl-text: #E8EFE9;
+  --dl-muted: #9DB0A3;            /* 4.5:1 on #16241C */
+  --dl-placeholder: #6E8A7A;
+
+  --dl-warning: #FFC107;
+  --dl-warning-bg: #2B2000;
+  --dl-warning-text: #FFD766;
+  --dl-error: #F87171;
+  --dl-error-bg: #2A0A0A;
+  --dl-error-text: #FCA5A5;
+
+  --dl-shadow-card: 0 2px 8px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2);
+  --dl-shadow-float: 0 8px 24px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.25);
+  --dl-shadow-hover: 0 14px 36px rgba(0,0,0,0.45), 0 4px 12px rgba(0,0,0,0.3);
+  --dl-shadow-sm: 0 1px 4px rgba(0,0,0,0.25);
+  --dl-shadow-drawer: -4px 0 32px rgba(0,0,0,0.5);
+}
+
+/* 1c. Cross-page view transitions (progressive enhancement) */
+@view-transition { navigation: auto; }
+
+::view-transition-old(root) {
+  animation: dl-fade-slide-out var(--dl-dur-base) var(--dl-ease-out);
+}
+::view-transition-new(root) {
+  animation: dl-fade-slide-in var(--dl-dur-base) var(--dl-ease-out);
+}
+
+@keyframes dl-fade-slide-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-8px); }
+}
+@keyframes dl-fade-slide-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Colour crossfade on theme toggle */
+html {
+  transition:
+    background-color var(--dl-dur-base) var(--dl-ease-out),
+    color var(--dl-dur-base) var(--dl-ease-out);
 }
 
 /* 2. Global Resets & Base Styles */
@@ -138,6 +204,19 @@ h1, h2, h3, h4, h5, h6, .dl-heading {
   letter-spacing: -0.02em;
   line-height: 1.25;
   margin-top: 0;
+}
+
+/* Tabular numbers for all monetary amounts, item counts, badges, and times */
+.dl-tabular-nums,
+.dl-product-price,
+.dl-cart-total-val,
+.dl-cart-badge,
+.dl-stat-number,
+.dl-stat-val,
+.dl-price,
+.dl-badge,
+.dl-count {
+  font-variant-numeric: tabular-nums;
 }
 
 h1 { font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight: 700; }
@@ -645,4 +724,92 @@ input:focus:not(:focus-visible) {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
+/* 14. Dark Mode Component Overrides */
+[data-theme="dark"] .skeleton-box {
+  background: linear-gradient(90deg, #1D2E24 25%, #243528 50%, #1D2E24 75%);
+  background-size: 200% 100%;
+}
+
+[data-theme="dark"] .dukaan-toast {
+  background: var(--dl-surface);
+  border-color: var(--dl-border);
+  color: var(--dl-text);
+}
+
+[data-theme="dark"] .status-pending   { background: #2B1A00; color: #FFD766; }
+[data-theme="dark"] .status-confirmed { background: #001A2B; color: #7ECAFF; }
+[data-theme="dark"] .status-preparing { background: #1A0B2E; color: #C4A5FF; }
+[data-theme="dark"] .status-ready     { background: #0A2B14; color: #6EE7A0; }
+[data-theme="dark"] .status-completed { background: #0A2B14; color: #3DBE75; }
+[data-theme="dark"] .status-cancelled { background: #2A0A0A; color: #FCA5A5; }
+
+[data-theme="dark"] .dl-badge-in-stock {
+  background-color: #0A2B14;
+  color: #3DBE75;
+}
+[data-theme="dark"] .dl-badge-out-stock {
+  background-color: var(--dl-error-bg);
+  color: var(--dl-error-text);
+}
+
+[data-theme="dark"] .dl-category-pill {
+  background-color: var(--dl-surface-2);
+  border-color: var(--dl-border);
+  color: var(--dl-muted);
+}
+[data-theme="dark"] .dl-category-pill:hover {
+  background-color: #152B1E;
+  border-color: var(--dl-primary);
+  color: var(--dl-primary);
+}
+[data-theme="dark"] .dl-category-pill.active {
+  background-color: var(--dl-primary);
+  border-color: var(--dl-primary);
+  color: #0B1F14;
+}
+
+[data-theme="dark"] .dl-mint-strip {
+  background-color: var(--dl-mint);
+  border-color: rgba(61, 190, 117, 0.15);
+}
+
+[data-theme="dark"] .dl-segmented-toggle {
+  background: var(--dl-surface-2);
+  border-color: var(--dl-border);
+}
+[data-theme="dark"] .dl-toggle-btn.active {
+  background-color: var(--dl-surface);
+  color: var(--dl-primary);
+}
+
+/* 15. Theme Toggle Button */
+.dl-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--dl-border);
+  border-radius: var(--dl-radius-btn);
+  background: transparent;
+  color: var(--dl-muted);
+  cursor: pointer;
+  transition: background-color var(--dl-dur-fast) ease, color var(--dl-dur-fast) ease, border-color var(--dl-dur-fast) ease;
+  flex-shrink: 0;
+}
+.dl-theme-toggle:hover {
+  background-color: var(--dl-mint);
+  color: var(--dl-primary);
+  border-color: var(--dl-primary);
+}
+[data-theme="dark"] .dl-theme-toggle:hover {
+  background-color: var(--dl-surface-2);
+  color: var(--dl-primary);
+  border-color: var(--dl-primary);
 }

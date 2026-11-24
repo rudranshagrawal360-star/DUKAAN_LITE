@@ -1,7 +1,7 @@
 [
   {
     "id": "P001",
-    "name": "Amul Taaza Toned Fresh Milk",
+    "name": "Toned Milk",
     "category": "Dairy & Breakfast",
     "price": 27,
     "unit": "500 ml pouch",
@@ -12,7 +12,7 @@
   },
   {
     "id": "P002",
-    "name": "Amul Pure Ghee Jar",
+    "name": "Pure Ghee",
     "category": "Dairy & Breakfast",
     "price": 310,
     "unit": "500 ml glass jar",
@@ -23,7 +23,7 @@
   },
   {
     "id": "P003",
-    "name": "Aashirvaad Shudh Chakki Atta",
+    "name": "Chakki Atta",
     "category": "Staples & Grains",
     "price": 245,
     "unit": "5 kg bag",
@@ -34,7 +34,7 @@
   },
   {
     "id": "P004",
-    "name": "India Gate Feast Rozzana Basmati Rice",
+    "name": "Basmati Rice",
     "category": "Staples & Grains",
     "price": 85,
     "unit": "500 g pouch",
@@ -45,7 +45,7 @@
   },
   {
     "id": "P005",
-    "name": "Tata Sampann Unpolished Toor Dal",
+    "name": "Toor Dal",
     "category": "Staples & Grains",
     "price": 175,
     "unit": "1 kg pouch",
@@ -56,7 +56,7 @@
   },
   {
     "id": "P006",
-    "name": "Fortune Sunlite Refined Sunflower Oil",
+    "name": "Refined Sunflower Oil",
     "category": "Staples & Grains",
     "price": 140,
     "unit": "1 L pouch",
@@ -67,10 +67,10 @@
   },
   {
     "id": "P007",
-    "name": "Fortune Premium Kachi Ghani Mustard Oil",
+    "name": "Kachi Ghani Mustard Oil",
     "category": "Staples & Grains",
     "price": 155,
-    "unit": "1 L pouch",
+    "unit": "1 L bottle",
     "image": "assets/products/fortune_mustard_oil.jpg",
     "available": true,
     "stockQuantity": 12,
@@ -78,7 +78,7 @@
   },
   {
     "id": "P008",
-    "name": "Tata Salt Vacuum Evaporated Iodized",
+    "name": "Iodised Salt",
     "category": "Staples & Grains",
     "price": 28,
     "unit": "1 kg pack",
@@ -89,7 +89,7 @@
   },
   {
     "id": "P009",
-    "name": "Everest Garam Masala Spice Blend",
+    "name": "Garam Masala",
     "category": "Spices & Masalas",
     "price": 82,
     "unit": "100 g box",
@@ -100,10 +100,10 @@
   },
   {
     "id": "P010",
-    "name": "MDH Deggi Mirch Red Chilli Powder",
+    "name": "Red Chilli Powder",
     "category": "Spices & Masalas",
     "price": 95,
-    "unit": "100 g tin",
+    "unit": "100 g box",
     "image": "assets/products/mdh_deggi_mirch.jpg",
     "available": true,
     "stockQuantity": 15,
@@ -111,7 +111,7 @@
   },
   {
     "id": "P011",
-    "name": "Maggi 2-Minute Masala Noodles",
+    "name": "Instant Noodles",
     "category": "Snacks & Biscuits",
     "price": 56,
     "unit": "Pack of 4 (280 g)",
@@ -122,7 +122,7 @@
   },
   {
     "id": "P012",
-    "name": "Parle-G Gold Glucose Biscuits",
+    "name": "Glucose Biscuits",
     "category": "Snacks & Biscuits",
     "price": 15,
     "unit": "100 g pack",
@@ -133,7 +133,7 @@
   },
   {
     "id": "P013",
-    "name": "Britannia Good Day Rich Cashew Cookies",
+    "name": "Cashew Cookies",
     "category": "Snacks & Biscuits",
     "price": 35,
     "unit": "200 g pack",
@@ -144,7 +144,7 @@
   },
   {
     "id": "P014",
-    "name": "Britannia Bourbon Chocolate Cream Biscuits",
+    "name": "Chocolate Cream Biscuits",
     "category": "Snacks & Biscuits",
     "price": 30,
     "unit": "150 g pack",
@@ -155,7 +155,7 @@
   },
   {
     "id": "P015",
-    "name": "Cadbury Oreo Original Vanilla Biscuits",
+    "name": "Vanilla Cream Biscuits",
     "category": "Snacks & Biscuits",
     "price": 40,
     "unit": "120 g pack",
@@ -166,7 +166,7 @@
   },
   {
     "id": "P016",
-    "name": "Haldiram Nagpur Bhujia Sev Namkeen",
+    "name": "Bhujia Sev",
     "category": "Snacks & Biscuits",
     "price": 90,
     "unit": "400 g pouch",
@@ -177,7 +177,7 @@
   },
   {
     "id": "P017",
-    "name": "Cadbury Dairy Milk Chocolate Bar",
+    "name": "Milk Chocolate Bar",
     "category": "Snacks & Biscuits",
     "price": 90,
     "unit": "130 g bar",
@@ -188,7 +188,7 @@
   },
   {
     "id": "P018",
-    "name": "Nestle KitKat 4-Finger Wafer Bar",
+    "name": "Crisp Wafer Bar",
     "category": "Snacks & Biscuits",
     "price": 25,
     "unit": "41.5 g bar",
@@ -199,7 +199,7 @@
   },
   {
     "id": "P019",
-    "name": "Tata Tea Gold Rich Aroma",
+    "name": "Masala Chai Dust",
     "category": "Beverages",
     "price": 260,
     "unit": "500 g pouch",
@@ -210,7 +210,7 @@
   },
   {
     "id": "P020",
-    "name": "Brooke Bond Red Label Tea",
+    "name": "CTC Leaf Tea",
     "category": "Beverages",
     "price": 240,
     "unit": "500 g carton",
@@ -221,7 +221,7 @@
   },
   {
     "id": "P021",
-    "name": "Nescafe Classic Instant Coffee Jar",
+    "name": "Instant Coffee",
     "category": "Beverages",
     "price": 390,
     "unit": "200 g jar",
@@ -232,7 +232,7 @@
   },
   {
     "id": "P022",
-    "name": "Dettol Original Bath Soap",
+    "name": "Antiseptic Bath Soap",
     "category": "Personal & Home Care",
     "price": 140,
     "unit": "Pack of 4 (440 g)",
@@ -243,7 +243,7 @@
   },
   {
     "id": "P023",
-    "name": "Colgate Strong Teeth Dental Cream",
+    "name": "Toothpaste",
     "category": "Personal & Home Care",
     "price": 65,
     "unit": "150 g tube",
@@ -254,7 +254,7 @@
   },
   {
     "id": "P024",
-    "name": "Clinic Plus Strong & Long Shampoo",
+    "name": "Nourishing Shampoo",
     "category": "Personal & Home Care",
     "price": 190,
     "unit": "340 ml bottle",
@@ -265,10 +265,10 @@
   },
   {
     "id": "P025",
-    "name": "Surf Excel Quick Wash Detergent Powder",
+    "name": "Detergent Powder",
     "category": "Personal & Home Care",
     "price": 145,
-    "unit": "1 kg carton box",
+    "unit": "1 kg carton",
     "image": "assets/products/surf_excel.jpg",
     "available": true,
     "stockQuantity": 14,
@@ -276,7 +276,7 @@
   },
   {
     "id": "P026",
-    "name": "Vim Classic Dishwash Bar with Lemons",
+    "name": "Dishwash Bar",
     "category": "Personal & Home Care",
     "price": 25,
     "unit": "300 g bar",
@@ -287,7 +287,7 @@
   },
   {
     "id": "P027",
-    "name": "Fresh Ratnagiri Alphonso Mangoes",
+    "name": "Alphonso Mangoes",
     "category": "Fresh Fruits",
     "price": 600,
     "unit": "1 Dozen Box (12 pcs)",

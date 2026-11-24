@@ -67,7 +67,7 @@ async function capture() {
   let anyOverflowFailed = false;
 
   for (const page of pages) {
-    // 1. Thorough overflow test across 320, 375, 768, 1366
+    // 1. Thorough overflow test across 320, 375, 768, 1366 in light mode
     for (const w of responsiveTestWidths) {
       await sendCommand(ws, 'Emulation.setDeviceMetricsOverride', {
         width: w,
@@ -96,7 +96,7 @@ async function capture() {
       }
     }
 
-    // 2. Capture screenshots at 375px and 1366px
+    // 2. Capture screenshots at 375px and 1366px in BOTH Light and Dark mode
     for (const vp of viewports) {
       await sendCommand(ws, 'Emulation.setDeviceMetricsOverride', {
         width: vp.width,
@@ -107,10 +107,30 @@ async function capture() {
       await sendCommand(ws, 'Page.navigate', { url: page.url });
       await new Promise(r => setTimeout(r, 600));
 
-      const shot = await sendCommand(ws, 'Page.captureScreenshot', { format: 'png' });
-      const filename = `screenshots/${page.name}_${vp.name}.png`;
-      fs.writeFileSync(filename, Buffer.from(shot.data, 'base64'));
-      console.log(`Saved screenshot: ${filename}`);
+      // Light mode capture
+      await sendCommand(ws, 'Runtime.evaluate', {
+        expression: `(() => {
+          if (window.DukaanTheme) window.DukaanTheme.set('light');
+          else document.documentElement.setAttribute('data-theme', 'light');
+        })()`
+      });
+      await new Promise(r => setTimeout(r, 350));
+      const shotLight = await sendCommand(ws, 'Page.captureScreenshot', { format: 'png' });
+      fs.writeFileSync(`screenshots/${page.name}_${vp.name}.png`, Buffer.from(shotLight.data, 'base64'));
+      fs.writeFileSync(`screenshots/${page.name}_${vp.name}_light.png`, Buffer.from(shotLight.data, 'base64'));
+      console.log(`Saved screenshot: screenshots/${page.name}_${vp.name}_light.png`);
+
+      // Dark mode capture
+      await sendCommand(ws, 'Runtime.evaluate', {
+        expression: `(() => {
+          if (window.DukaanTheme) window.DukaanTheme.set('dark');
+          else document.documentElement.setAttribute('data-theme', 'dark');
+        })()`
+      });
+      await new Promise(r => setTimeout(r, 350));
+      const shotDark = await sendCommand(ws, 'Page.captureScreenshot', { format: 'png' });
+      fs.writeFileSync(`screenshots/${page.name}_${vp.name}_dark.png`, Buffer.from(shotDark.data, 'base64'));
+      console.log(`Saved screenshot: screenshots/${page.name}_${vp.name}_dark.png`);
     }
   }
 
@@ -119,7 +139,7 @@ async function capture() {
     console.error('Some pages had overflow!');
     process.exit(1);
   } else {
-    console.log('All responsive tests passed with zero overflow! All screenshots captured.');
+    console.log('All responsive tests passed with zero overflow! All light and dark screenshots captured.');
   }
 }
 

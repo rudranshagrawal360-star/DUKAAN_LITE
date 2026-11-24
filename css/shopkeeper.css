@@ -338,3 +338,72 @@
   font-size: 0.95rem;
   color: var(--dl-text);
 }
+
+/* ============================================================
+   Dark Mode Overrides – Shopkeeper
+   ============================================================ */
+[data-theme="dark"] .dl-admin-layout {
+  background-color: var(--dl-bg);
+}
+
+[data-theme="dark"] .dl-admin-sidebar {
+  background-color: var(--dl-forest);
+}
+
+[data-theme="dark"] .dl-admin-main {
+  background-color: var(--dl-bg);
+}
+
+[data-theme="dark"] .dl-admin-topbar {
+  background-color: var(--dl-surface);
+  border-bottom-color: var(--dl-border);
+}
+
+[data-theme="dark"] .dl-admin-item-card {
+  background: var(--dl-surface);
+  border-color: var(--dl-border);
+}
+
+[data-theme="dark"] .dl-stat-card {
+  background: var(--dl-surface);
+  border-color: var(--dl-border);
+}
+
+[data-theme="dark"] .dl-admin-table th {
+  background: var(--dl-surface-2);
+  color: var(--dl-muted);
+  border-bottom-color: var(--dl-border);
+}
+
+[data-theme="dark"] .dl-admin-table td {
+  border-bottom-color: var(--dl-border);
+  color: var(--dl-text);
+}
+
+[data-theme="dark"] .dl-admin-table tr:hover td {
+  background: var(--dl-surface-2);
+}
+
+[data-theme="dark"] .btn-dl-primary {
+  background-color: var(--dl-primary);
+  color: #0B1F14;
+}
+
+[data-theme="dark"] .btn-dl-secondary {
+  background-color: var(--dl-surface-2);
+  border-color: var(--dl-border);
+  color: var(--dl-text);
+}
+
+[data-theme="dark"] .dl-mobile-bottom-tabs {
+  background: var(--dl-surface);
+  border-top-color: var(--dl-border);
+}
+
+[data-theme="dark"] .dl-tab-item {
+  color: var(--dl-muted);
+}
+
+[data-theme="dark"] .dl-tab-item.active {
+  color: var(--dl-primary);
+}

@@ -653,3 +653,77 @@
   gap: 0.45rem;
   flex: 1;
 }
+
+/* ============================================================
+   Dark Mode Overrides – Customer
+   ============================================================ */
+[data-theme="dark"] .dl-customer-hero {
+  background: linear-gradient(135deg, #0B2417 0%, #0F1E16 60%, #0F1A14 100%);
+  border-bottom-color: var(--dl-border);
+}
+
+[data-theme="dark"] .dl-shop-title {
+  color: var(--dl-ink);
+}
+
+[data-theme="dark"] .dl-open-chip {
+  background-color: var(--dl-surface-2);
+  border-color: var(--dl-border);
+  color: var(--dl-text);
+}
+
+[data-theme="dark"] .dl-product-card {
+  background: var(--dl-surface);
+  border-color: var(--dl-border);
+}
+
+[data-theme="dark"] .dl-product-image-wrap {
+  background-color: #1D2E24;
+  border-bottom-color: var(--dl-border);
+}
+
+[data-theme="dark"] .dl-cart-drawer {
+  background: var(--dl-surface);
+  border-left-color: var(--dl-border);
+}
+
+[data-theme="dark"] .dl-drawer-header {
+  background: var(--dl-surface);
+  border-bottom-color: var(--dl-border);
+}
+
+[data-theme="dark"] .dl-drawer-footer {
+  background: var(--dl-surface);
+  border-top-color: var(--dl-border);
+}
+
+[data-theme="dark"] .dl-cart-item {
+  border-bottom-color: var(--dl-border);
+}
+
+[data-theme="dark"] .dl-search-wrap {
+  background: var(--dl-surface-2);
+  border-color: var(--dl-border);
+}
+
+[data-theme="dark"] .dl-input,
+[data-theme="dark"] .dl-search-input {
+  background: var(--dl-surface-2);
+  border-color: var(--dl-border);
+  color: var(--dl-text);
+}
+
+[data-theme="dark"] .dl-app-header {
+  background: var(--dl-surface);
+  border-bottom-color: var(--dl-border);
+}
+
+[data-theme="dark"] .dl-header-cart-btn {
+  background: var(--dl-surface-2);
+  border-color: var(--dl-border);
+  color: var(--dl-text);
+}
+
+[data-theme="dark"] .dl-nav-subtle {
+  color: var(--dl-muted);
+}
