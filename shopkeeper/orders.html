@@ -11,17 +11,16 @@
   <link rel="apple-touch-icon" href="../assets/brand/icon-180.png">
   <meta name="theme-color" content="#124729">
 
-
   <!-- Pre-paint theme: runs before CSS to prevent flash -->
   <script>
     (function(){
-      var t=localStorage.getItem('dukaanlite_theme_v1');
-      var d=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
-      document.documentElement.setAttribute('data-theme',t||(d?'dark':'light'));
+      var t = localStorage.getItem('dukaanlite_theme_v1');
+      var d = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', t || (d ? 'dark' : 'light'));
     })();
   </script>
 
-  <!-- Bootstrap Icons -->
+  <!-- Bootstrap Icons via CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <!-- Inter Font from Google Fonts -->
@@ -34,15 +33,18 @@
   <link rel="stylesheet" href="../css/shopkeeper.css">
 </head>
 <body>
-  <a href="#main-content" class="skip-link">Skip to orders list</a>
+  <a href="#main-content" class="skip-link">Skip to orders content</a>
 
   <div class="dl-admin-layout">
     
-    <!-- Left Sidebar -->
+    <!-- Left Sidebar on Desktop -->
     <aside class="dl-admin-sidebar" aria-label="Shopkeeper Navigation">
-      <a class="dl-sidebar-brand" href="../index.html" aria-label="DukaanLite Home">
+      <a class="dl-sidebar-brand" href="dashboard.html" aria-label="DukaanLite Home">
         <div class="dl-sidebar-logo-tile" aria-hidden="true">
-          <img src="../assets/brand/logo-mark.png" alt="DukaanLite" width="22" height="25">
+          <img src="../assets/brand/logo-mark.png" 
+               data-logo-light="../assets/brand/logo-mark.png" 
+               data-logo-dark="../assets/brand/logo-mark-dark.png" 
+               alt="DukaanLite" width="20" height="22">
         </div>
         <span class="dl-sidebar-brand-name">DukaanLite</span>
       </a>
@@ -50,252 +52,341 @@
       <ul class="dl-sidebar-nav">
         <li>
           <a href="dashboard.html" class="dl-sidebar-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="3" y="3" width="7" height="7"></rect>
-              <rect x="14" y="3" width="7" height="7"></rect>
-              <rect x="14" y="14" width="7" height="7"></rect>
-              <rect x="3" y="14" width="7" height="7"></rect>
-            </svg>
+            <i class="bi bi-speedometer2" aria-hidden="true"></i>
             <span>Dashboard</span>
           </a>
         </li>
         <li>
           <a href="products.html" class="dl-sidebar-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <path d="M16 10a4 4 0 0 1-8 0"></path>
-            </svg>
+            <i class="bi bi-box-seam" aria-hidden="true"></i>
             <span>Products</span>
           </a>
         </li>
         <li>
           <a href="orders.html" class="dl-sidebar-link active" aria-current="page">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-              <polyline points="14 2 14 8 20 8"></polyline>
-              <line x1="16" y1="13" x2="8" y2="13"></line>
-              <line x1="16" y1="17" x2="8" y2="17"></line>
-            </svg>
+            <i class="bi bi-receipt" aria-hidden="true"></i>
             <span>Orders</span>
+            <span class="dl-sidebar-pending-badge" id="sidebar-pending-badge" style="display: none;">0</span>
           </a>
         </li>
         <li>
           <a href="settings.html" class="dl-sidebar-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="3"></circle>
-              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-            </svg>
+            <i class="bi bi-gear" aria-hidden="true"></i>
             <span>Settings</span>
           </a>
         </li>
       </ul>
 
+      <!-- Sidebar Footer: View Store & Theme Toggle -->
       <div class="dl-sidebar-footer">
-        <a href="../customer/catalog.html" class="dl-sidebar-link" style="color: var(--dl-primary-bright); background: rgba(7, 148, 72, 0.15);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-            <circle cx="12" cy="12" r="3"></circle>
-          </svg>
+        <a href="../customer/catalog.html" class="dl-sidebar-viewstore">
+          <i class="bi bi-shop" aria-hidden="true"></i>
           <span>View store</span>
+          <i class="bi bi-arrow-up-right ms-auto small opacity-75" aria-hidden="true"></i>
         </a>
+        <button type="button" class="dl-sidebar-theme-btn dl-theme-toggle" aria-label="Toggle dark mode">
+          <span class="dl-theme-icon"><i class="bi bi-moon-stars" aria-hidden="true"></i></span>
+          <span class="dl-theme-toggle-text">Dark mode</span>
+        </button>
       </div>
     </aside>
 
     <!-- Main Content -->
     <main id="main-content" class="dl-admin-main">
 
-      <div style="display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem;">
-        <div>
-          <h1 class="dl-heading mb-1" style="font-size: 1.6rem;">Order Management</h1>
-          <p class="text-dl-muted mb-0">Track order statuses from Pending to Completed</p>
+      <!-- Header Row -->
+      <div class="dl-orders-header-wrap">
+        <div class="dl-orders-title-row">
+          <h1 class="dl-orders-page-title">Orders</h1>
+        </div>
+
+        <!-- Compact Stats Strip -->
+        <div class="dl-orders-stats-strip" aria-label="Today order metrics">
+          <div class="dl-orders-stat-card">
+            <span class="dl-orders-stat-label">
+              <i class="bi bi-calendar3"></i> Today's orders
+            </span>
+            <span class="dl-orders-stat-value" id="stat-today-orders">0</span>
+          </div>
+          <div class="dl-orders-stat-card">
+            <span class="dl-orders-stat-label">
+              <i class="bi bi-hourglass-split text-warning"></i> Pending now
+            </span>
+            <span class="dl-orders-stat-value text-warning" id="stat-pending-orders">0</span>
+          </div>
+          <div class="dl-orders-stat-card">
+            <span class="dl-orders-stat-label">
+              <i class="bi bi-currency-rupee text-success"></i> Revenue today
+            </span>
+            <span class="dl-orders-stat-value text-success" id="stat-revenue-today">₹0</span>
+            <span class="dl-orders-stat-sub">Excl. cancelled</span>
+          </div>
+          <div class="dl-orders-stat-card">
+            <span class="dl-orders-stat-label">
+              <i class="bi bi-graph-up"></i> Avg order value
+            </span>
+            <span class="dl-orders-stat-value" id="stat-aov">₹0</span>
+          </div>
+        </div>
+
+        <!-- Controls Bar: Search, Date Filter, Cancelled Toggle, View Switcher -->
+        <div class="dl-orders-controls-bar">
+          <div class="dl-orders-controls-left">
+            <div class="dl-search-input-wrap">
+              <i class="bi bi-search" aria-hidden="true"></i>
+              <input type="search" 
+                     id="orders-search-input" 
+                     class="dl-input" 
+                     placeholder="Search order ID, customer, item…" 
+                     aria-label="Search orders">
+            </div>
+
+            <select id="orders-date-filter" class="dl-date-select" aria-label="Filter by date range">
+              <option value="all" selected>All time</option>
+              <option value="today">Today</option>
+              <option value="7days">Last 7 days</option>
+            </select>
+          </div>
+
+          <div class="dl-orders-controls-right">
+            <button type="button" class="dl-btn-toggle-cancelled" id="toggle-cancelled-btn" aria-label="Toggle cancelled orders">
+              <i class="bi bi-eye"></i> Cancelled (0)
+            </button>
+
+            <!-- Board | List Switch -->
+            <div class="dl-view-switcher" role="radiogroup" aria-label="Select layout view">
+              <button type="button" class="dl-view-btn active" id="view-board-btn" aria-label="Board view">
+                <i class="bi bi-kanban"></i> Board
+              </button>
+              <button type="button" class="dl-view-btn" id="view-list-btn" aria-label="List view">
+                <i class="bi bi-list-ul"></i> List
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Swipeable Status Tabs (one column at a time on phone) -->
+        <div class="dl-mobile-status-tabs" id="dl-mobile-status-tabs" aria-label="Status filter for mobile">
+          <!-- Populated by script -->
         </div>
       </div>
 
-      <!-- Filter Tabs -->
-      <div class="dl-categories-scroll mb-3" id="order-status-filters">
-        <button type="button" class="dl-category-pill active" data-status="ALL">All Orders</button>
-        <button type="button" class="dl-category-pill" data-status="Pending">Pending</button>
-        <button type="button" class="dl-category-pill" data-status="Confirmed">Confirmed</button>
-        <button type="button" class="dl-category-pill" data-status="Preparing">Preparing</button>
-        <button type="button" class="dl-category-pill" data-status="Ready">Ready</button>
-        <button type="button" class="dl-category-pill" data-status="Completed">Completed</button>
-      </div>
+      <!-- VIEW 1: Kanban Board View (Default) -->
+      <section id="orders-board-view" class="dl-orders-board-view" aria-label="Orders Kanban Board">
+        <div class="dl-board-grid" id="orders-board-grid">
+          
+          <!-- Column 1: Pending -->
+          <div class="dl-board-col mobile-visible" data-status="Pending">
+            <div class="dl-board-col-header">
+              <span class="dl-board-col-title">
+                <i class="bi bi-clock text-warning"></i> Pending
+              </span>
+              <span class="dl-board-col-count">0</span>
+            </div>
+            <div class="dl-board-col-cards"></div>
+          </div>
 
-      <!-- Desktop Orders Table -->
-      <div class="dl-table-container">
-        <table class="dl-table" aria-label="Orders management table">
-          <thead>
-            <tr>
-              <th scope="col">Order ID</th>
-              <th scope="col">Customer</th>
-              <th scope="col">Items Snapshot</th>
-              <th scope="col">Total</th>
-              <th scope="col">Status</th>
-              <th scope="col">Update Status</th>
-            </tr>
-          </thead>
-          <tbody id="orders-tbody">
-            <!-- Populated via script -->
-          </tbody>
-        </table>
-      </div>
+          <!-- Column 2: Confirmed -->
+          <div class="dl-board-col" data-status="Confirmed">
+            <div class="dl-board-col-header">
+              <span class="dl-board-col-title">
+                <i class="bi bi-check-circle text-info"></i> Confirmed
+              </span>
+              <span class="dl-board-col-count">0</span>
+            </div>
+            <div class="dl-board-col-cards"></div>
+          </div>
 
-      <!-- Mobile Stacked Card List -->
-      <div class="dl-mobile-card-list" id="orders-mobile-list">
-        <!-- Populated via script -->
-      </div>
+          <!-- Column 3: Preparing -->
+          <div class="dl-board-col" data-status="Preparing">
+            <div class="dl-board-col-header">
+              <span class="dl-board-col-title">
+                <i class="bi bi-fire" style="color: #7E22CE;"></i> Preparing
+              </span>
+              <span class="dl-board-col-count">0</span>
+            </div>
+            <div class="dl-board-col-cards"></div>
+          </div>
+
+          <!-- Column 4: Ready -->
+          <div class="dl-board-col" data-status="Ready">
+            <div class="dl-board-col-header">
+              <span class="dl-board-col-title">
+                <i class="bi bi-bell text-success"></i> Ready
+              </span>
+              <span class="dl-board-col-count">0</span>
+            </div>
+            <div class="dl-board-col-cards"></div>
+          </div>
+
+          <!-- Column 5: Completed -->
+          <div class="dl-board-col" data-status="Completed">
+            <div class="dl-board-col-header">
+              <span class="dl-board-col-title">
+                <i class="bi bi-check2-all text-success"></i> Completed
+              </span>
+              <span class="dl-board-col-count">0</span>
+            </div>
+            <div class="dl-board-col-cards"></div>
+          </div>
+
+          <!-- Column 6: Cancelled (Shown when toggled) -->
+          <div class="dl-board-col" data-status="Cancelled" style="display: none;">
+            <div class="dl-board-col-header">
+              <span class="dl-board-col-title">
+                <i class="bi bi-x-circle text-danger"></i> Cancelled
+              </span>
+              <span class="dl-board-col-count">0</span>
+            </div>
+            <div class="dl-board-col-cards"></div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- VIEW 2: List View (Table layout) -->
+      <section id="orders-list-view" class="dl-orders-list-view" aria-label="Orders List Table">
+        <div class="dl-orders-table-card">
+          <div class="dl-orders-table-wrap">
+            <table class="dl-orders-table" aria-label="Orders data table">
+              <thead>
+                <tr>
+                  <th scope="col">Order</th>
+                  <th scope="col">Customer</th>
+                  <th scope="col">Items</th>
+                  <th scope="col">Placed</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Next Action</th>
+                </tr>
+              </thead>
+              <tbody id="orders-table-tbody">
+                <!-- Populated by script -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
     </main>
 
     <!-- Mobile Bottom Tab Bar -->
     <nav class="dl-mobile-bottom-tabs" aria-label="Mobile Navigation">
       <a href="dashboard.html" class="dl-tab-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="3" y="3" width="7" height="7"></rect>
-          <rect x="14" y="3" width="7" height="7"></rect>
-          <rect x="14" y="14" width="7" height="7"></rect>
-          <rect x="3" y="14" width="7" height="7"></rect>
-        </svg>
+        <i class="bi bi-speedometer2" aria-hidden="true"></i>
         <span>Dashboard</span>
       </a>
       <a href="products.html" class="dl-tab-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-        </svg>
+        <i class="bi bi-box-seam" aria-hidden="true"></i>
         <span>Products</span>
       </a>
       <a href="orders.html" class="dl-tab-item active" aria-current="page">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-          <polyline points="14 2 14 8 20 8"></polyline>
-        </svg>
+        <div style="position: relative; display: inline-flex;">
+          <i class="bi bi-receipt" aria-hidden="true"></i>
+          <span class="dl-mobile-tab-badge" id="mobile-pending-badge" style="display: none;">0</span>
+        </div>
         <span>Orders</span>
       </a>
       <a href="settings.html" class="dl-tab-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="3"></circle>
-          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-        </svg>
+        <i class="bi bi-gear" aria-hidden="true"></i>
         <span>Settings</span>
       </a>
     </nav>
 
   </div>
 
+  <!-- Right-Side Order Drawer & Overlay -->
+  <div class="dl-drawer-overlay" id="dl-drawer-overlay" aria-hidden="true"></div>
+  <aside class="dl-order-drawer" id="dl-order-drawer" aria-label="Order Details Drawer" aria-hidden="true">
+    <div class="dl-drawer-header">
+      <div class="dl-drawer-title-wrap">
+        <h2 class="dl-drawer-order-id" id="drawer-order-id">#ORD-0000</h2>
+        <span class="dl-status-badge status-pending" id="drawer-order-badge">
+          <i class="bi bi-clock"></i> Pending
+        </span>
+      </div>
+      <button type="button" class="dl-drawer-close-btn" id="drawer-close-btn" aria-label="Close drawer">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="dl-drawer-body">
+      <!-- Customer Card -->
+      <div class="dl-drawer-section-card">
+        <div class="dl-drawer-section-title">Customer</div>
+        <div class="fw-bold" id="drawer-customer-name">Customer Name</div>
+        <div class="small text-dl-muted font-tabular" id="drawer-customer-phone">9800000000</div>
+        
+        <div class="dl-drawer-customer-actions">
+          <a href="#" class="dl-drawer-action-btn" id="drawer-call-btn">
+            <i class="bi bi-telephone"></i> Call
+          </a>
+          <button type="button" class="dl-drawer-action-btn" id="drawer-wa-btn">
+            <i class="bi bi-whatsapp" style="color: #25D366;"></i> WhatsApp
+          </button>
+        </div>
+      </div>
+
+      <!-- Customer Instructions / Notes -->
+      <div class="dl-drawer-section-card" id="drawer-notes-wrap" style="display: none;">
+        <div class="dl-drawer-section-title">Delivery Note</div>
+        <div class="small fst-italic" id="drawer-notes-text"></div>
+      </div>
+
+      <!-- Parchi Slip Items Receipt -->
+      <div class="dl-drawer-parchi">
+        <div class="dl-drawer-section-title">Order Items</div>
+        <table class="dl-drawer-items-table">
+          <tbody id="drawer-items-tbody"></tbody>
+        </table>
+
+        <div class="dl-drawer-parchi-tear" aria-hidden="true"></div>
+
+        <div class="dl-drawer-total-row">
+          <span>Total</span>
+          <span id="drawer-total-amount">₹0</span>
+        </div>
+      </div>
+
+      <!-- Status History Timeline -->
+      <div class="dl-drawer-section-card">
+        <div class="dl-drawer-section-title">Status Timeline</div>
+        <div class="dl-drawer-timeline" id="drawer-timeline-container">
+          <!-- Populated by script -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Drawer Footer Actions -->
+    <div class="dl-drawer-footer" id="drawer-footer-container">
+      <!-- Populated dynamically: Primary next-step button and cancel button -->
+    </div>
+  </aside>
+
+  <!-- Cancel Order Confirmation Modal Overlay -->
+  <div class="dl-modal-overlay" id="dl-cancel-overlay" role="dialog" aria-modal="true" aria-labelledby="cancel-title">
+    <div class="dl-confirm-modal">
+      <h3 class="dl-confirm-title" id="cancel-title">Cancel Order</h3>
+      <p class="dl-confirm-desc">
+        Are you sure you want to cancel order <strong id="cancel-modal-order-id">#ORD-0000</strong>? 
+        This will stop preparation and mark the order as Cancelled.
+      </p>
+      <div class="dl-confirm-actions">
+        <button type="button" class="btn btn-dl-outline btn-sm" id="cancel-modal-dismiss">
+          Keep order
+        </button>
+        <button type="button" class="btn btn-danger btn-sm" id="cancel-modal-confirm">
+          Yes, cancel order
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared & Page Scripts -->
+  <script src="../js/shared/theme.js"></script>
   <script src="../js/shared/storage.js"></script>
+  <script src="../js/shared/live.js"></script>
   <script src="../js/shared/ui.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      if (window.DukaanTheme) DukaanTheme.init();
-      let orders = DukaanStorage.getOrders();
-      let activeStatusFilter = 'ALL';
-
-      const statusClassMap = {
-        'Pending': 'status-pending',
-        'Confirmed': 'status-confirmed',
-        'Preparing': 'status-preparing',
-        'Ready': 'status-ready',
-        'Completed': 'status-completed',
-        'Cancelled': 'status-cancelled'
-      };
-
-      const allowedStatuses = ["Pending", "Confirmed", "Preparing", "Ready", "Completed", "Cancelled"];
-
-      function renderOrders() {
-        const tbody = document.getElementById('orders-tbody');
-        const mobileList = document.getElementById('orders-mobile-list');
-
-        const filtered = orders.filter(o => 
-          activeStatusFilter === 'ALL' || o.status === activeStatusFilter
-        );
-
-        if (tbody) {
-          tbody.innerHTML = filtered.map(order => {
-            const statusClass = statusClassMap[order.status] || 'status-pending';
-            const itemsSummary = (order.items || []).map(i => `${i.quantity}x ${i.name} (₹${i.price})`).join('<br>');
-            const options = allowedStatuses.map(st => 
-              `<option value="${st}" ${st === order.status ? 'selected' : ''}>${st}</option>`
-            ).join('');
-
-            return `
-              <tr>
-                <td><strong>${DukaanUI.escapeHtml(order.id)}</strong></td>
-                <td>
-                  <div>${DukaanUI.escapeHtml(order.customerName || 'Customer')}</div>
-                  <div class="text-dl-muted small">${DukaanUI.escapeHtml(order.customerPhone || '')}</div>
-                </td>
-                <td style="font-size: 0.85rem; line-height: 1.4;">${itemsSummary}</td>
-                <td><strong style="color: var(--dl-forest);">₹${Number(order.estimatedTotal || 0).toLocaleString('en-IN')}</strong></td>
-                <td>
-                  <span class="dl-status-badge ${statusClass}">${DukaanUI.escapeHtml(order.status)}</span>
-                </td>
-                <td>
-                  <select class="dl-input order-status-select" data-id="${order.id}" style="height: 36px; padding: 0.2rem 0.5rem; font-size: 0.85rem; width: auto;">
-                    ${options}
-                  </select>
-                </td>
-              </tr>
-            `;
-          }).join('');
-        }
-
-        if (mobileList) {
-          mobileList.innerHTML = filtered.map(order => {
-            const statusClass = statusClassMap[order.status] || 'status-pending';
-            const itemsSummary = (order.items || []).map(i => `&bull; ${i.quantity}x ${i.name}`).join('<br>');
-            const options = allowedStatuses.map(st => 
-              `<option value="${st}" ${st === order.status ? 'selected' : ''}>${st}</option>`
-            ).join('');
-
-            return `
-              <div class="dl-admin-item-card">
-                <div class="dl-admin-item-header">
-                  <strong>${DukaanUI.escapeHtml(order.id)}</strong>
-                  <span class="dl-status-badge ${statusClass}">${DukaanUI.escapeHtml(order.status)}</span>
-                </div>
-                <div class="text-dl-muted small">
-                  Customer: <strong>${DukaanUI.escapeHtml(order.customerName || 'Customer')}</strong>
-                </div>
-                <div style="font-size: 0.82rem; color: var(--dl-text); margin: 0.25rem 0;">
-                  ${itemsSummary}
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
-                  <strong style="font-size: 1.05rem; color: var(--dl-forest);">₹${Number(order.estimatedTotal || 0).toLocaleString('en-IN')}</strong>
-                  <select class="dl-input order-status-select" data-id="${order.id}" style="height: 36px; padding: 0.2rem 0.5rem; font-size: 0.82rem; width: auto;">
-                    ${options}
-                  </select>
-                </div>
-              </div>
-            `;
-          }).join('');
-        }
-
-        // Attach status update event
-        document.querySelectorAll('.order-status-select').forEach(sel => {
-          sel.addEventListener('change', (e) => {
-            const id = e.target.getAttribute('data-id');
-            const newStatus = e.target.value;
-            DukaanStorage.updateOrderStatus(id, newStatus);
-            orders = DukaanStorage.getOrders();
-            DukaanUI.showToast(`Order ${id} updated to ${newStatus}`, 'success');
-            renderOrders();
-          });
-        });
-      }
-
-      renderOrders();
-
-      // Status filter pill clicks
-      document.querySelectorAll('#order-status-filters .dl-category-pill').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          document.querySelectorAll('#order-status-filters .dl-category-pill').forEach(b => b.classList.remove('active'));
-          e.currentTarget.classList.add('active');
-          activeStatusFilter = e.currentTarget.getAttribute('data-status');
-          renderOrders();
-        });
-      });
-    });
-  </script>
+  <script src="../js/shopkeeper/orders.js"></script>
 </body>
 </html>

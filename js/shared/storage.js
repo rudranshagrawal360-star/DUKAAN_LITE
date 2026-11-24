@@ -95,7 +95,7 @@ const DEFAULT_ORDERS = [
   },
   {
     id: "ORD-1004",
-    createdAt: new Date(Date.now() - 3600000 * 12).toISOString(),
+    createdAt: new Date(Date.now() - 1000 * 60 * 18).toISOString(), // 18 mins ago (triggers > 10m amber warning)
     customerName: "Amit K.",
     customerPhone: "9800004444",
     items: [
@@ -105,9 +105,61 @@ const DEFAULT_ORDERS = [
     estimatedTotal: 422,
     status: "Pending",
     statusHistory: [
-      { status: "Pending", at: new Date(Date.now() - 3600000 * 12).toISOString() }
+      { status: "Pending", at: new Date(Date.now() - 1000 * 60 * 18).toISOString() }
     ],
     notes: "Doorbell broken – please knock."
+  },
+  {
+    id: "ORD-1005",
+    createdAt: new Date(Date.now() - 1000 * 60 * 35).toISOString(),
+    customerName: "Pooja D.",
+    customerPhone: "9800005555",
+    items: [
+      { name: "Basmati Rice", unit: "1 kg pack", price: 115, quantity: 2, subtotal: 230 },
+      { name: "Toor Dal", unit: "1 kg pack", price: 155, quantity: 1, subtotal: 155 }
+    ],
+    estimatedTotal: 385,
+    status: "Ready",
+    statusHistory: [
+      { status: "Pending", at: new Date(Date.now() - 1000 * 60 * 35).toISOString() },
+      { status: "Confirmed", at: new Date(Date.now() - 1000 * 60 * 28).toISOString() },
+      { status: "Preparing", at: new Date(Date.now() - 1000 * 60 * 15).toISOString() },
+      { status: "Ready", at: new Date(Date.now() - 1000 * 60 * 3).toISOString() }
+    ],
+    notes: "Please pack neatly."
+  },
+  {
+    id: "ORD-1006",
+    createdAt: new Date(Date.now() - 1000 * 60 * 75).toISOString(),
+    customerName: "Vikram N.",
+    customerPhone: "9800006666",
+    items: [
+      { name: "Dishwash Liquid", unit: "500 ml bottle", price: 95, quantity: 1, subtotal: 95 }
+    ],
+    estimatedTotal: 95,
+    status: "Cancelled",
+    statusHistory: [
+      { status: "Pending", at: new Date(Date.now() - 1000 * 60 * 75).toISOString() },
+      { status: "Cancelled", at: new Date(Date.now() - 1000 * 60 * 68).toISOString() }
+    ],
+    notes: "Customer cancelled via phone."
+  },
+  {
+    id: "ORD-1007",
+    createdAt: new Date(Date.now() - 1000 * 60 * 4).toISOString(), // 4 mins ago (recent pending)
+    customerName: "Neha G.",
+    customerPhone: "9800007777",
+    items: [
+      { name: "Toned Milk", unit: "500 ml pouch", price: 27, quantity: 2, subtotal: 54 },
+      { name: "Whole Wheat Bread", unit: "400 g loaf", price: 45, quantity: 1, subtotal: 45 },
+      { name: "Farm Fresh Eggs", unit: "Pack of 6", price: 52, quantity: 1, subtotal: 52 }
+    ],
+    estimatedTotal: 151,
+    status: "Pending",
+    statusHistory: [
+      { status: "Pending", at: new Date(Date.now() - 1000 * 60 * 4).toISOString() }
+    ],
+    notes: "Ring bell twice."
   }
 ];
 
