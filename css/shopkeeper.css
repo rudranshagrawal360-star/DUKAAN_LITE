@@ -1454,3 +1454,786 @@
   background: #0B1F14;
   color: var(--dl-primary);
 }
+
+/* ============================================================
+   STAGE D: Dashboard Analytics Styles
+   ============================================================ */
+
+/* 1. Dashboard Header & Range Switcher */
+.dl-dash-header-wrap {
+  margin-bottom: 1.5rem;
+}
+
+.dl-dash-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.dl-dash-page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--dl-text);
+  margin: 0;
+}
+
+.dl-range-switcher {
+  display: inline-flex;
+  background: var(--dl-surface-2);
+  border: 1px solid var(--dl-border);
+  border-radius: var(--dl-radius-btn);
+  padding: 3px;
+  gap: 2px;
+}
+
+.dl-range-btn {
+  border: none;
+  background: transparent;
+  color: var(--dl-muted);
+  padding: 0.4rem 0.85rem;
+  border-radius: calc(var(--dl-radius-btn) - 2px);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--dl-transition-fast);
+  white-space: nowrap;
+}
+
+.dl-range-btn.active {
+  background: var(--dl-surface);
+  color: var(--dl-text);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* 2. Needs Attention Section */
+.dl-attention-card {
+  background: var(--dl-surface);
+  border: 1px solid var(--dl-border);
+  border-left: 4px solid var(--dl-marigold);
+  border-radius: var(--dl-radius-card);
+  padding: 0.85rem 1.15rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.dl-attention-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.dl-attention-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--dl-text);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.dl-attention-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.65rem;
+}
+
+.dl-attention-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--dl-radius-btn);
+  background: var(--dl-surface-2);
+  border: 1px solid var(--dl-border);
+  font-size: 0.82rem;
+}
+
+.dl-attention-item.urgent {
+  border-color: #F59E0B;
+  background: rgba(245, 158, 11, 0.06);
+}
+
+.dl-attention-item-text {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--dl-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dl-attention-item-action {
+  color: var(--dl-primary);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.dl-attention-item-action:hover {
+  text-decoration: underline;
+}
+
+/* 3. KPI Row with Sparklines */
+.dl-dash-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 991px) {
+  .dl-dash-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 440px) {
+  .dl-dash-kpi-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
+.dl-dash-kpi-card {
+  background: var(--dl-surface);
+  border: 1px solid var(--dl-border);
+  border-radius: var(--dl-radius-card);
+  padding: 1rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.dl-kpi-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.35rem;
+}
+
+.dl-kpi-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+  color: var(--dl-muted);
+}
+
+.dl-kpi-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  border-radius: var(--dl-radius-pill);
+  padding: 0.1rem 0.45rem;
+  font-variant-numeric: tabular-nums;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.dl-kpi-badge.positive {
+  background: #DCFCE7;
+  color: #15803D;
+}
+
+.dl-kpi-badge.negative {
+  background: #FEE2E2;
+  color: #991B1B;
+}
+
+.dl-kpi-main-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.dl-kpi-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--dl-text);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.15;
+}
+
+.dl-kpi-sparkline-wrap {
+  width: 90px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.dl-kpi-sparkline-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.dl-kpi-subtext {
+  font-size: 0.72rem;
+  color: var(--dl-muted);
+  margin-top: 0.35rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 4. Active Orders Pipeline Stacked Bar */
+.dl-pipeline-card {
+  background: var(--dl-surface);
+  border: 1px solid var(--dl-border);
+  border-radius: var(--dl-radius-card);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.dl-pipeline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.dl-pipeline-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--dl-text);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.dl-pipeline-total {
+  font-size: 0.8rem;
+  color: var(--dl-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.dl-pipeline-bar {
+  display: flex;
+  height: 28px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--dl-surface-2);
+  border: 1px solid var(--dl-border);
+}
+
+.dl-pipeline-seg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  transition: width 0.5s var(--dl-ease-out);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 4px;
+}
+
+.dl-pipeline-seg.seg-pending   { background: #F59E0B; color: #0B1F14; }
+.dl-pipeline-seg.seg-confirmed { background: #0284C7; }
+.dl-pipeline-seg.seg-preparing { background: #9333EA; }
+.dl-pipeline-seg.seg-ready     { background: #16A34A; }
+.dl-pipeline-seg.seg-completed { background: #0A7D3E; }
+
+.dl-pipeline-legend {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.65rem;
+  font-size: 0.75rem;
+  color: var(--dl-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.dl-pipeline-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.dl-pipeline-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* 5. Orders and Revenue Trend Chart */
+.dl-trend-card {
+  background: var(--dl-surface);
+  border: 1px solid var(--dl-border);
+  border-radius: var(--dl-radius-card);
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.dl-trend-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.dl-trend-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--dl-text);
+  margin: 0;
+}
+
+.dl-chart-metric-switch {
+  display: inline-flex;
+  background: var(--dl-surface-2);
+  border: 1px solid var(--dl-border);
+  border-radius: var(--dl-radius-btn);
+  padding: 2px;
+}
+
+.dl-chart-metric-btn {
+  border: none;
+  background: transparent;
+  color: var(--dl-muted);
+  padding: 0.25rem 0.65rem;
+  border-radius: calc(var(--dl-radius-btn) - 2px);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--dl-transition-fast);
+}
+
+.dl-chart-metric-btn.active {
+  background: var(--dl-surface);
+  color: var(--dl-text);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.dl-chart-svg-container {
+  position: relative;
+  width: 100%;
+  height: 240px;
+}
+
+.dl-trend-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.dl-chart-gridline {
+  stroke: var(--dl-border);
+  stroke-dasharray: 4 4;
+  stroke-width: 1;
+}
+
+.dl-chart-axis-label {
+  fill: var(--dl-muted);
+  font-size: 11px;
+  font-family: inherit;
+  font-variant-numeric: tabular-nums;
+}
+
+.dl-chart-area-path {
+  fill: url(#dlTrendGradient);
+  transition: d 0.4s var(--dl-ease-out);
+}
+
+.dl-chart-line-path {
+  fill: none;
+  stroke: var(--dl-primary);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: d 0.4s var(--dl-ease-out);
+}
+
+.dl-chart-data-point {
+  fill: var(--dl-surface);
+  stroke: var(--dl-primary);
+  stroke-width: 2.5;
+  cursor: pointer;
+  transition: r 0.2s, stroke-width 0.2s;
+  outline: none;
+}
+
+.dl-chart-data-point:hover,
+.dl-chart-data-point:focus {
+  r: 6;
+  stroke-width: 3.5;
+  stroke: var(--dl-marigold);
+}
+
+/* Floating Chart Tooltip */
+.dl-chart-floating-tooltip {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  background: var(--dl-forest);
+  color: #FFFFFF;
+  padding: 0.45rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -100%);
+  transition: opacity 0.15s, transform 0.15s;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  white-space: nowrap;
+}
+
+.dl-chart-floating-tooltip.active {
+  opacity: 1;
+}
+
+/* 6. Busiest Hours Heatmap Grid */
+.dl-heatmap-card {
+  background: var(--dl-surface);
+  border: 1px solid var(--dl-border);
+  border-radius: var(--dl-radius-card);
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.dl-heatmap-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.dl-heatmap-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--dl-text);
+  margin: 0;
+}
+
+.dl-heatmap-legend {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  color: var(--dl-muted);
+}
+
+.dl-heatmap-legend-scale {
+  display: flex;
+  gap: 2px;
+}
+
+.dl-heatmap-legend-box {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+}
+
+.dl-heatmap-scroll-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dl-heatmap-table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: separate;
+  border-spacing: 3px;
+}
+
+.dl-heatmap-th-day {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--dl-muted);
+  width: 44px;
+  text-align: right;
+  padding-right: 0.5rem;
+}
+
+.dl-heatmap-th-hour {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--dl-muted);
+  text-align: center;
+  padding-bottom: 0.35rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.dl-heatmap-cell {
+  height: 28px;
+  border-radius: 4px;
+  border: 1px solid var(--dl-border);
+  cursor: pointer;
+  transition: transform 0.15s, outline 0.15s;
+  position: relative;
+}
+
+.dl-heatmap-cell:hover,
+.dl-heatmap-cell:focus {
+  transform: scale(1.15);
+  z-index: 5;
+  outline: 2px solid var(--dl-marigold);
+}
+
+/* 7. Two-Column Analytics Split (Top Sellers & Category Share) */
+.dl-analytics-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 991px) {
+  .dl-analytics-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Top Sellers Card */
+.dl-top-sellers-card {
+  background: var(--dl-surface);
+  border: 1px solid var(--dl-border);
+  border-radius: var(--dl-radius-card);
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.dl-sellers-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--dl-text);
+  margin-bottom: 1rem;
+}
+
+.dl-sellers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.dl-seller-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.dl-seller-info-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.dl-seller-rank-name {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 600;
+  color: var(--dl-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dl-seller-rank {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--dl-muted);
+  width: 18px;
+}
+
+.dl-seller-stats {
+  font-size: 0.78rem;
+  color: var(--dl-muted);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.dl-seller-bar-track {
+  width: 100%;
+  height: 6px;
+  background: var(--dl-surface-2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.dl-seller-bar-fill {
+  height: 100%;
+  background: var(--dl-primary);
+  border-radius: 999px;
+  transition: width 0.6s var(--dl-ease-out);
+}
+
+/* Category Share Donut Card */
+.dl-category-donut-card {
+  background: var(--dl-surface);
+  border: 1px solid var(--dl-border);
+  border-radius: var(--dl-radius-card);
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.dl-donut-content-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 480px) {
+  .dl-donut-content-row {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.dl-donut-svg-wrap {
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.dl-donut-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.dl-donut-center-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none;
+}
+
+.dl-donut-center-val {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--dl-text);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.dl-donut-center-lbl {
+  font-size: 0.68rem;
+  color: var(--dl-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+
+.dl-donut-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  flex: 1 1 auto;
+  font-size: 0.8rem;
+}
+
+.dl-donut-legend-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  color: var(--dl-text);
+}
+
+.dl-donut-legend-label {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dl-donut-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dl-donut-legend-pct {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--dl-muted);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   Dark Mode Overrides – Stage D Analytics
+   ============================================================ */
+[data-theme="dark"] .dl-dash-kpi-card,
+[data-theme="dark"] .dl-attention-card,
+[data-theme="dark"] .dl-pipeline-card,
+[data-theme="dark"] .dl-trend-card,
+[data-theme="dark"] .dl-heatmap-card,
+[data-theme="dark"] .dl-top-sellers-card,
+[data-theme="dark"] .dl-category-donut-card {
+  background: var(--dl-surface);
+  border-color: var(--dl-border);
+}
+
+[data-theme="dark"] .dl-attention-item {
+  background: var(--dl-surface-2);
+  border-color: var(--dl-border);
+}
+
+[data-theme="dark"] .dl-attention-item.urgent {
+  background: rgba(217, 119, 6, 0.12);
+  border-color: #D97706;
+}
+
+[data-theme="dark"] .dl-kpi-badge.positive {
+  background: #0A2B14;
+  color: #6EE7A0;
+}
+
+[data-theme="dark"] .dl-kpi-badge.negative {
+  background: #2A0A0A;
+  color: #FCA5A5;
+}
+
+[data-theme="dark"] .dl-chart-data-point {
+  fill: var(--dl-surface);
+  stroke: var(--dl-primary);
+}
+
+[data-theme="dark"] .dl-chart-floating-tooltip {
+  background: var(--dl-surface-2);
+  color: var(--dl-text);
+  border: 1px solid var(--dl-border);
+}
+
+[data-theme="dark"] .dl-seller-bar-fill {
+  background: var(--dl-primary);
+}

@@ -11,17 +11,16 @@
   <link rel="apple-touch-icon" href="../assets/brand/icon-180.png">
   <meta name="theme-color" content="#124729">
 
-
   <!-- Pre-paint theme: runs before CSS to prevent flash -->
   <script>
     (function(){
-      var t=localStorage.getItem('dukaanlite_theme_v1');
-      var d=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
-      document.documentElement.setAttribute('data-theme',t||(d?'dark':'light'));
+      var t = localStorage.getItem('dukaanlite_theme_v1');
+      var d = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', t || (d ? 'dark' : 'light'));
     })();
   </script>
 
-  <!-- Bootstrap Icons -->
+  <!-- Bootstrap Icons via CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <!-- Inter Font from Google Fonts -->
@@ -35,7 +34,7 @@
 </head>
 <body>
   <!-- Accessibility Skip Link -->
-  <a href="#main-content" class="skip-link">Skip to main dashboard content</a>
+  <a href="#main-content" class="skip-link">Skip to dashboard analytics content</a>
 
   <div class="dl-admin-layout">
     
@@ -96,88 +95,231 @@
     <!-- Main Content Area -->
     <main id="main-content" class="dl-admin-main">
       
-      <!-- Top Banner -->
+      <!-- Dashboard Header: Title + Range Switcher -->
+      <div class="dl-dash-header-wrap">
+        <div class="dl-dash-title-row">
+          <div>
+            <h1 class="dl-dash-page-title">Analytics & Overview</h1>
+            <div class="small text-dl-muted mt-1" id="admin-store-tag">Sharma General Store · Open 8:00 AM – 9:00 PM</div>
+          </div>
 
-      <!-- Page Header -->
-      <div style="display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
-        <div>
-          <h1 class="dl-heading mb-1" style="font-size: 1.6rem;">Store Overview</h1>
-          <p class="text-dl-muted mb-0" id="admin-store-tag">Sharma General Store</p>
+          <!-- Time Range Switcher: Today | 7 days | 30 days -->
+          <div class="dl-range-switcher" role="radiogroup" aria-label="Select analytics time range">
+            <button type="button" class="dl-range-btn" data-range="today" aria-label="Today range">
+              Today
+            </button>
+            <button type="button" class="dl-range-btn active" data-range="7days" aria-label="Last 7 days range">
+              7 days
+            </button>
+            <button type="button" class="dl-range-btn" data-range="30days" aria-label="Last 30 days range">
+              30 days
+            </button>
+          </div>
         </div>
-        <div>
-          <span class="dl-header-pill" style="display: inline-flex;">
-            <span class="dl-status-dot" aria-hidden="true"></span>
-            <span class="dl-status-open">Open for Orders</span>
+      </div>
+
+      <!-- Section: Needs Attention Strip -->
+      <div class="dl-attention-card" id="dl-attention-card" style="display: none;">
+        <div class="dl-attention-header">
+          <span class="dl-attention-title">
+            <i class="bi bi-bell text-warning"></i> Needs Attention
           </span>
         </div>
-      </div>
-
-      <!-- Stat Cards -->
-      <div class="dl-stats-grid">
-        <div class="dl-stat-card">
-          <div class="dl-stat-icon-circle" aria-hidden="true">📦</div>
-          <div>
-            <div class="dl-stat-label">Total Products</div>
-            <div class="dl-stat-value" id="stat-total-products">20</div>
-          </div>
-        </div>
-
-        <div class="dl-stat-card">
-          <div class="dl-stat-icon-circle" aria-hidden="true">⏳</div>
-          <div>
-            <div class="dl-stat-label">Pending Orders</div>
-            <div class="dl-stat-value" id="stat-pending-orders">1</div>
-          </div>
-        </div>
-
-        <div class="dl-stat-card">
-          <div class="dl-stat-icon-circle" aria-hidden="true">✓</div>
-          <div>
-            <div class="dl-stat-label">Completed Orders</div>
-            <div class="dl-stat-value" id="stat-completed-orders">1</div>
-          </div>
-        </div>
-
-        <div class="dl-stat-card">
-          <div class="dl-stat-icon-circle" aria-hidden="true">₹</div>
-          <div>
-            <div class="dl-stat-label">Estimated Sales</div>
-            <div class="dl-stat-value" id="stat-total-sales">₹1,304</div>
-          </div>
+        <div class="dl-attention-items-grid" id="dl-attention-items-grid">
+          <!-- Populated by dashboard.js -->
         </div>
       </div>
 
-      <!-- Recent Orders Section -->
-      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
-        <h2 class="dl-heading mb-0" style="font-size: 1.25rem;">Recent Incoming Orders</h2>
-        <a href="orders.html" class="text-dl-primary fw-semibold small" style="text-decoration: underline;">
-          View all orders &rarr;
-        </a>
-      </div>
+      <!-- Section: KPI Row with tiny Sparklines and % Changes -->
+      <section class="dl-dash-kpi-grid" aria-label="Key Performance Indicators">
+        
+        <!-- Revenue Card -->
+        <div class="dl-dash-kpi-card">
+          <div class="dl-kpi-top-row">
+            <span class="dl-kpi-title">Revenue</span>
+            <span class="dl-kpi-badge positive" id="kpi-revenue-badge">+0%</span>
+          </div>
+          <div class="dl-kpi-main-row">
+            <span class="dl-kpi-value" id="kpi-revenue-val">₹0</span>
+            <div class="dl-kpi-sparkline-wrap">
+              <svg class="dl-kpi-sparkline-svg" id="kpi-revenue-sparkline" viewBox="0 0 90 26" aria-hidden="true"></svg>
+            </div>
+          </div>
+          <div class="dl-kpi-subtext">vs previous period</div>
+        </div>
 
-      <!-- Desktop Table -->
-      <div class="dl-table-container">
-        <table class="dl-table" aria-label="Recent orders table">
+        <!-- Orders Count Card -->
+        <div class="dl-dash-kpi-card">
+          <div class="dl-kpi-top-row">
+            <span class="dl-kpi-title">Orders</span>
+            <span class="dl-kpi-badge positive" id="kpi-orders-badge">+0%</span>
+          </div>
+          <div class="dl-kpi-main-row">
+            <span class="dl-kpi-value" id="kpi-orders-val">0</span>
+            <div class="dl-kpi-sparkline-wrap">
+              <svg class="dl-kpi-sparkline-svg" id="kpi-orders-sparkline" viewBox="0 0 90 26" aria-hidden="true"></svg>
+            </div>
+          </div>
+          <div class="dl-kpi-subtext">vs previous period</div>
+        </div>
+
+        <!-- Average Order Value (AOV) Card -->
+        <div class="dl-dash-kpi-card">
+          <div class="dl-kpi-top-row">
+            <span class="dl-kpi-title">Avg Order Value</span>
+            <span class="dl-kpi-badge positive" id="kpi-aov-badge">+0%</span>
+          </div>
+          <div class="dl-kpi-main-row">
+            <span class="dl-kpi-value" id="kpi-aov-val">₹0</span>
+            <div class="dl-kpi-sparkline-wrap">
+              <svg class="dl-kpi-sparkline-svg" id="kpi-aov-sparkline" viewBox="0 0 90 26" aria-hidden="true"></svg>
+            </div>
+          </div>
+          <div class="dl-kpi-subtext">vs previous period</div>
+        </div>
+
+        <!-- Cancellation Rate Card -->
+        <div class="dl-dash-kpi-card">
+          <div class="dl-kpi-top-row">
+            <span class="dl-kpi-title">Cancellation Rate</span>
+            <span class="dl-kpi-badge positive" id="kpi-cancel-badge">0%</span>
+          </div>
+          <div class="dl-kpi-main-row">
+            <span class="dl-kpi-value" id="kpi-cancel-val">0%</span>
+            <div class="dl-kpi-sparkline-wrap">
+              <svg class="dl-kpi-sparkline-svg" id="kpi-cancel-sparkline" viewBox="0 0 90 26" aria-hidden="true"></svg>
+            </div>
+          </div>
+          <div class="dl-kpi-subtext">vs previous period</div>
+        </div>
+
+      </section>
+
+      <!-- Section: Active Orders Pipeline Stacked Bar -->
+      <section class="dl-pipeline-card" aria-label="Current Orders Pipeline">
+        <div class="dl-pipeline-header">
+          <span class="dl-pipeline-title">
+            <i class="bi bi-diagram-3"></i> Orders Pipeline
+          </span>
+          <span class="dl-pipeline-total" id="pipeline-total-count">0 orders in pipeline</span>
+        </div>
+        <div class="dl-pipeline-bar" id="dl-pipeline-bar" role="meter" aria-label="Active order pipeline">
+          <!-- Populated by script -->
+        </div>
+        <div class="dl-pipeline-legend">
+          <span class="dl-pipeline-legend-item">
+            <span class="dl-pipeline-legend-dot" style="background: #F59E0B;"></span> Pending
+          </span>
+          <span class="dl-pipeline-legend-item">
+            <span class="dl-pipeline-legend-dot" style="background: #0284C7;"></span> Confirmed
+          </span>
+          <span class="dl-pipeline-legend-item">
+            <span class="dl-pipeline-legend-dot" style="background: #9333EA;"></span> Preparing
+          </span>
+          <span class="dl-pipeline-legend-item">
+            <span class="dl-pipeline-legend-dot" style="background: #16A34A;"></span> Ready
+          </span>
+          <span class="dl-pipeline-legend-item">
+            <span class="dl-pipeline-legend-dot" style="background: #0A7D3E;"></span> Completed
+          </span>
+        </div>
+      </section>
+
+      <!-- Section: Orders & Revenue Trend (Smooth SVG Area Chart) -->
+      <section class="dl-trend-card" aria-label="Orders and revenue trend">
+        <div class="dl-trend-header">
+          <h2 class="dl-trend-title">Performance Trend</h2>
+          <div class="dl-chart-metric-switch" role="radiogroup" aria-label="Select trend metric">
+            <button type="button" class="dl-chart-metric-btn active" data-metric="revenue" aria-label="Revenue metric">
+              Revenue (₹)
+            </button>
+            <button type="button" class="dl-chart-metric-btn" data-metric="orders" aria-label="Orders metric">
+              Orders count
+            </button>
+          </div>
+        </div>
+
+        <div class="dl-chart-svg-container">
+          <svg class="dl-trend-svg" id="dl-trend-svg" viewBox="0 0 800 240" preserveAspectRatio="none" aria-label="Trend chart graphic">
+            <!-- Rendered by dashboard.js -->
+          </svg>
+          <div class="dl-chart-floating-tooltip" id="dl-chart-floating-tooltip" aria-hidden="true"></div>
+        </div>
+
+        <!-- Visually Hidden Screen Reader Table (Accessible Alternative) -->
+        <table class="visually-hidden" aria-label="Daily trend data table">
           <thead>
             <tr>
-              <th scope="col">Order ID</th>
-              <th scope="col">Customer</th>
-              <th scope="col">Items</th>
-              <th scope="col">Total</th>
-              <th scope="col">Status</th>
-              <th scope="col">Action</th>
+              <th scope="col">Date</th>
+              <th scope="col">Revenue</th>
+              <th scope="col">Orders</th>
             </tr>
           </thead>
-          <tbody id="recent-orders-tbody">
-            <!-- Populated via script -->
-          </tbody>
+          <tbody id="trend-accessible-tbody"></tbody>
         </table>
-      </div>
+      </section>
 
-      <!-- Mobile Stacked Card List -->
-      <div class="dl-mobile-card-list" id="recent-orders-mobile-list">
-        <!-- Populated via script -->
-      </div>
+      <!-- Section: Busiest Hours Heatmap Grid (7 Days x 8am to 9pm) -->
+      <section class="dl-heatmap-card" aria-label="Busiest hours heatmap">
+        <div class="dl-heatmap-header">
+          <h2 class="dl-heatmap-title">Busiest Hours Heatmap</h2>
+          <div class="dl-heatmap-legend">
+            <span>Fewer</span>
+            <div class="dl-heatmap-legend-scale" aria-hidden="true">
+              <div class="dl-heatmap-legend-box" style="background-color: rgba(10, 125, 62, 0.08);"></div>
+              <div class="dl-heatmap-legend-box" style="background-color: rgba(10, 125, 62, 0.35);"></div>
+              <div class="dl-heatmap-legend-box" style="background-color: rgba(10, 125, 62, 0.65);"></div>
+              <div class="dl-heatmap-legend-box" style="background-color: rgba(10, 125, 62, 1.0);"></div>
+            </div>
+            <span>Peak</span>
+          </div>
+        </div>
+
+        <div class="dl-heatmap-scroll-wrap">
+          <table class="dl-heatmap-table" aria-label="Weekly order density by hour">
+            <thead>
+              <tr id="dl-heatmap-header-row">
+                <!-- Populated by script -->
+              </tr>
+            </thead>
+            <tbody id="dl-heatmap-tbody">
+              <!-- Populated by script -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section: Two-Column Analytics Split (Top Sellers & Category Share) -->
+      <section class="dl-analytics-split" aria-label="Product and category analytics">
+        
+        <!-- Top Sellers Ranked List with Proportional Bars -->
+        <div class="dl-top-sellers-card">
+          <h2 class="dl-sellers-title">Top Sellers</h2>
+          <div class="dl-sellers-list" id="dl-top-sellers-list">
+            <!-- Populated by script -->
+          </div>
+        </div>
+
+        <!-- Category Share Donut Chart with Legend -->
+        <div class="dl-category-donut-card">
+          <h2 class="dl-sellers-title">Category Share</h2>
+          <div class="dl-donut-content-row">
+            <div class="dl-donut-svg-wrap">
+              <svg class="dl-donut-svg" id="dl-donut-svg" viewBox="0 0 160 160" aria-label="Category share donut graphic">
+                <!-- Slices rendered by script -->
+              </svg>
+              <div class="dl-donut-center-text" aria-hidden="true">
+                <span class="dl-donut-center-val" id="dl-donut-center-val">0</span>
+                <span class="dl-donut-center-lbl">Items</span>
+              </div>
+            </div>
+            <div class="dl-donut-legend" id="dl-donut-legend">
+              <!-- Populated by script -->
+            </div>
+          </div>
+        </div>
+
+      </section>
 
     </main>
 
@@ -206,97 +348,12 @@
 
   </div>
 
+  <!-- Shared & Dashboard Scripts -->
   <script src="../js/shared/theme.js"></script>
   <script src="../js/shared/storage.js"></script>
   <script src="../js/shared/live.js"></script>
   <script src="../js/shared/ui.js"></script>
   <script src="../js/shopkeeper/nav.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      if (window.DukaanTheme) DukaanTheme.init();
-      const settings = DukaanStorage.getSettings();
-      const products = DukaanStorage.getProducts();
-      const orders = DukaanStorage.getOrders();
-
-      if (settings && document.getElementById('admin-store-tag')) {
-        document.getElementById('admin-store-tag').textContent = settings.shopName || 'Sharma General Store';
-      }
-
-      // Compute statistics
-      const totalProds = products.length;
-      const pendingCount = orders.filter(o => o.status === 'Pending').length;
-      const completedCount = orders.filter(o => o.status === 'Completed').length;
-      const salesSum = orders
-        .filter(o => o.status !== 'Cancelled')
-        .reduce((sum, o) => sum + (o.estimatedTotal || 0), 0);
-
-      document.getElementById('stat-total-products').textContent = totalProds;
-      document.getElementById('stat-pending-orders').textContent = pendingCount;
-      document.getElementById('stat-completed-orders').textContent = completedCount;
-      document.getElementById('stat-total-sales').textContent = `₹${salesSum.toLocaleString('en-IN')}`;
-
-      // Render recent orders
-      const tbody = document.getElementById('recent-orders-tbody');
-      const mobileList = document.getElementById('recent-orders-mobile-list');
-
-      const statusClassMap = {
-        'Pending': 'status-pending',
-        'Confirmed': 'status-confirmed',
-        'Preparing': 'status-preparing',
-        'Ready': 'status-ready',
-        'Completed': 'status-completed',
-        'Cancelled': 'status-cancelled'
-      };
-
-      const topOrders = orders.slice(0, 5);
-
-      if (tbody) {
-        tbody.innerHTML = topOrders.map(order => {
-          const statusClass = statusClassMap[order.status] || 'status-pending';
-          const itemsSummary = (order.items || []).map(i => `${i.quantity}x ${i.name}`).join(', ');
-          return `
-            <tr>
-              <td><strong>${DukaanUI.escapeHtml(order.id)}</strong></td>
-              <td>${DukaanUI.escapeHtml(order.customerName || 'Customer')}</td>
-              <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${DukaanUI.escapeHtml(itemsSummary)}">
-                ${DukaanUI.escapeHtml(itemsSummary)}
-              </td>
-              <td><strong>₹${Number(order.estimatedTotal || 0).toLocaleString('en-IN')}</strong></td>
-              <td>
-                <span class="dl-status-badge ${statusClass}">${DukaanUI.escapeHtml(order.status)}</span>
-              </td>
-              <td>
-                <a href="orders.html" class="btn-dl-secondary" style="min-height: 32px; padding: 0.25rem 0.65rem; font-size: 0.78rem;">
-                  Manage
-                </a>
-              </td>
-            </tr>
-          `;
-        }).join('');
-      }
-
-      if (mobileList) {
-        mobileList.innerHTML = topOrders.map(order => {
-          const statusClass = statusClassMap[order.status] || 'status-pending';
-          const itemsCount = (order.items || []).length;
-          return `
-            <div class="dl-admin-item-card">
-              <div class="dl-admin-item-header">
-                <strong>${DukaanUI.escapeHtml(order.id)}</strong>
-                <span class="dl-status-badge ${statusClass}">${DukaanUI.escapeHtml(order.status)}</span>
-              </div>
-              <div class="small text-dl-muted">${DukaanUI.escapeHtml(order.customerName || 'Customer')} &bull; ${itemsCount} items</div>
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.25rem;">
-                <span style="font-weight: 700; color: var(--dl-forest);">₹${Number(order.estimatedTotal || 0).toLocaleString('en-IN')}</span>
-                <a href="orders.html" class="btn-dl-secondary" style="min-height: 32px; padding: 0.25rem 0.65rem; font-size: 0.78rem;">
-                  View &rarr;
-                </a>
-              </div>
-            </div>
-          `;
-        }).join('');
-      }
-    });
-  </script>
+  <script src="../js/shopkeeper/dashboard.js"></script>
 </body>
 </html>
