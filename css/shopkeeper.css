@@ -2237,3 +2237,49 @@
 [data-theme="dark"] .dl-seller-bar-fill {
   background: var(--dl-primary);
 }
+
+/* ============================================================
+   Product Management Drawer & SVG Picker Styles
+   ============================================================ */
+.dl-preset-svg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
+  gap: 0.45rem;
+  max-height: 140px;
+  overflow-y: auto;
+  padding: 0.4rem;
+  background: var(--dl-surface-2);
+  border: 1px solid var(--dl-border);
+  border-radius: var(--dl-radius-btn);
+}
+
+.dl-preset-svg-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--dl-surface);
+  border: 1.5px solid var(--dl-border);
+  border-radius: 8px;
+  padding: 4px;
+  cursor: pointer;
+  min-height: 38px;
+  min-width: 38px;
+  transition: all var(--dl-transition-fast);
+}
+
+.dl-preset-svg-btn:hover {
+  border-color: var(--dl-primary);
+  transform: scale(1.05);
+}
+
+.dl-preset-svg-btn.selected {
+  border-color: var(--dl-primary);
+  background: var(--dl-mint);
+  box-shadow: 0 0 0 2px rgba(10, 125, 62, 0.25);
+}
+
+[data-theme="dark"] .dl-preset-svg-btn.selected {
+  background: #0A2B14;
+  border-color: var(--dl-primary);
+  box-shadow: 0 0 0 2px rgba(61, 190, 117, 0.35);
+}

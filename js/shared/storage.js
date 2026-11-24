@@ -437,6 +437,100 @@ function saveProducts(productsList) {
 }
 
 /**
+ * Add a new product to the catalog.
+ * @param {Object} product - Product properties
+ * @returns {Object|null} The saved product object or null on error
+ */
+function addProduct(product) {
+  if (!product || !product.name || typeof product.price !== 'number' || product.price <= 0) {
+    console.error("[Storage] addProduct: Invalid product details.");
+    return null;
+  }
+  const products = getProducts();
+  const nextNum = products.reduce((max, p) => {
+    const num = parseInt(String(p.id).replace(/\D/g, ''), 10);
+    return !isNaN(num) && num > max ? num : max;
+  }, 0) + 1;
+  const newId = `P${String(nextNum).padStart(3, '0')}`;
+  
+  const newProduct = {
+    id: newId,
+    name: product.name.trim(),
+    category: product.category || 'General',
+    price: Math.round(product.price),
+    unit: product.unit || '1 unit',
+    image: product.image || 'assets/products/svg/p001.svg',
+    available: product.available !== false,
+    stockQuantity: typeof product.stockQuantity === 'number' ? Math.max(0, product.stockQuantity) : 20,
+    updatedAt: new Date().toISOString()
+  };
+
+  products.push(newProduct);
+  const success = saveProducts(products);
+  if (success) {
+    if (typeof window !== 'undefined' && window.DukaanLive) {
+      const fn = window.DukaanLive.broadcast || window.DukaanLive.publish;
+      if (typeof fn === 'function') fn('CATALOG_UPDATED', { action: 'ADD', product: newProduct });
+    }
+    return newProduct;
+  }
+  return null;
+}
+
+/**
+ * Update an existing product.
+ * @param {string} id - Product identifier
+ * @param {Object} updates - Updated properties
+ * @returns {boolean} True if successfully updated
+ */
+function updateProduct(id, updates) {
+  const products = getProducts();
+  const idx = products.findIndex(p => p.id === id);
+  if (idx === -1) return false;
+
+  products[idx] = {
+    ...products[idx],
+    ...updates,
+    updatedAt: new Date().toISOString()
+  };
+
+  const success = saveProducts(products);
+  if (success && typeof window !== 'undefined' && window.DukaanLive) {
+    const fn = window.DukaanLive.broadcast || window.DukaanLive.publish;
+    if (typeof fn === 'function') fn('CATALOG_UPDATED', { action: 'UPDATE', product: products[idx] });
+  }
+  return success;
+}
+
+/**
+ * Delete a product from the catalog.
+ * @param {string} id - Product identifier
+ * @returns {boolean} True if successfully deleted
+ */
+function deleteProduct(id) {
+  const products = getProducts();
+  const filtered = products.filter(p => p.id !== id);
+  if (filtered.length === products.length) return false;
+
+  const success = saveProducts(filtered);
+  if (success && typeof window !== 'undefined' && window.DukaanLive) {
+    const fn = window.DukaanLive.broadcast || window.DukaanLive.publish;
+    if (typeof fn === 'function') fn('CATALOG_UPDATED', { action: 'DELETE', productId: id });
+  }
+  return success;
+}
+
+/**
+ * Get product by ID.
+ * @param {string} id
+ * @returns {Object|null}
+ */
+function getProductById(id) {
+  const products = getProducts();
+  return products.find(p => p.id === id) || null;
+}
+
+/**
  * Retrieve all recorded orders.
  * Seeds initial demo orders if storage is uninitialized.
  * @returns {Array<Object>} List of order objects
@@ -644,6 +738,10 @@ if (typeof window !== 'undefined') {
   window.DukaanStorage = {
     getProducts,
     saveProducts,
+    addProduct,
+    updateProduct,
+    deleteProduct,
+    getProductById,
     getOrders,
     addOrder,
     updateOrderStatus,

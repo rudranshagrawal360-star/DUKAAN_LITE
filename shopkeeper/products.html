@@ -11,7 +11,6 @@
   <link rel="apple-touch-icon" href="../assets/brand/icon-180.png">
   <meta name="theme-color" content="#124729">
 
-
   <!-- Pre-paint theme: runs before CSS to prevent flash -->
   <script>
     (function(){
@@ -34,7 +33,11 @@
   <link rel="stylesheet" href="../css/shopkeeper.css">
 </head>
 <body>
+  <!-- Skip Link for Accessibility -->
   <a href="#main-content" class="skip-link">Skip to products list</a>
+
+  <!-- Accessible Live Announcer -->
+  <div id="products-live-announcer" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
 
   <div class="dl-admin-layout">
     
@@ -95,38 +98,95 @@
     <!-- Main Content -->
     <main id="main-content" class="dl-admin-main">
 
-      <div style="display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+      <!-- Header Row with Actions -->
+      <div class="dl-products-header-wrap" style="display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
         <div>
           <h1 class="dl-heading mb-1" style="font-size: 1.6rem;">Product Catalog</h1>
           <p class="text-dl-muted mb-0" id="product-count-sub">Manage inventory pricing and stock availability</p>
         </div>
-        <div style="max-width: 260px; width: 100%;">
-          <input type="search" id="admin-product-search" class="dl-input" placeholder="Search catalog..." style="height: 38px; font-size: 0.88rem;">
+
+        <div style="display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;">
+          <button type="button" class="btn-dl-secondary" id="btn-export-products-csv" style="min-height: 38px; font-size: 0.88rem;">
+            <i class="bi bi-download" aria-hidden="true"></i>
+            <span>Export CSV</span>
+          </button>
+          <button type="button" class="btn-dl-primary" id="btn-add-product-main" style="min-height: 38px; font-size: 0.88rem;">
+            <i class="bi bi-plus-lg" aria-hidden="true"></i>
+            <span>Add product</span>
+          </button>
         </div>
       </div>
+
+      <!-- Controls & Filter Toolbar -->
+      <div class="dl-products-controls-bar" style="background: var(--dl-surface); border: 1px solid var(--dl-border); border-radius: var(--dl-radius-btn); padding: 0.85rem 1rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+        <!-- Search -->
+        <div style="flex: 1 1 200px; min-width: 180px; position: relative;">
+          <i class="bi bi-search text-dl-muted" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); pointer-events: none;" aria-hidden="true"></i>
+          <input type="search" id="admin-product-search" class="dl-input" placeholder="Search by name, category, unit..." style="padding-left: 2.2rem; height: 38px; font-size: 0.88rem;" aria-label="Search products">
+        </div>
+
+        <!-- Category Filter -->
+        <div style="flex: 0 1 180px; min-width: 140px;">
+          <select id="admin-category-filter" class="dl-date-select w-100" style="height: 38px; font-size: 0.85rem;" aria-label="Filter by category">
+            <option value="ALL">All Categories</option>
+            <option value="Dairy & Breakfast">Dairy &amp; Breakfast</option>
+            <option value="Staples & Grains">Staples &amp; Grains</option>
+            <option value="Spices & Masalas">Spices &amp; Masalas</option>
+            <option value="Snacks & Biscuits">Snacks &amp; Biscuits</option>
+            <option value="Beverages">Beverages</option>
+            <option value="Personal & Home Care">Personal &amp; Home Care</option>
+            <option value="Fresh Fruits">Fresh Fruits</option>
+          </select>
+        </div>
+
+        <!-- Stock Status Filter -->
+        <div style="flex: 0 1 150px; min-width: 130px;">
+          <select id="admin-stock-filter" class="dl-date-select w-100" style="height: 38px; font-size: 0.85rem;" aria-label="Filter by stock status">
+            <option value="ALL">All Stock Status</option>
+            <option value="in-stock">In Stock</option>
+            <option value="low-stock">Low Stock (≤5)</option>
+            <option value="out-of-stock">Unavailable</option>
+          </select>
+        </div>
+
+        <!-- Sort Select -->
+        <div style="flex: 0 1 160px; min-width: 140px;">
+          <select id="admin-sort-select" class="dl-date-select w-100" style="height: 38px; font-size: 0.85rem;" aria-label="Sort products">
+            <option value="name-asc">Name: A to Z</option>
+            <option value="name-desc">Name: Z to A</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="stock-asc">Stock: Low to High</option>
+            <option value="stock-desc">Stock: High to Low</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div id="products-empty-state" style="display: none;"></div>
 
       <!-- Desktop Table -->
       <div class="dl-table-container">
         <table class="dl-table" aria-label="Products table">
           <thead>
             <tr>
-              <th scope="col">Product</th>
-              <th scope="col">Category</th>
-              <th scope="col">Unit</th>
-              <th scope="col">Price</th>
-              <th scope="col">Stock Status</th>
-              <th scope="col">Toggle Availability</th>
+              <th scope="col" style="min-width: 220px;">Product</th>
+              <th scope="col" style="min-width: 140px;">Category</th>
+              <th scope="col" style="min-width: 130px;">Unit</th>
+              <th scope="col" style="min-width: 100px;">Price</th>
+              <th scope="col" style="min-width: 140px;">Stock</th>
+              <th scope="col" style="min-width: 210px;">Actions</th>
             </tr>
           </thead>
           <tbody id="admin-products-tbody">
-            <!-- Populated via script -->
+            <!-- Populated via products.js -->
           </tbody>
         </table>
       </div>
 
       <!-- Mobile Stacked Card List -->
       <div class="dl-mobile-card-list" id="admin-products-mobile-list">
-        <!-- Populated via script -->
+        <!-- Populated via products.js -->
       </div>
     </main>
 
@@ -155,101 +215,125 @@
 
   </div>
 
+  <!-- Right-Side Product Add / Edit Drawer -->
+  <div class="dl-drawer-overlay" id="product-drawer-overlay"></div>
+  <aside class="dl-order-drawer" id="product-drawer" aria-labelledby="product-drawer-title" aria-modal="true" role="dialog">
+    <div class="dl-drawer-header">
+      <div class="dl-drawer-title-wrap">
+        <h2 class="dl-drawer-title" id="product-drawer-title" style="font-size: 1.15rem; margin-bottom: 0.15rem;">Add Product</h2>
+        <span class="text-dl-muted small font-monospace" id="product-id-display">Auto-generated</span>
+      </div>
+      <button type="button" class="dl-drawer-close-btn" id="btn-close-product-drawer" aria-label="Close product drawer">
+        <i class="bi bi-x-lg" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <div class="dl-drawer-body">
+      <form id="product-edit-form" novalidate>
+        <!-- Product Name -->
+        <div class="mb-3">
+          <label for="product-name-input" class="dl-form-label">Product Name *</label>
+          <input type="text" id="product-name-input" class="dl-input" placeholder="e.g. Masala Oats" required>
+        </div>
+
+        <!-- Category -->
+        <div class="mb-3">
+          <label for="product-category-select" class="dl-form-label">Category *</label>
+          <select id="product-category-select" class="dl-date-select w-100" style="height: 42px;" required>
+            <option value="Dairy & Breakfast">Dairy &amp; Breakfast</option>
+            <option value="Staples & Grains">Staples &amp; Grains</option>
+            <option value="Spices & Masalas">Spices &amp; Masalas</option>
+            <option value="Snacks & Biscuits">Snacks &amp; Biscuits</option>
+            <option value="Beverages">Beverages</option>
+            <option value="Personal & Home Care">Personal &amp; Home Care</option>
+            <option value="Fresh Fruits">Fresh Fruits</option>
+            <option value="General Essentials">General Essentials</option>
+          </select>
+        </div>
+
+        <!-- Unit Description -->
+        <div class="mb-3">
+          <label for="product-unit-input" class="dl-form-label">Unit Description *</label>
+          <input type="text" id="product-unit-input" class="dl-input" placeholder="e.g. 500 g pouch, 1 L bottle, Pack of 4" required>
+        </div>
+
+        <!-- Price & Stock Row -->
+        <div class="row g-2 mb-3" style="display: flex; gap: 0.75rem;">
+          <div style="flex: 1;">
+            <label for="product-price-input" class="dl-form-label">Price (₹) *</label>
+            <input type="number" id="product-price-input" class="dl-input dl-tabular-nums" min="1" step="1" placeholder="45" required>
+            <small class="text-dl-muted" style="font-size: 0.75rem;">Must be greater than 0</small>
+          </div>
+          <div style="flex: 1;">
+            <label for="product-stock-input" class="dl-form-label">Stock Quantity</label>
+            <input type="number" id="product-stock-input" class="dl-input dl-tabular-nums" min="0" step="1" value="20" required>
+            <small class="text-dl-muted" style="font-size: 0.75rem;">≤5 shows Low Stock</small>
+          </div>
+        </div>
+
+        <!-- Availability Toggle -->
+        <div class="mb-3 p-3" style="background: var(--dl-surface-2); border: 1px solid var(--dl-border); border-radius: var(--dl-radius-btn);">
+          <div class="form-check form-switch d-flex align-items-center justify-content-between p-0 m-0">
+            <div>
+              <label class="form-check-label font-weight-medium" for="product-avail-checkbox" style="display: block; font-weight: 600; color: var(--dl-ink);">
+                Available for Order
+              </label>
+              <small class="text-dl-muted" style="font-size: 0.78rem;">Customers can add this item to their WhatsApp cart</small>
+            </div>
+            <input class="form-check-input ms-2" type="checkbox" id="product-avail-checkbox" checked style="cursor: pointer; width: 40px; height: 22px;">
+          </div>
+        </div>
+
+        <!-- Illustration Picker -->
+        <div class="mb-3">
+          <div class="d-flex align-items-center justify-content-between mb-1">
+            <label class="dl-form-label mb-0">Product Illustration</label>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span class="text-dl-muted small">Preview:</span>
+              <img id="product-image-preview" src="../assets/products/svg/p001.svg" alt="Preview" width="30" height="30" style="object-fit: contain; border: 1px solid var(--dl-border); border-radius: 6px; padding: 2px; background: var(--dl-surface);">
+            </div>
+          </div>
+          <input type="hidden" id="product-image-path" value="assets/products/svg/p001.svg">
+          <div class="dl-preset-svg-grid" id="product-svg-picker-grid">
+            <!-- Populated via script -->
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="d-flex gap-2 pt-2">
+          <button type="button" class="btn-dl-secondary flex-fill" id="btn-cancel-product-drawer">Cancel</button>
+          <button type="submit" class="btn-dl-primary flex-fill" id="btn-save-product">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </aside>
+
+  <!-- Delete Product Confirmation Modal -->
+  <div class="dl-modal-overlay" id="delete-modal-overlay"></div>
+  <div class="dl-modal-card" id="delete-product-modal" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
+    <div class="dl-modal-header">
+      <h3 class="dl-modal-title" id="delete-modal-title">
+        <i class="bi bi-trash text-danger me-1"></i> Delete Product
+      </h3>
+    </div>
+    <div class="dl-modal-body">
+      <p class="mb-2">Are you sure you want to delete <strong id="delete-product-name-target">this product</strong>?</p>
+      <p class="text-dl-muted small mb-0">This action cannot be undone. Historical orders containing this item will maintain their saved snapshot.</p>
+    </div>
+    <div class="dl-modal-actions">
+      <button type="button" class="btn-dl-secondary" id="btn-cancel-delete">Cancel</button>
+      <button type="button" class="btn-dl-primary" id="btn-confirm-delete" style="background-color: var(--dl-error); border-color: var(--dl-error);">
+        Delete Product
+      </button>
+    </div>
+  </div>
+
+  <!-- Shared & Product Scripts -->
   <script src="../js/shared/theme.js"></script>
-  <script src="../js/shared/storage.js"></script>
   <script src="../js/shared/live.js"></script>
+  <script src="../js/shared/storage.js"></script>
   <script src="../js/shared/ui.js"></script>
   <script src="../js/shopkeeper/nav.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      if (window.DukaanTheme) DukaanTheme.init();
-      let products = DukaanStorage.getProducts();
-
-      function renderProducts(filterText = '') {
-        const tbody = document.getElementById('admin-products-tbody');
-        const mobileList = document.getElementById('admin-products-mobile-list');
-
-        const filtered = products.filter(p => 
-          !filterText || 
-          p.name.toLowerCase().includes(filterText) || 
-          p.category.toLowerCase().includes(filterText)
-        );
-
-        document.getElementById('product-count-sub').textContent = 
-          `Showing ${filtered.length} of ${products.length} items`;
-
-        if (tbody) {
-          tbody.innerHTML = filtered.map(p => `
-            <tr>
-              <td>
-                <div style="display: flex; align-items: center; gap: 0.75rem;">
-                  <img src="../${DukaanUI.escapeHtml(p.image)}" alt="${DukaanUI.escapeHtml(p.name)}" style="width: 38px; height: 38px; object-fit: cover; border-radius: 8px; border: 1px solid var(--dl-border); flex-shrink: 0;" loading="lazy">
-                  <strong>${DukaanUI.escapeHtml(p.name)}</strong>
-                </div>
-              </td>
-              <td><span class="text-dl-muted">${DukaanUI.escapeHtml(p.category)}</span></td>
-              <td>${DukaanUI.escapeHtml(p.unit)}</td>
-              <td><strong>₹${p.price}</strong></td>
-              <td>
-                ${p.available 
-                  ? '<span class="dl-badge dl-badge-in-stock">✓ In Stock</span>' 
-                  : '<span class="dl-badge dl-badge-out-stock">✕ Unavailable</span>'}
-              </td>
-              <td>
-                <button type="button" class="btn-dl-secondary btn-toggle-avail" data-id="${p.id}" style="min-height: 32px; padding: 0.25rem 0.65rem; font-size: 0.78rem;">
-                  ${p.available ? 'Mark Out of Stock' : 'Mark In Stock'}
-                </button>
-              </td>
-            </tr>
-          `).join('');
-        }
-
-        if (mobileList) {
-          mobileList.innerHTML = filtered.map(p => `
-            <div class="dl-admin-item-card">
-              <div class="dl-admin-item-header" style="align-items: center;">
-                <div style="display: flex; align-items: center; gap: 0.65rem; min-width: 0;">
-                  <img src="../${DukaanUI.escapeHtml(p.image)}" alt="${DukaanUI.escapeHtml(p.name)}" style="width: 36px; height: 36px; object-fit: cover; border-radius: 8px; border: 1px solid var(--dl-border); flex-shrink: 0;" loading="lazy">
-                  <span class="dl-admin-item-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${DukaanUI.escapeHtml(p.name)}</span>
-                </div>
-                ${p.available 
-                  ? '<span class="dl-badge dl-badge-in-stock" style="flex-shrink: 0;">✓ In Stock</span>' 
-                  : '<span class="dl-badge dl-badge-out-stock" style="flex-shrink: 0;">✕ Unavailable</span>'}
-              </div>
-              <div class="text-dl-muted small" style="margin-top: 0.35rem;">
-                ${DukaanUI.escapeHtml(p.category)} &bull; ${DukaanUI.escapeHtml(p.unit)} &bull; <strong>₹${p.price}</strong>
-              </div>
-              <div style="margin-top: 0.45rem;">
-                <button type="button" class="btn-dl-secondary btn-toggle-avail w-100" data-id="${p.id}" style="min-height: 36px; font-size: 0.82rem;">
-                  ${p.available ? 'Mark Out of Stock' : 'Mark In Stock'}
-                </button>
-              </div>
-            </div>
-          `).join('');
-        }
-
-        // Attach availability toggle listeners
-        document.querySelectorAll('.btn-toggle-avail').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            const id = e.currentTarget.getAttribute('data-id');
-            const target = products.find(p => p.id === id);
-            if (target) {
-              target.available = !target.available;
-              target.updatedAt = new Date().toISOString();
-              DukaanStorage.saveProducts(products);
-              DukaanUI.showToast(`Updated "${target.name}" to ${target.available ? 'In Stock' : 'Unavailable'}`, 'success');
-              renderProducts(document.getElementById('admin-product-search').value.toLowerCase().trim());
-            }
-          });
-        });
-      }
-
-      renderProducts();
-
-      document.getElementById('admin-product-search').addEventListener('input', (e) => {
-        renderProducts(e.target.value.toLowerCase().trim());
-      });
-    });
-  </script>
+  <script src="../js/shopkeeper/products.js"></script>
 </body>
 </html>

@@ -737,6 +737,16 @@ function initCatalog() {
 
   // Wire My Orders drawer
   initMyOrdersDrawer();
+
+  // Live sync for catalog changes made by shopkeeper in another tab
+  if (window.DukaanLive) {
+    window.DukaanLive.subscribe((event, data) => {
+      if (event === 'CATALOG_UPDATED') {
+        allProducts = DukaanStorage.getProducts();
+        renderProductList();
+      }
+    });
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

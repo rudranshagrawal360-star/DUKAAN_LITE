@@ -98,21 +98,31 @@
    * @param {Function} callback - Function receiving (payload, timestamp)
    * @returns {Function} Unsubscribe function
    */
-  function subscribe(type, callback) {
+  function subscribe(typeOrCallback, callback) {
+    let type = typeOrCallback;
+    let cb = callback;
+
+    // If first argument is a function, treat as wildcard subscriber
+    if (typeof typeOrCallback === 'function') {
+      type = '*';
+      cb = typeOrCallback;
+    }
+
     if (!listeners.has(type)) {
       listeners.set(type, []);
     }
-    listeners.get(type).push(callback);
+    listeners.get(type).push(cb);
 
     return function unsubscribe() {
       const arr = listeners.get(type) || [];
-      const idx = arr.indexOf(callback);
+      const idx = arr.indexOf(cb);
       if (idx !== -1) arr.splice(idx, 1);
     };
   }
 
   window.DukaanLive = {
     broadcast,
+    publish: broadcast,
     subscribe,
     CHANNEL_NAME
   };
