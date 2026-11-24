@@ -89,14 +89,20 @@
   }
 
   /* --------------------------------------------------------------------------
-     Live Cross-Tab Synchronization
+     Live Cross-Tab Synchronization & Accessibility Announcer
      -------------------------------------------------------------------------- */
+  function announceLiveMessage(msg) {
+    const el = document.getElementById('orders-live-announcer');
+    if (el) el.textContent = msg;
+  }
+
   function setupLiveListener() {
     if (window.DukaanLive) {
       window.DukaanLive.subscribe((event, data) => {
         if (event === 'ORDER_CREATED') {
           orders = DukaanStorage.getOrders();
           renderAll();
+          announceLiveMessage(`New order #${data.id} placed by ${data.customerName || 'Customer'}. Total: ₹${data.estimatedTotal || 0}`);
           if (window.DukaanUI) {
             DukaanUI.showToast(`New order #${data.id} from ${data.customerName || 'Customer'}!`, 'success');
           }
@@ -111,6 +117,7 @@
         } else if (event === 'ORDER_UPDATED') {
           orders = DukaanStorage.getOrders();
           renderAll();
+          announceLiveMessage(`Order #${data.orderId} updated to ${data.status}`);
           if (selectedOrderId && selectedOrderId === data.orderId) {
             const updated = orders.find(o => o.id === data.orderId);
             if (updated) renderDrawer(updated);
@@ -670,6 +677,7 @@
     orders = DukaanStorage.getOrders();
     const updatedOrder = orders.find(o => o.id === orderId);
 
+    announceLiveMessage(`Order #${orderId} moved to ${nextStatus}`);
     if (window.DukaanUI) {
       DukaanUI.showToast(`Order #${orderId} moved to ${nextStatus}`, 'success');
     }
@@ -1002,6 +1010,7 @@
     const success = DukaanStorage.updateOrderStatus(id, 'Cancelled');
     if (success) {
       orders = DukaanStorage.getOrders();
+      announceLiveMessage(`Order #${id} has been cancelled`);
       if (window.DukaanUI) {
         DukaanUI.showToast(`Order #${id} has been cancelled`, 'info');
       }

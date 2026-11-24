@@ -300,6 +300,10 @@ function renderProductList() {
 
   if (emptyState) emptyState.style.display = 'none';
 
+  grid.classList.remove('dl-fade-in');
+  void grid.offsetWidth;
+  grid.classList.add('dl-fade-in');
+
   grid.innerHTML = filtered.map(product => {
     const isUnavailable = !product.available;
     const isLowStock = product.available && product.stockQuantity <= 5;

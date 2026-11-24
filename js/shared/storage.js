@@ -598,12 +598,14 @@ function resetDemoData() {
     localStorage.removeItem(STORAGE_KEYS.PRODUCTS);
     localStorage.removeItem(STORAGE_KEYS.ORDERS);
     localStorage.removeItem(STORAGE_KEYS.SETTINGS);
+    localStorage.removeItem(STORAGE_KEYS.MY_ORDERS);
+    localStorage.removeItem(STORAGE_KEYS.ACTIVE_USER);
     
     // Re-seed defaults immediately
     safeSetItem(STORAGE_KEYS.PRODUCTS, DEFAULT_PRODUCTS);
     safeSetItem(STORAGE_KEYS.ORDERS, DEFAULT_ORDERS);
     safeSetItem(STORAGE_KEYS.SETTINGS, DEFAULT_SETTINGS);
-    console.log("[Storage] Demo data successfully reset to defaults.");
+    console.log("[Storage] Demo data successfully reset to clean defaults.");
     return true;
   } catch (err) {
     console.error("[Storage] Failed to reset demo data:", err);

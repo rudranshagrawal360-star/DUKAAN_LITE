@@ -670,7 +670,7 @@ input:focus:not(:focus-visible) {
 .status-completed { background: #E9F6ED; color: #0A7D3E; }
 .status-cancelled { background: #FEE2E2; color: #991B1B; }
 
-/* 11. Toasts */
+/* 11. Toasts (Bottom-right on desktop, Top on phones, auto-dismissing) */
 #toast-container {
   position: fixed;
   bottom: 1.5rem;
@@ -680,10 +680,12 @@ input:focus:not(:focus-visible) {
   flex-direction: column;
   gap: var(--dl-space-2);
   max-width: calc(100vw - 3rem);
-  width: 340px;
+  width: 360px;
+  pointer-events: none;
 }
 
 .dukaan-toast {
+  pointer-events: auto;
   background: var(--dl-surface);
   border: 1px solid var(--dl-border);
   border-radius: var(--dl-radius-btn);
@@ -691,19 +693,93 @@ input:focus:not(:focus-visible) {
   box-shadow: var(--dl-shadow-card);
   display: flex;
   align-items: center;
-  gap: 0.65rem;
-  animation: dlSlideUp 220ms ease forwards;
+  gap: 0.75rem;
+  font-family: var(--dl-font);
+  color: var(--dl-ink);
+  animation: dlToastSlideInRight 250ms var(--dl-ease-out) forwards;
+  transition: opacity 250ms var(--dl-ease-out), transform 250ms var(--dl-ease-out);
+}
+
+.dukaan-toast.dismissing {
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
 }
 
 .dukaan-toast.toast-success { border-left: 4px solid var(--dl-primary); }
 .dukaan-toast.toast-error   { border-left: 4px solid var(--dl-error); }
 .dukaan-toast.toast-warning { border-left: 4px solid var(--dl-warning); }
 
-/* 12. Shimmer Skeleton Loading */
+.dl-toast-icon {
+  font-size: 1.15rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.dl-toast-close {
+  background: none;
+  border: none;
+  color: var(--dl-muted);
+  cursor: pointer;
+  padding: 0;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 6px;
+  transition: color var(--dl-transition-fast), background-color var(--dl-transition-fast);
+}
+
+.dl-toast-close:hover {
+  color: var(--dl-ink);
+  background-color: var(--dl-track);
+}
+
+@keyframes dlToastSlideInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@media (max-width: 576px) {
+  #toast-container {
+    bottom: auto;
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+    width: auto;
+    max-width: calc(100vw - 2rem);
+  }
+  .dukaan-toast {
+    animation: dlToastSlideInTop 250ms var(--dl-ease-out) forwards;
+  }
+  .dukaan-toast.dismissing {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.96);
+  }
+}
+
+@keyframes dlToastSlideInTop {
+  from { opacity: 0; transform: translateY(-24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 12. Shimmer Skeleton Loading & Content Crossfade */
 .skeleton-box {
   background: linear-gradient(90deg, #EFF2F0 25%, #FAFCFB 50%, #EFF2F0 75%);
   background-size: 200% 100%;
   animation: dlShimmer 1.5s infinite;
+}
+
+.dl-product-skeleton {
+  pointer-events: none;
+  animation: dlFadeIn 250ms var(--dl-ease-out) forwards;
+}
+
+.dl-fade-in {
+  animation: dlFadeIn 250ms var(--dl-ease-out) forwards;
 }
 
 @keyframes dlShimmer {
@@ -711,8 +787,8 @@ input:focus:not(:focus-visible) {
   100% { background-position: 200% 0; }
 }
 
-@keyframes dlSlideUp {
-  from { opacity: 0; transform: translateY(12px); }
+@keyframes dlFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 

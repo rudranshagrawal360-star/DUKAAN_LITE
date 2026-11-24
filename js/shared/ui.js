@@ -42,37 +42,39 @@ function showToast(message, type = 'success', duration = 3500) {
   }
 
   const icons = {
-    success: '✓',
-    error: '✕',
-    warning: '⚠',
-    info: 'ℹ'
+    success: '<i class="bi bi-check-circle-fill text-success" aria-hidden="true"></i>',
+    error: '<i class="bi bi-x-circle-fill text-danger" aria-hidden="true"></i>',
+    warning: '<i class="bi bi-exclamation-triangle-fill text-warning" aria-hidden="true"></i>',
+    info: '<i class="bi bi-info-circle-fill text-primary" aria-hidden="true"></i>'
   };
 
   const toast = document.createElement('div');
   toast.className = `dukaan-toast toast-${type}`;
-  toast.setAttribute('role', 'alert');
+  toast.setAttribute('role', 'status');
 
   toast.innerHTML = `
-    <span style="font-weight: 800; font-size: 1.1rem; line-height: 1;">${icons[type] || 'ℹ'}</span>
-    <div style="flex: 1; font-size: 0.9rem; font-weight: 500;">${escapeHtml(message)}</div>
-    <button type="button" aria-label="Close" style="background: none; border: none; font-size: 1rem; cursor: pointer; color: #888; padding: 0;">&times;</button>
+    <span class="dl-toast-icon">${icons[type] || icons.info}</span>
+    <div style="flex: 1; font-size: 0.88rem; font-weight: 500; line-height: 1.35;">${escapeHtml(message)}</div>
+    <button type="button" aria-label="Close notification" class="dl-toast-close">
+      <i class="bi bi-x-lg" aria-hidden="true" style="font-size: 0.82rem;"></i>
+    </button>
   `;
 
+  function dismiss() {
+    if (toast.classList.contains('dismissing')) return;
+    toast.classList.add('dismissing');
+    setTimeout(() => toast.remove(), 250);
+  }
+
   // Close on button click
-  toast.querySelector('button').addEventListener('click', () => {
-    toast.remove();
-  });
+  toast.querySelector('.dl-toast-close').addEventListener('click', dismiss);
 
   container.appendChild(toast);
 
   // Auto-remove after duration
-  setTimeout(() => {
-    if (toast.parentElement) {
-      toast.style.opacity = '0';
-      toast.style.transition = 'opacity 200ms ease';
-      setTimeout(() => toast.remove(), 200);
-    }
-  }, duration);
+  if (duration > 0) {
+    setTimeout(dismiss, duration);
+  }
 }
 
 /**
@@ -91,10 +93,12 @@ function renderEmptyState(container, message, actionText = null, actionCallback 
   wrapper.style.margin = '0 auto';
 
   wrapper.innerHTML = `
-    <div style="font-size: 3rem; margin-bottom: 0.75rem;" aria-hidden="true">🛒</div>
-    <h3 class="font-heading" style="font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--text-main);">Nothing Here Yet</h3>
-    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.25rem;">${escapeHtml(message)}</p>
-    ${actionText ? `<button type="button" class="btn-dukaan-primary empty-state-btn">${escapeHtml(actionText)}</button>` : ''}
+    <div class="mb-2" aria-hidden="true">
+      <i class="bi bi-basket2 text-dl-muted" style="font-size: 2.25rem;"></i>
+    </div>
+    <h3 class="dl-heading mb-1" style="font-size: 1.15rem; color: var(--dl-ink);">No items found</h3>
+    <p class="text-dl-muted small mb-3">${escapeHtml(message)}</p>
+    ${actionText ? `<button type="button" class="btn-dl-secondary btn-sm empty-state-btn">${escapeHtml(actionText)}</button>` : ''}
   `;
 
   if (actionText && actionCallback) {
