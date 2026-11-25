@@ -35,51 +35,55 @@ const DEFAULT_SETTINGS = {
   updatedAt: new Date().toISOString()
 };
 
-// 3. Brand-free seed products (fictional generic names, existing product photos)
+// 3. Realistic seed products with authentic studio photography from stitch datasets
 const DEFAULT_PRODUCTS = [
   // Dairy & Breakfast
-  { id: "P001", name: "Toned Milk", category: "Dairy & Breakfast", price: 27, unit: "500 ml pouch", image: "assets/products/svg/p001.svg", available: true, stockQuantity: 30, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P002", name: "Pure Ghee", category: "Dairy & Breakfast", price: 310, unit: "500 ml glass jar", image: "assets/products/svg/p002.svg", available: true, stockQuantity: 14, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P001", name: "Amul Taaza Toned Fresh Milk", category: "Dairy & Breakfast", price: 27, unit: "500 ml pouch", image: "assets/products/amul_milk.jpg", available: true, stockQuantity: 30, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P002", name: "Amul Pure Ghee Jar", category: "Dairy & Breakfast", price: 310, unit: "500 ml glass jar", image: "assets/products/amul_ghee.jpg", available: true, stockQuantity: 14, updatedAt: "2026-11-23T08:00:00.000Z" },
 
-  // Staples & Grains
-  { id: "P003", name: "Chakki Atta", category: "Staples & Grains", price: 245, unit: "5 kg bag", image: "assets/products/svg/p003.svg", available: true, stockQuantity: 20, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P004", name: "Basmati Rice", category: "Staples & Grains", price: 85, unit: "500 g pouch", image: "assets/products/svg/p004.svg", available: true, stockQuantity: 18, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P005", name: "Toor Dal", category: "Staples & Grains", price: 175, unit: "1 kg pouch", image: "assets/products/svg/p005.svg", available: true, stockQuantity: 15, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P006", name: "Refined Sunflower Oil", category: "Staples & Grains", price: 140, unit: "1 L pouch", image: "assets/products/svg/p006.svg", available: true, stockQuantity: 16, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P007", name: "Kachi Ghani Mustard Oil", category: "Staples & Grains", price: 155, unit: "1 L bottle", image: "assets/products/svg/p007.svg", available: true, stockQuantity: 12, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P008", name: "Iodised Salt", category: "Staples & Grains", price: 28, unit: "1 kg pack", image: "assets/products/svg/p008.svg", available: true, stockQuantity: 40, updatedAt: "2026-11-23T08:00:00.000Z" },
+  // Atta, Rice & Dal
+  { id: "P003", name: "Aashirvaad Shudh Chakki Atta", category: "Atta, Rice & Dal", price: 245, unit: "5 kg bag", image: "assets/products/aashirvaad_atta.jpg", available: true, stockQuantity: 20, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P004", name: "India Gate Feast Rozzana Basmati Rice", category: "Atta, Rice & Dal", price: 85, unit: "500 g pouch", image: "assets/products/india_gate_rice.jpg", available: true, stockQuantity: 18, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P005", name: "Tata Sampann Unpolished Toor Dal", category: "Atta, Rice & Dal", price: 175, unit: "1 kg pouch", image: "assets/products/tata_toor_dal.jpg", available: true, stockQuantity: 15, updatedAt: "2026-11-23T08:00:00.000Z" },
 
-  // Spices & Masalas
-  { id: "P009", name: "Garam Masala", category: "Spices & Masalas", price: 82, unit: "100 g box", image: "assets/products/svg/p009.svg", available: true, stockQuantity: 22, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P010", name: "Red Chilli Powder", category: "Spices & Masalas", price: 95, unit: "100 g box", image: "assets/products/svg/p010.svg", available: true, stockQuantity: 15, updatedAt: "2026-11-23T08:00:00.000Z" },
+  // Oils, Masalas & Spices
+  { id: "P006", name: "Fortune Sunlite Refined Sunflower Oil", category: "Oils, Masalas & Spices", price: 140, unit: "1 L pouch", image: "assets/products/fortune_sunflower_oil.jpg", available: true, stockQuantity: 16, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P007", name: "Fortune Premium Kachi Ghani Mustard Oil", category: "Oils, Masalas & Spices", price: 155, unit: "1 L bottle", image: "assets/products/fortune_mustard_oil.jpg", available: true, stockQuantity: 12, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P008", name: "Tata Salt Vacuum Evaporated Iodized", category: "Oils, Masalas & Spices", price: 28, unit: "1 kg pack", image: "assets/products/tata_salt.jpg", available: true, stockQuantity: 40, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P009", name: "Everest Garam Masala Spice Blend", category: "Oils, Masalas & Spices", price: 82, unit: "100 g box", image: "assets/products/everest_garam_masala.jpg", available: true, stockQuantity: 22, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P010", name: "MDH Deggi Mirch Red Chilli Powder", category: "Oils, Masalas & Spices", price: 95, unit: "100 g tin", image: "assets/products/mdh_deggi_mirch.jpg", available: true, stockQuantity: 15, updatedAt: "2026-11-23T08:00:00.000Z" },
 
   // Snacks & Biscuits
-  { id: "P011", name: "Instant Noodles", category: "Snacks & Biscuits", price: 56, unit: "Pack of 4 (280 g)", image: "assets/products/svg/p011.svg", available: true, stockQuantity: 25, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P012", name: "Glucose Biscuits", category: "Snacks & Biscuits", price: 15, unit: "100 g pack", image: "assets/products/svg/p012.svg", available: true, stockQuantity: 45, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P013", name: "Cashew Cookies", category: "Snacks & Biscuits", price: 35, unit: "200 g pack", image: "assets/products/svg/p013.svg", available: true, stockQuantity: 20, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P014", name: "Chocolate Cream Biscuits", category: "Snacks & Biscuits", price: 30, unit: "150 g pack", image: "assets/products/svg/p014.svg", available: true, stockQuantity: 24, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P015", name: "Vanilla Cream Biscuits", category: "Snacks & Biscuits", price: 40, unit: "120 g pack", image: "assets/products/svg/p015.svg", available: true, stockQuantity: 18, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P016", name: "Bhujia Sev", category: "Snacks & Biscuits", price: 90, unit: "400 g pouch", image: "assets/products/svg/p016.svg", available: true, stockQuantity: 15, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P017", name: "Milk Chocolate Bar", category: "Snacks & Biscuits", price: 90, unit: "130 g bar", image: "assets/products/svg/p017.svg", available: true, stockQuantity: 16, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P018", name: "Crisp Wafer Bar", category: "Snacks & Biscuits", price: 25, unit: "41.5 g bar", image: "assets/products/svg/p018.svg", available: false, stockQuantity: 0, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P011", name: "Maggi 2-Minute Masala Noodles", category: "Snacks & Biscuits", price: 56, unit: "Pack of 4 (280 g)", image: "assets/products/maggi_noodles.jpg", available: true, stockQuantity: 25, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P012", name: "Parle-G Gold Glucose Biscuits", category: "Snacks & Biscuits", price: 15, unit: "100 g pack", image: "assets/products/parle_g_gold.jpg", available: true, stockQuantity: 45, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P013", name: "Britannia Good Day Rich Cashew Cookies", category: "Snacks & Biscuits", price: 35, unit: "200 g pack", image: "assets/products/good_day_cookies.jpg", available: true, stockQuantity: 20, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P014", name: "Britannia Bourbon Chocolate Cream Biscuits", category: "Snacks & Biscuits", price: 30, unit: "150 g pack", image: "assets/products/britannia_bourbon.jpg", available: true, stockQuantity: 24, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P015", name: "Oreo Original Vanilla Creme Biscuits", category: "Snacks & Biscuits", price: 40, unit: "120 g pack", image: "assets/products/oreo_biscuits.jpg", available: true, stockQuantity: 18, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P016", name: "Haldiram's Nagpur Aloo Bhujia", category: "Snacks & Biscuits", price: 48, unit: "150 g pouch", image: "assets/products/haldirams_bhujia.jpg", available: true, stockQuantity: 15, updatedAt: "2026-11-23T08:00:00.000Z" },
 
-  // Beverages
-  { id: "P019", name: "Masala Chai Dust", category: "Beverages", price: 260, unit: "500 g pouch", image: "assets/products/svg/p019.svg", available: true, stockQuantity: 14, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P020", name: "CTC Leaf Tea", category: "Beverages", price: 240, unit: "500 g carton", image: "assets/products/svg/p020.svg", available: true, stockQuantity: 12, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P021", name: "Instant Coffee", category: "Beverages", price: 390, unit: "200 g jar", image: "assets/products/svg/p021.svg", available: true, stockQuantity: 10, updatedAt: "2026-11-23T08:00:00.000Z" },
+  // Chocolates & Sweets
+  { id: "P017", name: "Cadbury Dairy Milk Chocolate", category: "Chocolates & Sweets", price: 45, unit: "52 g bar", image: "assets/products/dairy_milk_chocolate.jpg", available: true, stockQuantity: 16, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P018", name: "Nestle KitKat 4 Finger Chocolate Bar", category: "Chocolates & Sweets", price: 25, unit: "38 g bar", image: "assets/products/kitkat_chocolate.jpg", available: false, stockQuantity: 0, updatedAt: "2026-11-23T08:00:00.000Z" },
 
-  // Personal & Home Care
-  { id: "P022", name: "Antiseptic Bath Soap", category: "Personal & Home Care", price: 140, unit: "Pack of 4 (440 g)", image: "assets/products/svg/p022.svg", available: true, stockQuantity: 20, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P023", name: "Toothpaste", category: "Personal & Home Care", price: 65, unit: "150 g tube", image: "assets/products/svg/p023.svg", available: true, stockQuantity: 25, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P024", name: "Nourishing Shampoo", category: "Personal & Home Care", price: 190, unit: "340 ml bottle", image: "assets/products/svg/p024.svg", available: true, stockQuantity: 11, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P025", name: "Detergent Powder", category: "Personal & Home Care", price: 145, unit: "1 kg carton", image: "assets/products/svg/p025.svg", available: true, stockQuantity: 14, updatedAt: "2026-11-23T08:00:00.000Z" },
-  { id: "P026", name: "Dishwash Bar", category: "Personal & Home Care", price: 25, unit: "300 g bar", image: "assets/products/svg/p026.svg", available: true, stockQuantity: 35, updatedAt: "2026-11-23T08:00:00.000Z" },
+  // Tea, Coffee & Drinks
+  { id: "P019", name: "Tata Tea Gold Rich Aroma", category: "Tea, Coffee & Drinks", price: 260, unit: "500 g pouch", image: "assets/products/tata_tea_gold.jpg", available: true, stockQuantity: 14, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P020", name: "Brooke Bond Red Label Strong Tea", category: "Tea, Coffee & Drinks", price: 145, unit: "250 g box", image: "assets/products/red_label_tea.jpg", available: true, stockQuantity: 12, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P021", name: "Nescafe Classic Instant Coffee Jar", category: "Tea, Coffee & Drinks", price: 165, unit: "50 g glass jar", image: "assets/products/nescafe_coffee.jpg", available: true, stockQuantity: 10, updatedAt: "2026-11-23T08:00:00.000Z" },
+
+  // Bath & Personal Care
+  { id: "P022", name: "Dettol Original Bathing Soap Bar", category: "Bath & Personal Care", price: 36, unit: "125 g bar", image: "assets/products/dettol_soap.jpg", available: true, stockQuantity: 20, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P023", name: "Clinic Plus Strong & Long Shampoo", category: "Bath & Personal Care", price: 120, unit: "340 ml bottle", image: "assets/products/clinic_plus_shampoo.jpg", available: true, stockQuantity: 25, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P024", name: "Colgate Strong Teeth Dental Cream", category: "Bath & Personal Care", price: 55, unit: "150 g tube", image: "assets/products/colgate_toothpaste.jpg", available: true, stockQuantity: 11, updatedAt: "2026-11-23T08:00:00.000Z" },
+
+  // Cleaning & Household
+  { id: "P025", name: "Surf Excel Quick Wash Detergent Powder", category: "Cleaning & Household", price: 135, unit: "1 kg carton", image: "assets/products/surf_excel.jpg", available: true, stockQuantity: 14, updatedAt: "2026-11-23T08:00:00.000Z" },
+  { id: "P026", name: "Vim Dishwash Bar with Lemon", category: "Cleaning & Household", price: 20, unit: "300 g bar", image: "assets/products/vim_bar.jpg", available: true, stockQuantity: 35, updatedAt: "2026-11-23T08:00:00.000Z" },
 
   // Fresh Fruits
-  { id: "P027", name: "Alphonso Mangoes", category: "Fresh Fruits", price: 600, unit: "1 Dozen Box (12 pcs)", image: "assets/products/svg/p027.svg", available: false, stockQuantity: 0, updatedAt: "2026-11-23T08:00:00.000Z" }
+  { id: "P027", name: "Fresh Ratnagiri Alphonso Mangoes", category: "Fresh Fruits", price: 600, unit: "1 Dozen Box (12 pcs)", image: "assets/products/alphonso_mangoes.jpg", available: false, stockQuantity: 0, updatedAt: "2026-11-23T08:00:00.000Z" }
 ];
 
-// 4. Fictional Demo Orders (brand-free item names, fake phone numbers)
+// 4. Fictional Demo Orders (authentic packaging item names, fake phone numbers)
 const DEFAULT_TODAY_ORDERS = [
   {
     id: "ORD-1001",
@@ -87,8 +91,8 @@ const DEFAULT_TODAY_ORDERS = [
     customerName: "Meera S.",
     customerPhone: "9800001111",
     items: [
-      { name: "Toned Milk", unit: "500 ml pouch", price: 27, quantity: 2, subtotal: 54 },
-      { name: "Glucose Biscuits", unit: "100 g pack", price: 15, quantity: 2, subtotal: 30 }
+      { name: "Amul Taaza Toned Fresh Milk", unit: "500 ml pouch", price: 27, quantity: 2, subtotal: 54 },
+      { name: "Parle-G Gold Glucose Biscuits", unit: "100 g pack", price: 15, quantity: 2, subtotal: 30 }
     ],
     estimatedTotal: 84,
     status: "Completed",
@@ -107,9 +111,9 @@ const DEFAULT_TODAY_ORDERS = [
     customerName: "Rajan V.",
     customerPhone: "9800002222",
     items: [
-      { name: "Chakki Atta", unit: "5 kg bag", price: 245, quantity: 1, subtotal: 245 },
-      { name: "Refined Sunflower Oil", unit: "1 L pouch", price: 140, quantity: 1, subtotal: 140 },
-      { name: "Iodised Salt", unit: "1 kg pack", price: 28, quantity: 1, subtotal: 28 }
+      { name: "Aashirvaad Shudh Chakki Atta", unit: "5 kg bag", price: 245, quantity: 1, subtotal: 245 },
+      { name: "Fortune Sunlite Refined Sunflower Oil", unit: "1 L pouch", price: 140, quantity: 1, subtotal: 140 },
+      { name: "Tata Salt Vacuum Evaporated Iodized", unit: "1 kg pack", price: 28, quantity: 1, subtotal: 28 }
     ],
     estimatedTotal: 413,
     status: "Preparing",
@@ -126,8 +130,8 @@ const DEFAULT_TODAY_ORDERS = [
     customerName: "Sunita P.",
     customerPhone: "9800003333",
     items: [
-      { name: "Masala Chai Dust", unit: "500 g pouch", price: 260, quantity: 1, subtotal: 260 },
-      { name: "Cashew Cookies", unit: "200 g pack", price: 35, quantity: 2, subtotal: 70 }
+      { name: "Tata Tea Gold Rich Aroma", unit: "500 g pouch", price: 260, quantity: 1, subtotal: 260 },
+      { name: "Britannia Good Day Rich Cashew Cookies", unit: "200 g pack", price: 35, quantity: 2, subtotal: 70 }
     ],
     estimatedTotal: 330,
     status: "Confirmed",
@@ -143,8 +147,8 @@ const DEFAULT_TODAY_ORDERS = [
     customerName: "Amit K.",
     customerPhone: "9800004444",
     items: [
-      { name: "Instant Noodles", unit: "Pack of 4", price: 56, quantity: 2, subtotal: 112 },
-      { name: "Pure Ghee", unit: "500 ml jar", price: 310, quantity: 1, subtotal: 310 }
+      { name: "Maggi 2-Minute Masala Noodles", unit: "Pack of 4", price: 56, quantity: 2, subtotal: 112 },
+      { name: "Amul Pure Ghee Jar", unit: "500 ml jar", price: 310, quantity: 1, subtotal: 310 }
     ],
     estimatedTotal: 422,
     status: "Pending",
@@ -159,10 +163,10 @@ const DEFAULT_TODAY_ORDERS = [
     customerName: "Pooja D.",
     customerPhone: "9800005555",
     items: [
-      { name: "Basmati Rice", unit: "1 kg pack", price: 115, quantity: 2, subtotal: 230 },
-      { name: "Toor Dal", unit: "1 kg pack", price: 155, quantity: 1, subtotal: 155 }
+      { name: "India Gate Feast Rozzana Basmati Rice", unit: "500 g pouch", price: 85, quantity: 2, subtotal: 170 },
+      { name: "Tata Sampann Unpolished Toor Dal", unit: "1 kg pouch", price: 175, quantity: 1, subtotal: 175 }
     ],
-    estimatedTotal: 385,
+    estimatedTotal: 345,
     status: "Ready",
     statusHistory: [
       { status: "Pending", at: new Date(Date.now() - 1000 * 60 * 35).toISOString() },
@@ -178,9 +182,9 @@ const DEFAULT_TODAY_ORDERS = [
     customerName: "Vikram N.",
     customerPhone: "9800006666",
     items: [
-      { name: "Dishwash Liquid", unit: "500 ml bottle", price: 95, quantity: 1, subtotal: 95 }
+      { name: "Vim Dishwash Bar with Lemon", unit: "300 g bar", price: 20, quantity: 2, subtotal: 40 }
     ],
-    estimatedTotal: 95,
+    estimatedTotal: 40,
     status: "Cancelled",
     statusHistory: [
       { status: "Pending", at: new Date(Date.now() - 1000 * 60 * 75).toISOString() },
@@ -194,11 +198,11 @@ const DEFAULT_TODAY_ORDERS = [
     customerName: "Neha G.",
     customerPhone: "9800007777",
     items: [
-      { name: "Toned Milk", unit: "500 ml pouch", price: 27, quantity: 2, subtotal: 54 },
-      { name: "Whole Wheat Bread", unit: "400 g loaf", price: 45, quantity: 1, subtotal: 45 },
-      { name: "Farm Fresh Eggs", unit: "Pack of 6", price: 52, quantity: 1, subtotal: 52 }
+      { name: "Amul Taaza Toned Fresh Milk", unit: "500 ml pouch", price: 27, quantity: 2, subtotal: 54 },
+      { name: "Cadbury Dairy Milk Chocolate", unit: "52 g bar", price: 45, quantity: 1, subtotal: 45 },
+      { name: "Maggi 2-Minute Masala Noodles", unit: "Pack of 4", price: 56, quantity: 1, subtotal: 56 }
     ],
-    estimatedTotal: 151,
+    estimatedTotal: 155,
     status: "Pending",
     statusHistory: [
       { status: "Pending", at: new Date(Date.now() - 1000 * 60 * 4).toISOString() }
@@ -402,7 +406,7 @@ function safeSetItem(key, value) {
 // Public Storage API Functions
 // ============================================================================
 
-const SEED_VERSION_KEY = 'dukaanlite_catalog_seed_v4';
+const SEED_VERSION_KEY = 'dukaanlite_catalog_seed_v6';
 
 /**
  * Retrieve all products.
@@ -699,6 +703,9 @@ function resetDemoData() {
     safeSetItem(STORAGE_KEYS.PRODUCTS, DEFAULT_PRODUCTS);
     safeSetItem(STORAGE_KEYS.ORDERS, DEFAULT_ORDERS);
     safeSetItem(STORAGE_KEYS.SETTINGS, DEFAULT_SETTINGS);
+    try {
+      localStorage.setItem(SEED_VERSION_KEY, 'true');
+    } catch (e) {}
     console.log("[Storage] Demo data successfully reset to clean defaults.");
     return true;
   } catch (err) {

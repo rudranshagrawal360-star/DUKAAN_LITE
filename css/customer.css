@@ -882,7 +882,7 @@
   justify-content: center;
   position: relative;
   overflow: hidden;
-  padding: 1rem;
+  padding: 0.65rem;
   border-bottom: 1px solid var(--dl-border);
 }
 

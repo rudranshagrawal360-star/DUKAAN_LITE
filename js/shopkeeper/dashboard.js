@@ -15,11 +15,13 @@
 
   const CATEGORY_COLORS = {
     'Dairy & Breakfast': '#0A7D3E',
-    'Staples & Grains': '#F4AA2E',
-    'Spices & Masalas': '#DC2626',
+    'Atta, Rice & Dal': '#F4AA2E',
+    'Oils, Masalas & Spices': '#DC2626',
     'Snacks & Biscuits': '#8B5CF6',
-    'Beverages': '#0284C7',
-    'Personal & Home Care': '#EC4899',
+    'Chocolates & Sweets': '#D946EF',
+    'Tea, Coffee & Drinks': '#0284C7',
+    'Bath & Personal Care': '#EC4899',
+    'Cleaning & Household': '#059669',
     'Fresh Fruits': '#10B981',
     'Other': '#6B7280'
   };

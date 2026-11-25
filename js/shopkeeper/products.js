@@ -27,29 +27,35 @@
   let activeStockStatus = 'ALL';
   let currentSort = 'name-asc';
 
-  // Preset SVG illustration options for product images
+  // Preset illustration/photo options for product images
   const SVG_PRESETS = [
-    { label: 'Milk Pouch', path: 'assets/products/svg/p001.svg' },
-    { label: 'Ghee Jar', path: 'assets/products/svg/p002.svg' },
-    { label: 'Atta / Flour Bag', path: 'assets/products/svg/p003.svg' },
-    { label: 'Rice Pouch', path: 'assets/products/svg/p004.svg' },
-    { label: 'Dal Pouch', path: 'assets/products/svg/p005.svg' },
-    { label: 'Oil Bottle', path: 'assets/products/svg/p007.svg' },
-    { label: 'Salt Pack', path: 'assets/products/svg/p008.svg' },
-    { label: 'Spices Box', path: 'assets/products/svg/p009.svg' },
-    { label: 'Noodles Pack', path: 'assets/products/svg/p011.svg' },
-    { label: 'Biscuits Pack', path: 'assets/products/svg/p012.svg' },
-    { label: 'Cookies Pack', path: 'assets/products/svg/p013.svg' },
-    { label: 'Sev / Namkeen', path: 'assets/products/svg/p016.svg' },
-    { label: 'Chocolate Bar', path: 'assets/products/svg/p017.svg' },
-    { label: 'Tea Pouch', path: 'assets/products/svg/p019.svg' },
-    { label: 'Coffee Jar', path: 'assets/products/svg/p021.svg' },
-    { label: 'Soap Bar', path: 'assets/products/svg/p022.svg' },
-    { label: 'Toothpaste Tube', path: 'assets/products/svg/p023.svg' },
-    { label: 'Shampoo Bottle', path: 'assets/products/svg/p024.svg' },
-    { label: 'Detergent Box', path: 'assets/products/svg/p025.svg' },
-    { label: 'Dishwash Bar', path: 'assets/products/svg/p026.svg' },
-    { label: 'Fruit Box', path: 'assets/products/svg/p027.svg' }
+    { label: 'Amul Milk', path: 'assets/products/amul_milk.jpg' },
+    { label: 'Amul Ghee', path: 'assets/products/amul_ghee.jpg' },
+    { label: 'Aashirvaad Atta', path: 'assets/products/aashirvaad_atta.jpg' },
+    { label: 'India Gate Rice', path: 'assets/products/india_gate_rice.jpg' },
+    { label: 'Tata Toor Dal', path: 'assets/products/tata_toor_dal.jpg' },
+    { label: 'Sunflower Oil', path: 'assets/products/fortune_sunflower_oil.jpg' },
+    { label: 'Mustard Oil', path: 'assets/products/fortune_mustard_oil.jpg' },
+    { label: 'Tata Salt', path: 'assets/products/tata_salt.jpg' },
+    { label: 'Garam Masala', path: 'assets/products/everest_garam_masala.jpg' },
+    { label: 'Deggi Mirch', path: 'assets/products/mdh_deggi_mirch.jpg' },
+    { label: 'Maggi Noodles', path: 'assets/products/maggi_noodles.jpg' },
+    { label: 'Parle-G Gold', path: 'assets/products/parle_g_gold.jpg' },
+    { label: 'Good Day Cookies', path: 'assets/products/good_day_cookies.jpg' },
+    { label: 'Bourbon Biscuits', path: 'assets/products/britannia_bourbon.jpg' },
+    { label: 'Oreo Biscuits', path: 'assets/products/oreo_biscuits.jpg' },
+    { label: 'Aloo Bhujia', path: 'assets/products/haldirams_bhujia.jpg' },
+    { label: 'Dairy Milk', path: 'assets/products/dairy_milk_chocolate.jpg' },
+    { label: 'KitKat', path: 'assets/products/kitkat_chocolate.jpg' },
+    { label: 'Tata Tea Gold', path: 'assets/products/tata_tea_gold.jpg' },
+    { label: 'Red Label Tea', path: 'assets/products/red_label_tea.jpg' },
+    { label: 'Nescafe Coffee', path: 'assets/products/nescafe_coffee.jpg' },
+    { label: 'Dettol Soap', path: 'assets/products/dettol_soap.jpg' },
+    { label: 'Clinic Plus Shampoo', path: 'assets/products/clinic_plus_shampoo.jpg' },
+    { label: 'Colgate Toothpaste', path: 'assets/products/colgate_toothpaste.jpg' },
+    { label: 'Surf Excel', path: 'assets/products/surf_excel.jpg' },
+    { label: 'Vim Dishwash Bar', path: 'assets/products/vim_bar.jpg' },
+    { label: 'Alphonso Mangoes', path: 'assets/products/alphonso_mangoes.jpg' }
   ];
 
   /* --------------------------------------------------------------------------
